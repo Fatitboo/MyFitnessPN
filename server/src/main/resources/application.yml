@@ -1,0 +1,6 @@
+# Config server
+server:
+  port: 8088
+
+# Config to spring file
+spring:
