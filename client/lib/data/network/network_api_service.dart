@@ -10,12 +10,16 @@ import 'package:http/http.dart' as http;
   @override
   Future<dynamic> getApi(String path) async {
     dynamic responseJson;
+    print(baseUrl+path);
+
     try {
       final response = await http.get(Uri.parse(baseUrl+path), headers: {
         'content-type': 'application/json',
-
+        // 'Bearer Token': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE1MjI4MDY3fQ.bhN0GE0oYxrGtLETeOpueGDs-QjLh_Wucfqu4n1uxs0'
       });
+      print(baseUrl+path);
       print(response.body);
+      return response;
     } on SocketException {
       throw InternetException();
     } on RequestTimeOut {

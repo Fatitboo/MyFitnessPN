@@ -3,6 +3,8 @@ package dev.MyFitnessPN.server.models;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import dev.MyFitnessPN.server.component.Food;
+import dev.MyFitnessPN.server.component.exercise.Exercise;
+import dev.MyFitnessPN.server.component.exercise.Routine;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
@@ -50,6 +52,7 @@ public class User implements UserDetails {
     private String userType;
     // exercise
     private List<Exercise> exercises;
+    private List<Routine> routines;
 
     // date create and update
     @CreatedDate

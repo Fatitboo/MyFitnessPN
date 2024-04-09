@@ -17,7 +17,10 @@ import 'package:do_an_2/views/user/sign_up/sign_up_binding.dart';
 import 'package:do_an_2/views/user/sign_up/sign_up_page.dart';
 import 'package:do_an_2/views/user/welcome/welcome_binding.dart';
 import 'package:do_an_2/views/user/welcome/welcome_page.dart';
+import 'package:do_an_2/views/user/workout/exercise/exercise_binding.dart';
 import 'package:get/get.dart';
+
+import '../../views/user/workout/exercise/exercise_page.dart';
 
 class AppPages {
   static const INITIAL = AppRoutes.INITIAL;
@@ -74,6 +77,13 @@ class AppPages {
       name: AppRoutes.PROFILE_USER,
       page: () => ProfilePage(),
       binding: ProfileBinding(),
+      transition: Transition.native,
+    ),
+
+    GetPage(
+      name: AppRoutes.EXERCISE,
+      page: () => ExercisePage(),
+      binding: ExerciseBinding(),
       transition: Transition.native,
     ),
 

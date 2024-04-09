@@ -2,7 +2,7 @@ package dev.MyFitnessPN.server.services;
 
 import dev.MyFitnessPN.server.component.messageresponse.MessageResponse;
 import dev.MyFitnessPN.server.dtos.ExerciseDTO;
-import dev.MyFitnessPN.server.models.Exercise;
+import dev.MyFitnessPN.server.component.exercise.Exercise;
 import dev.MyFitnessPN.server.models.User;
 import dev.MyFitnessPN.server.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package dev.MyFitnessPN.server.models;
+package dev.MyFitnessPN.server.component.exercise;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

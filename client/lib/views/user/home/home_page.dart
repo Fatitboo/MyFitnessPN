@@ -22,7 +22,7 @@ class HomePage extends GetView<HomeController> {
           'assets/images/food.png',
           width: 80,
         ),
-        title: const Text("MyFitnessPN", style: TextStyle(color: Colors.white),),
+        title: Text("MyFitnessPN" + controller.a.value, style: TextStyle(color: Colors.white),),
         centerTitle: true,
         titleTextStyle: TextStyle(
             color: AppColor.primaryColor1,

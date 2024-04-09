@@ -1,8 +1,13 @@
 package dev.MyFitnessPN.server.controllers;
+
+import dev.MyFitnessPN.server.component.exercise.Exercise;
+import dev.MyFitnessPN.server.component.exercise.Routine;
 import dev.MyFitnessPN.server.component.messageresponse.MessageResponse;
 import dev.MyFitnessPN.server.dtos.ExerciseDTO;
-import dev.MyFitnessPN.server.component.exercise.Exercise;
+import dev.MyFitnessPN.server.dtos.RoutineDTO;
 import dev.MyFitnessPN.server.services.ExerciseService;
+import dev.MyFitnessPN.server.services.RoutineService;
+import dev.MyFitnessPN.server.value.Constant;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,35 +15,31 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import dev.MyFitnessPN.server.value.Constant;
 
 import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/v1/user/exercises")
+@RequestMapping("api/v1/user/routines")
 @RequiredArgsConstructor
-public class ExerciseController {
-    private final ExerciseService exerciseService;
+public class RoutineController {
+    private final RoutineService routineService;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getAllExercise(@PathVariable String userId, @RequestParam(value="type", required = false) String type) {
+    public ResponseEntity<?> getAllRoutine(@PathVariable String userId) {
         HashMap<String, Object> Response = new HashMap<>();
         try {
-            if(type == null){
-                type = "none";
-            }
-            List<Exercise> exercise = exerciseService.getAllExercise(userId, type);
-            return ResponseEntity.status(HttpStatus.OK).body(exercise);
+            List<Routine> routines = routineService.getAllRoutine(userId);
+            return ResponseEntity.status(HttpStatus.OK).body(routines);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
         }
     }
 
-    @PostMapping("{userId}/create-exercise")
-    public ResponseEntity<?> createExercise(@Valid @RequestBody ExerciseDTO exerciseDTO, @PathVariable String userId, BindingResult result) {
+    @PostMapping("{userId}/create-routine")
+    public ResponseEntity<?> createRoutine(@Valid @RequestBody RoutineDTO routineDTO, @PathVariable String userId, BindingResult result) {
 
         HashMap<String, Object> Response = new HashMap<>();
         if (result.hasErrors()) {
@@ -50,7 +51,7 @@ public class ExerciseController {
             return ResponseEntity.badRequest().body(Response);
         }
         try {
-            Exercise exercise = exerciseService.createExercise(exerciseDTO, userId);
+            Routine exercise = routineService.createRoutine(routineDTO, userId);
             return ResponseEntity.status(HttpStatus.CREATED).body(exercise);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
@@ -58,8 +59,8 @@ public class ExerciseController {
         }
     }
 
-    @PutMapping("{userId}/update-exercise/{exerciseId}")
-    public ResponseEntity<?> updateExercise(@Valid @RequestBody ExerciseDTO exerciseDTO, @PathVariable String userId, @PathVariable String exerciseId, BindingResult result) {
+    @PutMapping("{userId}/update-routine/{routineId}")
+    public ResponseEntity<?> updateRoutine(@Valid @RequestBody RoutineDTO routineDTO, @PathVariable String userId, @PathVariable String routineId, BindingResult result) {
 
         HashMap<String, Object> Response = new HashMap<>();
         if (result.hasErrors()) {
@@ -72,12 +73,12 @@ public class ExerciseController {
         }
         try {
             MessageResponse res;
-            res = exerciseService.updateExercise(exerciseDTO, userId, exerciseId);
+            res = routineService.updateExercise(routineDTO, userId, routineId);
             switch (res.getResType()) {
                 case Constant.MessageType.error, Constant.MessageType.warning:
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res.getResMessage());
                 case Constant.MessageType.success:
-                    Response.put("exerciseId", exerciseId);
+                        Response.put("routineId", routineId);
                     Response.put("messageResponse", res.getResMessage());
                     return ResponseEntity.status(HttpStatus.OK).body(Response);
                 default:
@@ -88,18 +89,18 @@ public class ExerciseController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
         }
     }
-
-    @DeleteMapping("{userId}/delete-exercise/{exerciseId}")
-    public ResponseEntity<?> deleteExercise(@PathVariable String userId, @PathVariable String exerciseId){
+//
+    @DeleteMapping("{userId}/delete-routine/{routineId}")
+    public ResponseEntity<?> deleteExercise(@PathVariable String userId, @PathVariable String routineId){
         HashMap<String, Object> Response = new HashMap<>();
         try {
             MessageResponse res;
-            res = exerciseService.deleteExercise(userId, exerciseId);
+            res = routineService.deleteRoutine(userId, routineId);
             switch (res.getResType()) {
                 case Constant.MessageType.error, Constant.MessageType.warning:
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res.getResMessage());
                 case Constant.MessageType.success:
-                    Response.put("exerciseId", exerciseId);
+                    Response.put("routineId", routineId);
                     Response.put("messageResponse", res.getResMessage());
                     return ResponseEntity.status(HttpStatus.OK).body(Response);
                 default:
@@ -110,5 +111,5 @@ public class ExerciseController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
         }
     }
-}
 
+}
