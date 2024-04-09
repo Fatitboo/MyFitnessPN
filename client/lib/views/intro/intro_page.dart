@@ -17,7 +17,7 @@ class IntroPage extends GetView<IntroController> {
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           child: Column(
             children: [
-              // big logo
+              // big logdo
               Padding(
                 padding: const EdgeInsets.only(
                   left: 70.0,

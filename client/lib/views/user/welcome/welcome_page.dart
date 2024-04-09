@@ -1,3 +1,5 @@
+import 'package:do_an_2/res/routes/names.dart';
+import 'package:do_an_2/res/values/color_extension.dart';
 import 'package:do_an_2/views/common_widgets/keep_alive_page.dart';
 import 'package:do_an_2/views/user/welcome/pages/final_page.dart';
 import 'package:do_an_2/views/user/welcome/pages/first_page.dart';
@@ -39,8 +41,8 @@ class _buildDotIndicator extends GetView<WelcomeController> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Obx(() => Positioned(
-        top: 80,
-        width: 300.w,
+        top: 40,
+        width: 200.w,
         height: 10.h,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
@@ -48,8 +50,8 @@ class _buildDotIndicator extends GetView<WelcomeController> {
             height: 10,
             child: LinearPercentIndicator(
               lineHeight: 6.h,
-              backgroundColor: Colors.green,
-              progressColor: Colors.red,
+              backgroundColor: AppColor.primaryColor3,
+              progressColor: AppColor.primaryColor1,
               percent: controller.progressValue.value,
               animateFromLastPercent: true,
               barRadius: const Radius.circular(3),
@@ -90,43 +92,46 @@ class _buildPageView extends GetView<WelcomeController> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return PageView(
-      scrollDirection: Axis.horizontal,
-      onPageChanged: (index) {
-        controller.changePage(index);
-      },
-      controller: pageController,
-      pageSnapping: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        FirstPage(onTap: () {
-          currentPageIndex = pageController.page!.round();
-          movingNextPage(pageController, currentPageIndex);
-        }),
-        KeepAlivePage(
-            child: SecondPage(onTap: () {
-          currentPageIndex = pageController.page!.round();
-          movingNextPage(pageController, currentPageIndex);
-        }, back: () {
-          currentPageIndex = pageController.page!.round();
-          movingPreviousPage(pageController, currentPageIndex);
-        })),
-        KeepAlivePage(
-            child: ThirdPage(onTap: () {
-          currentPageIndex = pageController.page!.round();
-          movingNextPage(pageController, currentPageIndex);
-        }, back: () {
-          currentPageIndex = pageController.page!.round();
-          movingPreviousPage(pageController, currentPageIndex);
-        })),
-        KeepAlivePage(
-            child: FinalPage(onTap: () {
-          controller.toPageApplication();
-        }, back: () {
-          currentPageIndex = pageController.page!.round();
-          movingPreviousPage(pageController, currentPageIndex);
-        }))
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 150),
+      child: PageView(
+        scrollDirection: Axis.horizontal,
+        onPageChanged: (index) {
+          controller.changePage(index);
+        },
+        controller: pageController,
+        pageSnapping: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          FirstPage(onTap: () {
+            currentPageIndex = pageController.page!.round();
+            movingNextPage(pageController, currentPageIndex);
+          },),
+          KeepAlivePage(
+              child: SecondPage(onTap: () {
+            currentPageIndex = pageController.page!.round();
+            movingNextPage(pageController, currentPageIndex);
+          }, back: () {
+            currentPageIndex = pageController.page!.round();
+            movingPreviousPage(pageController, currentPageIndex);
+          })),
+          KeepAlivePage(
+              child: ThirdPage(onTap: () {
+            currentPageIndex = pageController.page!.round();
+            movingNextPage(pageController, currentPageIndex);
+          }, back: () {
+            currentPageIndex = pageController.page!.round();
+            movingPreviousPage(pageController, currentPageIndex);
+          })),
+          KeepAlivePage(
+              child: FinalPage(onTap: () {
+            controller.toPageApplication();
+          }, back: () {
+            currentPageIndex = pageController.page!.round();
+            movingPreviousPage(pageController, currentPageIndex);
+          }))
+        ],
+      ),
     );
   }
 }

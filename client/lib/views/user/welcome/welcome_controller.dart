@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 
 class WelcomeController extends GetxController {
 
-
-
   var progressValue = 0.0.obs;
   var index = 0.obs;
+  //Goal
+  var goal = "".obs;
 
   @override
   void onInit() {

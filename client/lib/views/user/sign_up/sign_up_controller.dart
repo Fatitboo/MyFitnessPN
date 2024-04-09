@@ -9,9 +9,11 @@ class SignUpController extends GetxController {
   final passwordController = TextEditingController();
   final repassController = TextEditingController();
   toPageSignIn() async {
-    Get.offAndToNamed(AppRoutes.SIGN_IN_ADMIN);
+    Get.offAndToNamed(AppRoutes.SIGN_IN_USER);
   }
-  void signUserUp(){}
+  void signUserUp(){
+    Get.offAndToNamed(AppRoutes.WELCOME);
+  }
   @override
   void onInit() {
     // TODO: implement onInit
