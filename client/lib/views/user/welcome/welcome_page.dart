@@ -92,7 +92,7 @@ class _buildPageView extends GetView<WelcomeController> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-<<<<<<< HEAD
+
     return Padding(
       padding: const EdgeInsets.only(top: 150),
       child: PageView(
@@ -133,46 +133,8 @@ class _buildPageView extends GetView<WelcomeController> {
           }))
         ],
       ),
-=======
-    return PageView(
-      scrollDirection: Axis.horizontal,
-      onPageChanged: (index) {
-        controller.changePage(index);
-      },
-      controller: pageController,
-      pageSnapping: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        FirstPage(onTap: () {
-          
-          currentPageIndex = pageController.page!.round();
-          movingNextPage(pageController, currentPageIndex);
-        }),
-        KeepAlivePage(
-            child: SecondPage(onTap: () {
-          currentPageIndex = pageController.page!.round();
-          movingNextPage(pageController, currentPageIndex);
-        }, back: () {
-          currentPageIndex = pageController.page!.round();
-          movingPreviousPage(pageController, currentPageIndex);
-        })),
-        KeepAlivePage(
-            child: ThirdPage(onTap: () {
-          currentPageIndex = pageController.page!.round();
-          movingNextPage(pageController, currentPageIndex);
-        }, back: () {
-          currentPageIndex = pageController.page!.round();
-          movingPreviousPage(pageController, currentPageIndex);
-        })),
-        KeepAlivePage(
-            child: FinalPage(onTap: () {
-          controller.toPageApplication();
-        }, back: () {
-          currentPageIndex = pageController.page!.round();
-          movingPreviousPage(pageController, currentPageIndex);
-        }))
-      ],
->>>>>>> origin/Phat
+
+
     );
   }
 }

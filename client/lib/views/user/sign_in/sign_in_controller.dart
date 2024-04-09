@@ -14,10 +14,7 @@ class SignInController extends GetxController {
   GoogleSignInAccount? _currentUser ;
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-<<<<<<< HEAD
-  void signUserIn() {
-    // Get.offAndToNamed(AppRoutes.WELCOME);
-=======
+
   Future signUserIn() async{
     try {
       var user = await _googleSignIn.signIn();
@@ -26,7 +23,7 @@ class SignInController extends GetxController {
     catch(e){
       print(e);
     }
->>>>>>> origin/Phat
+
   }
 
   toPageSignUp() async {

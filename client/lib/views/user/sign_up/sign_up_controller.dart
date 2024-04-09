@@ -14,11 +14,7 @@ class SignUpController extends GetxController {
   toPageSignIn() async {
     Get.offAndToNamed(AppRoutes.SIGN_IN_USER);
   }
-  void signUserUp(){
-    Get.offAndToNamed(AppRoutes.WELCOME);
-  }
-<<<<<<< HEAD
-=======
+
   void signUserUp(){
     var information = {
       'username': 'user3',
@@ -40,7 +36,7 @@ class SignUpController extends GetxController {
     var postApi = NetworkApiService().postApi("/register", object);
     
   }
->>>>>>> origin/Phat
+
   @override
   void onInit() {
     // TODO: implement onInit
