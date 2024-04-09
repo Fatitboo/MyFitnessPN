@@ -100,6 +100,7 @@ class _buildPageView extends GetView<WelcomeController> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         FirstPage(onTap: () {
+          
           currentPageIndex = pageController.page!.round();
           movingNextPage(pageController, currentPageIndex);
         }),

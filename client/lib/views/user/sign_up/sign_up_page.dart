@@ -19,7 +19,7 @@ class SignUpPage extends GetView<SignUpController> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
 
                     // logo
                     Padding(
@@ -36,57 +36,57 @@ class SignUpPage extends GetView<SignUpController> {
                       style: TextStyle(
                           color: Colors.grey[700],
                           fontSize: 16,
-                          fontWeight: FontWeight.normal
-                      ),
+                          fontWeight: FontWeight.normal),
                     ),
                     // welcome back, you've been missed!
                     Text(
                       'Create a new account!',
                       style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                      ),
+                          color: Colors.grey[700],
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
 
-                    const SizedBox(height: 25),
+                     Form(
+                          key: controller.formField,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              // username textfield
+                              MyTextField(
+                                controller: controller.usernameController,
+                                hintText: 'Email',
+                                checkEmail: true,
+                              ),
 
-                    // username textfield
-                    MyTextField(
-                      controller: controller.usernameController,
-                      hintText: 'Email',
-                      obscureText: false,
-                    ),
+                              const SizedBox(height: 10),
 
-                    const SizedBox(height: 10),
+                              // password textfield
+                              MyTextField(
+                                controller: controller.passwordController,
+                                hintText: 'Password',
+                                isPass: true,
+                              ),
 
-                    // password textfield
-                    MyTextField(
-                      controller: controller.passwordController,
-                      hintText: 'Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(height: 10),
-                    MyTextField(
-                      controller: controller.repassController,
-                      hintText: 'Enter Password again' ,
-                      obscureText: true,
-                    ),
-
-
-
-                    const SizedBox(height: 25),
-
+                              const SizedBox(height: 10),
+                              MyTextField(
+                                controller: controller.repassController,
+                                hintText: 'Enter Password again',
+                                isPass: true,
+                              ),
+                            ],
+                          ),
+                        ),
+                    const SizedBox(height: 20),
                     // sign in button
                     RoundButton(
                         title: "Sign Up",
                         onPressed: () {
-                          controller.signUserUp();
+                          // controller.signUserUp();
+                          if (controller.formField.currentState!.validate()) {}
                         }),
 
                     const SizedBox(height: 50),
-
 
                     // Already have an account? Sign In
                     Row(

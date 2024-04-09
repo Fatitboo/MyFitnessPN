@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: AppColor.primaryColor1,
-          fontFamily: "Poppins"
+          fontFamily: "PublicSans"
         ),
         title: 'MyFitnessPN',
         initialRoute: AppPages.INITIAL,
