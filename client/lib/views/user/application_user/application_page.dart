@@ -111,7 +111,7 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
         ),
       ),
       floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
+          FloatingActionButtonLocation.centerDocked,
     );
   }
 }
