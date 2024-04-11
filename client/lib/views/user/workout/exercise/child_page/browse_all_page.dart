@@ -7,8 +7,15 @@ class BrowseAllPage extends GetView<ExerciseController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Browse all "),
-    );
+    return Obx(() => Column(
+      children: [
+        ListView.builder(
+            itemCount: controller.browserList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Text(controller.browserList.elementAt(index)["name"].toString());
+            }
+        ),
+      ],
+    ));
   }
 }

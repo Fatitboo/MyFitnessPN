@@ -48,6 +48,7 @@ public class ExerciseService {
                 .caloriesBurn(exerciseDTO.getCaloriesBurn())
                 .instruction(exerciseDTO.getInstruction())
                 .video(exerciseDTO.getVideo())
+                .logAt(exerciseDTO.getLogAt())
                 .sets(exerciseDTO.getSets()).build();
 
         //add exercise to user
@@ -101,6 +102,7 @@ public class ExerciseService {
                         .caloriesBurn(exerciseDTO.getCaloriesBurn())
                         .instruction(exerciseDTO.getInstruction())
                         .video(exerciseDTO.getVideo())
+                        .logAt(exerciseDTO.getLogAt())
                         .sets(exerciseDTO.getSets()).build();
                 exerciseList.set(i, exercise);
                 user.setExercises(exerciseList);

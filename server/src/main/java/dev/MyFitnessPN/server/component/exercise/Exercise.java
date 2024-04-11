@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -21,8 +22,10 @@ public class Exercise {
     private String name;
     private String type;
     private double minutes;
-    private String caloriesBurn;
+    private double caloriesBurn;
     private String instruction;
     private String video;
     private List<Set> sets;
+
+    private LocalDateTime logAt;
 }

@@ -1,3 +1,4 @@
+import 'package:do_an_2/res/values/constants.dart';
 import 'package:do_an_2/views/user/diary/diary_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,8 +15,11 @@ class DiaryPage extends GetView<DiaryController>{
         children: [
           Text('Diary page'),
           ElevatedButton(onPressed: () {
-            Get.toNamed(AppRoutes.EXERCISE);
-          }, child: Text("Log Exercise"))
+            Get.toNamed(AppRoutes.EXERCISE, arguments: {"type": Constant.EXERCISE_strength}, preventDuplicates: false);
+          }, child: Text("Log Strength")),
+          ElevatedButton(onPressed: () {
+            Get.toNamed(AppRoutes.EXERCISE, arguments: {"type": Constant.EXERCISE_cardio}, preventDuplicates: false);
+          }, child: Text("Log Cardio"))
         ],
       ),
     );
