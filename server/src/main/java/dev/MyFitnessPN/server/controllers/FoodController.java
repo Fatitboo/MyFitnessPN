@@ -1,6 +1,8 @@
 package dev.MyFitnessPN.server.controllers;
 
-import dev.MyFitnessPN.server.component.Food;
+import dev.MyFitnessPN.server.component.meal.Food;
+import dev.MyFitnessPN.server.component.meal.Meal;
+import dev.MyFitnessPN.server.component.meal.Recipe;
 import dev.MyFitnessPN.server.services.FoodServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FoodController {
     private final FoodServices foodServices;
+    @GetMapping("/{userId}/getFood")
+    public ResponseEntity<?> getAllFoodbyUserId(@PathVariable String userId) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+
+        try {
+            List<Food> f = foodServices.getAllFoodOfUser( userId);
+
+
+            Response.put("message","Get all foods successfully!");
+            Response.put("foods",f);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
     @PostMapping("/{userId}/createFood")
     public ResponseEntity<?> createFood(@PathVariable String userId,@RequestBody Food foodDto,  BindingResult result) {
 
@@ -69,6 +89,104 @@ public class FoodController {
             Response.put("message","Delete food successfully!");
             Response.put("deletedFoodId",fooId);
 
+            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+    @PostMapping("/{userId}/createRecipe")
+    public ResponseEntity<?> createRecipe(@PathVariable String userId,@RequestBody Recipe recipeDto) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+
+        try {
+
+
+            Recipe recipe = foodServices.createRecipe(recipeDto, userId);
+            Response.put("message","Add recipe successfully!");
+            Response.put("addedRecipe",recipe);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+    @PostMapping("/{userId}/updateRecipe")
+    public ResponseEntity<?> updateRecipe( @RequestBody Recipe recipeDto, @PathVariable String userId) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+
+        try {
+            foodServices.updateRecipe(recipeDto,userId);
+            Response.put("message","Update Recipe successfully!");
+            Response.put("updatedRecipe",recipeDto);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+    @DeleteMapping("/{userId}/deleteRecipe/{recipeId}")
+    public ResponseEntity<?> deleteRecipe( @PathVariable String recipeId, @PathVariable String userId) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+
+        try {
+            foodServices.deleteRecipe(recipeId,userId);
+            Response.put("message","Delete Recipe successfully!");
+            Response.put("deletedRecipeId",recipeId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+    @PostMapping("/{userId}/createMeal")
+    public ResponseEntity<?> createMeal(@PathVariable String userId,@RequestBody Meal mealDto) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+
+        try {
+
+
+            Meal meal = foodServices.createMeal(mealDto, userId);
+            Response.put("message","Add Meal successfully!");
+            Response.put("addedMeal",meal);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+    @PostMapping("/{userId}/updateMeal")
+    public ResponseEntity<?> updateMeal( @RequestBody Meal mealDto, @PathVariable String userId) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+
+        try {
+            foodServices.updateMeal(mealDto,userId);
+            Response.put("message","Update Meal successfully!");
+            Response.put("updatedMeal",mealDto);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+    @DeleteMapping("/{userId}/deleteMeal/{mealId}")
+    public ResponseEntity<?> deleteMeal( @PathVariable String mealId, @PathVariable String userId) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+
+        try {
+            foodServices.deleteMeal(mealId,userId);
+            Response.put("message","Delete Meal successfully!");
+            Response.put("deletedMealId",mealId);
             return ResponseEntity.status(HttpStatus.CREATED).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());

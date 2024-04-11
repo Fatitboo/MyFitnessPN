@@ -3,13 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
-class DiaryPage extends GetView<DiaryController>{
+class DiaryPage extends GetView<DiaryController> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return const Center(
-      child: Text('Diary page'),
-    );
+    return Obx(() {
+      return Column(
+        children: [
+          Center(
+            child: Text('Diary page: '+ controller.str.value),
+
+          ),
+          ElevatedButton(onPressed: (){controller.getFoodSaved();}, child: Text("dddd"))
+        ],
+      );
+    });
   }
 
 }

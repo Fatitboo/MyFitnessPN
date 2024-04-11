@@ -3,6 +3,7 @@ import 'package:do_an_2/res/widgets/my_textfield.dart';
 import 'package:do_an_2/res/widgets/round_button.dart';
 import 'package:do_an_2/views/user/sign_up/sign_up_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SignUpPage extends GetView<SignUpController> {
@@ -55,10 +56,16 @@ class SignUpPage extends GetView<SignUpController> {
                               // username textfield
                               MyTextField(
                                 controller: controller.usernameController,
+                                hintText: 'Username',
+
+                              ),
+                              const SizedBox(height: 10),
+
+                              MyTextField(
+                                controller: controller.emailController,
                                 hintText: 'Email',
                                 checkEmail: true,
                               ),
-
                               const SizedBox(height: 10),
 
                               // password textfield
@@ -82,11 +89,13 @@ class SignUpPage extends GetView<SignUpController> {
                     RoundButton(
                         title: "Sign Up",
                         onPressed: () {
-                          // controller.signUserUp();
-                          if (controller.formField.currentState!.validate()) {}
+                          if (controller.formField.currentState!.validate()) {
+                            controller.signUserUp();
+
+                          }
                         }),
 
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 30),
 
                     // Already have an account? Sign In
                     Row(
@@ -110,7 +119,60 @@ class SignUpPage extends GetView<SignUpController> {
                           },
                         ),
                       ],
-                    )
+                    ),
+                    // or continue with
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              thickness: 0.5,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Text(
+                              'Or continue with',
+                              style: TextStyle(color: Colors.grey[700]),
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              thickness: 0.5,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // google sign in buttons
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: SizedBox(
+                        height: 40.h,
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                            onPressed: () => controller.SignUpGG(),
+                            icon: Image.asset("assets/icons/google.png"),
+                            label: const Text(
+                              'Sign up with Google',
+                              style: TextStyle(color: Color(0xff2186ab)),
+                            ),
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      side: const BorderSide(color: Colors.purple),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    )))),
+                      ),
+                    ),
                   ],
                 ),
               ),

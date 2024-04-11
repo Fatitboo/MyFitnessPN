@@ -1,7 +1,5 @@
-package dev.MyFitnessPN.server.component;
+package dev.MyFitnessPN.server.component.indexBody;
 import lombok.*;
-
-import java.util.List;
 
 @Data
 @Builder

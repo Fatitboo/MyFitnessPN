@@ -1,4 +1,4 @@
-package dev.MyFitnessPN.server.component;
+package dev.MyFitnessPN.server.component.meal;
 
 import lombok.*;
 
@@ -12,8 +12,8 @@ public class Food {
     private String foodId;
     private String foodName;
     private String description;
-    private int numberOfServing;
-    private int servingSize;
+    private double numberOfServing;
+    private double servingSize;
     private Nutrition[] nutrition;
 
 }
