@@ -4,7 +4,7 @@ import 'package:do_an_2/views/user/workout/exercise/child_page/browse_all_page.d
 import 'package:do_an_2/views/user/workout/exercise/child_page/history_page.dart';
 import 'package:do_an_2/views/user/workout/exercise/child_page/my_exercise_page.dart';
 import 'package:do_an_2/views/user/workout/exercise/exercise_controller.dart';
-import 'package:do_an_2/views/user/workout/exercise/form/add_exercise_form.dart';
+import 'package:do_an_2/views/user/workout/exercise/form/exercise_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +65,7 @@ class ExercisePage extends GetView<ExerciseController> {
                           onPressed: () async {
                             await showDialog(
                                 context: context,
-                                builder: (context) => AddExerciseForm(context: context, exerciseController: controller,)
+                                builder: (context) => ExerciseForm(context: context, exerciseController: controller, typeForm: "create",)
                             );
                           },
                           child: Text("Create an Exercise", style: TextStyle(fontSize: 16, color: AppColor.OutlineButtonColor),)

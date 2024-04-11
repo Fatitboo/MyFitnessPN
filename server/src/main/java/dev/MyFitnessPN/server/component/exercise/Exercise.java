@@ -19,6 +19,7 @@ import java.util.List;
 @Setter
 public class Exercise {
     private ObjectId exerciseId;
+    private String exeId;
     private String name;
     private String type;
     private double minutes;

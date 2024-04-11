@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:do_an_2/views/user/workout/exercise/exercise_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,16 +11,16 @@ import '../../../../../validate/Validator.dart';
 import '../../../../../validate/error_type.dart';
 import 'package:do_an_2/model/components/set.dart';
 
-class AddExerciseForm extends StatefulWidget{
-  const AddExerciseForm({super.key, required this.context, required this.exerciseController});
+class ExerciseForm extends StatefulWidget{
+  const ExerciseForm({super.key, required this.context, required this.exerciseController, required this.typeForm});
   final BuildContext context;
   final ExerciseController exerciseController;
-
+  final String typeForm;
   @override
-  State<AddExerciseForm> createState() => _AddExerciseFormState();
+  State<ExerciseForm> createState() => _AddExerciseFormState();
 }
 
-class _AddExerciseFormState extends State<AddExerciseForm> {
+class _AddExerciseFormState extends State<ExerciseForm> {
   Map<String, TextEditingController> formController = {
     "description": TextEditingController(),
     "sets": TextEditingController(),
@@ -63,6 +65,13 @@ class _AddExerciseFormState extends State<AddExerciseForm> {
           ERROR_TYPE.number: "Repetition must be a number",
         },
       };
+      if(widget.typeForm == "log"){
+        formController["description"]!.text = widget.exerciseController.selected.name!;
+        formController["sets"]!.text = widget.exerciseController.selected.sets![0].count.toString();
+        formController["reps"]!.text = widget.exerciseController.selected.sets![0].rep.toString();
+        formController["weight"]!.text = widget.exerciseController.selected.sets![0].weight.toString();
+        formController["caloriesBurned"]!.text = widget.exerciseController.selected.caloriesBurn.toString();
+      }
     }
     else{
       validate = {
@@ -78,7 +87,14 @@ class _AddExerciseFormState extends State<AddExerciseForm> {
           ERROR_TYPE.number: "Repetition must be a number",
         },
       };
+      if(widget.typeForm == "log"){
+        formController["description"]!.text = widget.exerciseController.selected.name!;
+        formController["caloriesBurned"]!.text = widget.exerciseController.selected.caloriesBurn.toString();
+        formController["minutes"]!.text = widget.exerciseController.selected.minutes.toString();
+      }
     }
+
+
   }
 
   @override
@@ -301,38 +317,59 @@ class _AddExerciseFormState extends State<AddExerciseForm> {
                     children: [
                       Expanded(
                         child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              errors = Validator.ValidateForm(validate, formController);
-                              var result = errors.values.toList().firstWhere((e) => e.isError, orElse: () => Val(false, ""));
-                              if(!result.isError){
-                                ExerciseDTO exeDTO;
-                                if(isStrength){
-                                  List<Set> sets = [
-                                    Set(
-                                      weight: double.parse(formController["weight"]!.text),
-                                      rep: int.parse(formController["reps"]!.text),
-                                      count: int.parse(formController["sets"]!.text),
-                                    )
-                                  ];
-                                  exeDTO = ExerciseDTO.initStrength(
-                                      formController["description"]!.text,
-                                      widget.exerciseController.currentWorkoutType.value.toLowerCase(),
-                                      sets,
-                                      double.parse(formController["caloriesBurned"]!.text),
-                                  );
-                                }
-                                else{
-                                  exeDTO = ExerciseDTO.initCardio(
-                                    formController["description"]!.text,
-                                    formController["type"]!.text,
-                                    double.parse(formController["minutes"]!.text),
-                                    double.parse(formController["caloriesBurned"]!.text),
-                                  );
-                                }
-                                widget.exerciseController.createExercise(exeDTO);
+                          onTap: () async {
+                            errors = Validator.ValidateForm(validate, formController);
+                            var result = errors.values.toList().firstWhere((e) => e.isError, orElse: () => Val(false, ""));
+                            Object obj;
+                            var item;
+                            ExerciseDTO exeDTO = ExerciseDTO.init();
+                            exeDTO.name = formController["description"]!.text;
+                            exeDTO.type = widget.exerciseController.currentWorkoutType.value.toLowerCase();
+                            exeDTO.caloriesBurn = double.parse(formController["caloriesBurned"]!.text);
+                            if(!result.isError){
+                              if(isStrength){
+                                List<Set> sets = [Set(
+                                  weight: double.parse(formController["weight"]!.text),
+                                  rep: int.parse(formController["reps"]!.text),
+                                  count: int.parse(formController["sets"]!.text),
+                                )];
+                                item = {
+                                  "name": exeDTO.name,
+                                  "type": exeDTO.type,
+                                  "sets": [{
+                                    "weight": sets[0].weight,
+                                    "rep": sets[0].rep,
+                                    "count": sets[0].count
+                                  }],
+                                  "caloriesBurn": exeDTO.caloriesBurn,
+                                };
+                                exeDTO.sets = sets;
                               }
-                            });
+                              else{
+                                exeDTO.minutes = double.parse(
+                                    formController["minutes"]!.text);
+                                item = {
+                                  "name": exeDTO.name,
+                                  "type": exeDTO.type,
+                                  "minutes":  exeDTO.minutes,
+                                  "caloriesBurn": exeDTO.caloriesBurn,
+                                };
+                              }
+                              if(widget.typeForm == "log"){
+                                exeDTO.id = widget.exerciseController.selected.id!;
+                                item["exeId"] = exeDTO.id;
+                                obj = jsonEncode(item);
+                                if(await widget.exerciseController.logExercise(exeDTO, obj, widget.exerciseController.selected.id!)){
+                                  Navigator.pop(ct);
+                                }
+                              }
+                              else{
+                                obj = jsonEncode(item);
+                                if(await widget.exerciseController.createExercise(obj)){
+                                  Navigator.pop(ct);
+                                }
+                              }
+                            }
                           },
                           child: Container(
                             padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
@@ -340,9 +377,9 @@ class _AddExerciseFormState extends State<AddExerciseForm> {
                               color: AppColor.primaryColor1,
                               borderRadius: const BorderRadius.all(Radius.circular(10)),
                             ),
-                            child: const Text(
-                              "Add Exercise",
-                              style: TextStyle(color: Colors.white),
+                            child: Text(
+                              widget.typeForm == "log" ? "Log exercise" : "Add Exercise",
+                              style: const TextStyle(color: Colors.white),
                               textAlign: TextAlign.center,
                             ),
                           ),

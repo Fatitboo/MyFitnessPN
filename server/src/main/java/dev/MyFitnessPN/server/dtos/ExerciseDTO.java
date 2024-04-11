@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ExerciseDTO {
+    private String exeId;
     private String name;
     private String type;
     private double minutes;

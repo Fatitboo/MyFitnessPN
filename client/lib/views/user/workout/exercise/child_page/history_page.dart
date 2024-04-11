@@ -1,15 +1,83 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../model/exerciseDTO.dart';
+import '../../../../../res/values/constants.dart';
+import '../../../../../res/widgets/loading_widget.dart';
 import '../exercise_controller.dart';
+import '../form/exercise_form.dart';
 
 class HistoryPage extends GetView<ExerciseController> {
 
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("History"),
-    );
+    return Obx(() => SizedBox(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(child: LoadingWidget(loading: controller.loading.value)),
+          Expanded(
+            child: ListView.builder(
+                itemCount: controller.myExercisesHistory.length,
+                itemBuilder: (BuildContext ct, int index) {
+                  ExerciseDTO exerciseDTO = controller.myExercisesHistory.value.elementAt(index);
+                  return GestureDetector(
+                    onTapDown: (position){
+                      final RenderBox renderBox = context.findRenderObject() as RenderBox;
+                      controller.tapPosition.value = renderBox.globalToLocal(position.globalPosition);
+                    },
+                    onLongPress: () {
+                      final RenderObject? overlay = Overlay.of(context)?.context.findRenderObject();
+                      final result = showMenu(
+                        context: ct,
+                        color: Colors.white,
+                        items: <PopupMenuEntry> [
+                          PopupMenuItem(
+                            onTap: () async{
+                              controller.selected = controller.myExercises.value[index];
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) => ExerciseForm(context: context, exerciseController: controller, typeForm: "log",)
+                              );
+                            },
+                            child: const Text("Log"),
+                          ),
+                        ],
+                        position: RelativeRect.fromRect(
+                          Rect.fromLTWH(controller.tapPosition.value.dx, controller.tapPosition.value.dy, 10, 10),
+                          Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay!.paintBounds.size.height),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      color: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      child: Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(exerciseDTO.name!, style: const TextStyle(fontSize: 16),),
+                              exerciseDTO.type == Constant.EXERCISE_strength.toLowerCase() ?
+                              Text(exerciseDTO.getStringStrengthValues(), style: const TextStyle(color: Colors.black54),)
+                                  :
+                              Text(exerciseDTO.getStringCardioValues(), style: const TextStyle(color: Colors.black54),)
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 }
