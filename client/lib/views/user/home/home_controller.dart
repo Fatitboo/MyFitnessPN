@@ -1,5 +1,12 @@
+
 import 'package:get/get.dart';
 
 class HomeController extends GetxController{
-  var a = "".obs;
+  var token = "".obs ;
+  @override
+  void onInit() {
+    super.onInit();
+
+
+  }
 }

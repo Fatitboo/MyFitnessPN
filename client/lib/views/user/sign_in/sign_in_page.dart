@@ -54,8 +54,8 @@ class SignInPage extends GetView<SignInController> {
                               // username textfield
                               MyTextField(
                                 controller: controller.usernameController,
-                                hintText: 'Email',
-                                checkEmail: true,
+                                hintText: 'Username',
+
                               ),
                           
                               const SizedBox(height: 20),
@@ -65,7 +65,6 @@ class SignInPage extends GetView<SignInController> {
                                 controller: controller.passwordController,
                                 hintText: 'Password',
                                 isPass: true,
-                                checkLength: 6,
                               ),
                           
                               const SizedBox(height: 10),
@@ -94,8 +93,9 @@ class SignInPage extends GetView<SignInController> {
                                   onPressed: () {
                                     Get.offAndToNamed(AppRoutes.APPLICATION_USER);
 
-                                    // if (controller.formField.currentState!.validate()) {
-                                    // }
+                                    if (controller.formField.currentState!.validate()) {
+
+                                    }
                                   }),
 
                             ],
@@ -144,7 +144,7 @@ class SignInPage extends GetView<SignInController> {
                           height: 40.h,
                           width: double.infinity,
                           child: OutlinedButton.icon(
-                              onPressed: () => controller.signUserIn(),
+                              onPressed: () => controller.signUserInGG(),
                               icon: Image.asset("assets/icons/google.png"),
                               label: const Text(
                                 'Sign In with Google',

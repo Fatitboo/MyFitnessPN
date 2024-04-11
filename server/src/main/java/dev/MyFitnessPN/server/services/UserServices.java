@@ -1,7 +1,7 @@
 package dev.MyFitnessPN.server.services;
 
 import com.google.gson.Gson;
-import dev.MyFitnessPN.server.component.HealthDataResponse;
+import dev.MyFitnessPN.server.component.indexBody.HealthDataResponse;
 import dev.MyFitnessPN.server.component.JwtTokenUtils;
 import dev.MyFitnessPN.server.dtos.UserDTO;
 import dev.MyFitnessPN.server.dtos.UserLoginDTO;

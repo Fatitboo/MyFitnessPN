@@ -1,6 +1,6 @@
 package dev.MyFitnessPN.server.controllers;
 
-import dev.MyFitnessPN.server.component.HealthDataResponse;
+import dev.MyFitnessPN.server.component.indexBody.HealthDataResponse;
 import dev.MyFitnessPN.server.dtos.UserDTO;
 import dev.MyFitnessPN.server.dtos.UserLoginDTO;
 import dev.MyFitnessPN.server.response.UserResponseLogin;
