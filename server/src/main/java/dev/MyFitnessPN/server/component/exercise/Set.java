@@ -10,6 +10,6 @@ import lombok.*;
 @Setter
 public class Set {
     private int rep;
-    private int weight;
+    private double weight;
     private int count;
 }

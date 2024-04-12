@@ -2,7 +2,7 @@ package dev.MyFitnessPN.server.services;
 
 import dev.MyFitnessPN.server.component.messageresponse.MessageResponse;
 import dev.MyFitnessPN.server.dtos.ExerciseDTO;
-import dev.MyFitnessPN.server.models.Exercise;
+import dev.MyFitnessPN.server.component.exercise.Exercise;
 import dev.MyFitnessPN.server.models.User;
 import dev.MyFitnessPN.server.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,8 @@ import org.bson.types.ObjectId;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import dev.MyFitnessPN.server.value.Constant;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -28,7 +30,7 @@ public class ExerciseService {
         return switch (type) {
             case Constant.ExerciseType.strength, Constant.ExerciseType.cardio ->
                     user.getExercises().stream().filter(item -> item.getType().equals(type)).toList();
-            case "none" -> user.getExercises();
+            case "none" -> user.getExercises() != null ? user.getExercises() : new ArrayList<>();
             default -> new ArrayList<>();
         };
     }
@@ -48,7 +50,10 @@ public class ExerciseService {
                 .caloriesBurn(exerciseDTO.getCaloriesBurn())
                 .instruction(exerciseDTO.getInstruction())
                 .video(exerciseDTO.getVideo())
+                .logAt(exerciseDTO.getLogAt())
                 .sets(exerciseDTO.getSets()).build();
+
+        exercise.setExeId(exercise.getExerciseId().toString());
 
         //add exercise to user
 
@@ -95,12 +100,14 @@ public class ExerciseService {
             if(exerciseList.get(i).getExerciseId().toString().equals(exerciseId)){
                 Exercise exercise = Exercise.builder()
                         .exerciseId(exerciseList.get(i).getExerciseId())
+                        .exeId(exerciseDTO.getExeId())
                         .name(exerciseDTO.getName())
                         .type(exerciseDTO.getType())
                         .minutes(exerciseDTO.getMinutes())
                         .caloriesBurn(exerciseDTO.getCaloriesBurn())
                         .instruction(exerciseDTO.getInstruction())
                         .video(exerciseDTO.getVideo())
+                        .logAt(LocalDateTime.now())
                         .sets(exerciseDTO.getSets()).build();
                 exerciseList.set(i, exercise);
                 user.setExercises(exerciseList);

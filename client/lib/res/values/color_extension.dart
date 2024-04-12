@@ -24,6 +24,7 @@ class AppColor {
   static Color get lightGray => const Color(0xffF7F8F8);
   static Color get blue1 => const Color(0xff92A3FD);
   static Color get blue2 => const Color(0xff9DCEFF);
+  static Color get OutlineButtonColor => const Color(0xff4d67ff);
 
 
 }

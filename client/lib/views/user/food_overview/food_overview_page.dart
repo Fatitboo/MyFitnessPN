@@ -118,7 +118,8 @@ class FoodOverviewPage extends GetView<FoodOverviewController> {
                       ),
                       TabBar(
                         labelStyle: TextStyle(
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.black
                         ),
 
                         tabAlignment: TabAlignment.center,
