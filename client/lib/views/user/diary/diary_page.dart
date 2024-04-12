@@ -1,3 +1,4 @@
+import 'package:do_an_2/res/routes/names.dart';
 import 'package:do_an_2/views/user/diary/diary_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,7 +15,7 @@ class DiaryPage extends GetView<DiaryController> {
             child: Text('Diary page: '+ controller.str.value),
 
           ),
-          ElevatedButton(onPressed: (){controller.getFoodSaved();}, child: Text("dddd"))
+          ElevatedButton(onPressed: (){Get.toNamed(AppRoutes.FOOD_OVERVIEW);}, child: Text("Log food"))
         ],
       );
     });
