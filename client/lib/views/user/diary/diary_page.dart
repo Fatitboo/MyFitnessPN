@@ -15,11 +15,14 @@ class DiaryPage extends GetView<DiaryController>{
         children: [
           Text('Diary page'),
           ElevatedButton(onPressed: () {
-            Get.toNamed(AppRoutes.EXERCISE, arguments: {"type": Constant.EXERCISE_strength}, preventDuplicates: false);
+            Get.toNamed(AppRoutes.EXERCISE, arguments: {"type": Constant.EXERCISE_strength, "from": "diary"}, preventDuplicates: false);
           }, child: Text("Log Strength")),
           ElevatedButton(onPressed: () {
-            Get.toNamed(AppRoutes.EXERCISE, arguments: {"type": Constant.EXERCISE_cardio}, preventDuplicates: false);
-          }, child: Text("Log Cardio"))
+            Get.toNamed(AppRoutes.EXERCISE, arguments: {"type": Constant.EXERCISE_cardio, "from": "diary"}, preventDuplicates: false);
+          }, child: Text("Log Cardio")),
+          ElevatedButton(onPressed: () {
+            Get.toNamed(AppRoutes.ROUTINE);
+          }, child: Text("Log Routine"))
         ],
       ),
     );

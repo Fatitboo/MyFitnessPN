@@ -12,6 +12,8 @@ class AppRoutes {
   static const HOME_USER = '/home_user';
   static const PROFILE_USER = '/profile_user';
   static const EXERCISE = '/user/exercise';
+  static const ROUTINE = '/user/routine';
+  static const ADD_ROUTINE = '/user/routine/add';
 
   
   // admin routes

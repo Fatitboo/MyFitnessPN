@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:do_an_2/res/values/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:do_an_2/data/network/network_api_service.dart';
 import 'package:do_an_2/model/exerciseDTO.dart';
@@ -11,10 +10,11 @@ class ExerciseController extends GetxController{
   Rx<bool> loading = false.obs;
   RxList myExercises = [].obs;
   RxList myExercisesHistory = [].obs;
-  List<dynamic> browserList = [].obs;
+  RxList browserList = [].obs;
   Rx<String> currentWorkoutType = "".obs;
   String userId = "660779c774cb604465279dcf";
   late ExerciseDTO selected;
+  Rx<String> from = "".obs;
 
   late final NetworkApiService networkApiService;
   Rx<Offset> tapPosition = Offset.zero.obs;
@@ -25,6 +25,7 @@ class ExerciseController extends GetxController{
     var params = Get.arguments;
     networkApiService = NetworkApiService();
     currentWorkoutType.value = params["type"].toString();
+    from.value = params["from"];
     getAllExercise();
   }
 
@@ -44,7 +45,6 @@ class ExerciseController extends GetxController{
       Map<String, dynamic> resMessage = json.decode(utf8.decode(res.bodyBytes));
       print(resMessage["message"]);
     }
-
   }
 
   Future<bool> createExercise (Object exe) async{
@@ -96,18 +96,18 @@ class ExerciseController extends GetxController{
   }
 
   void getBrowserExercise () async {
-    // String path = "https://api.api-ninjas.com/v1/exercises?type=strength";
-    // http.Response res;
-    // res = await http.get(Uri.parse(path), headers: {
-    //   'content-type': 'application/json',
-    //   'X-Api-Key': 'Ns5faweQ1C+yDh31sjY8ww==dGl9bUIzSEXVvnGW'
-    // });
-    //
-    // Iterable i = json.decode(res.body);
-    // List<ExerciseDTO> exercises = List<ExerciseDTO>.from(i.map((model)=> ExerciseDTO.fromJson(jsonDecode(model))));
-    // myExercises.value = exercises;
-    // print("Hello");
-    // print(exercises);
+    loading.value = true;
+    http.Response res = await networkApiService.getApi("${baseUri}admin");
+    loading.value = false;
+    if(res.statusCode == HttpStatus.ok){
+      Iterable i = json.decode(utf8.decode(res.bodyBytes));
+      List<ExerciseDTO> exercises = List<ExerciseDTO>.from(i.map((model)=> ExerciseDTO.fromJson(model))).where((e) => e.type == currentWorkoutType.value.toLowerCase()).toList();
+      browserList.value = exercises;
+    }
+    else{
+      Map<String, dynamic> resMessage = json.decode(utf8.decode(res.bodyBytes));
+      print(resMessage["message"]);
+    }
   }
 
   void onClickTopTabItem(int index){

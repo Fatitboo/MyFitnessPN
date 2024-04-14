@@ -32,9 +32,18 @@ class ExercisePage extends GetView<ExerciseController> {
               controller.onClickTopTabItem(index);
             },
             tabs: const [
-              Tab(text: 'HISTORY'),
-              Tab(text: 'MY EXERCISES'),
-              Tab(text: 'BROWSER ALL'),
+              SizedBox(
+                width: double.maxFinite,
+                child: Tab(text: 'HISTORY'),
+              ),
+              SizedBox(
+                  width: double.maxFinite,
+                  child: Tab(text: 'MY EXERCISES')
+              ),
+              SizedBox(
+                  width: double.maxFinite,
+                  child: Tab(text: 'BROWSER ALL')
+              ),
             ],
           ),
         ),

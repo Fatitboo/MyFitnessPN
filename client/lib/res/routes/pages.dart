@@ -18,6 +18,9 @@ import 'package:do_an_2/views/user/sign_up/sign_up_page.dart';
 import 'package:do_an_2/views/user/welcome/welcome_binding.dart';
 import 'package:do_an_2/views/user/welcome/welcome_page.dart';
 import 'package:do_an_2/views/user/workout/exercise/exercise_binding.dart';
+import 'package:do_an_2/views/user/workout/routine/add_routine_page.dart';
+import 'package:do_an_2/views/user/workout/routine/routine_binding.dart';
+import 'package:do_an_2/views/user/workout/routine/routine_page.dart';
 import 'package:get/get.dart';
 
 import '../../views/user/workout/exercise/exercise_page.dart';
@@ -92,6 +95,25 @@ class AppPages {
       name: AppRoutes.SIGN_IN_ADMIN,
       page: () => SignInAdminPage(),
       binding: SignInAdminBinding(),
+      transition: Transition.native,
+      fullscreenDialog: true,
+      popGesture: false,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.ROUTINE,
+      page: () => RoutinePage(),
+      binding: RoutineBinding(),
+      transition: Transition.native,
+      fullscreenDialog: true,
+      popGesture: false,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+
+    GetPage(
+      name: AppRoutes.ADD_ROUTINE,
+      page: () => AddRoutinePage(),
+      binding: RoutineBinding(),
       transition: Transition.native,
       fullscreenDialog: true,
       popGesture: false,

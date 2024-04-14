@@ -28,6 +28,9 @@ class HistoryPage extends GetView<ExerciseController> {
                   ExerciseDTO exerciseDTO = controller.myExercisesHistory.value.elementAt(index);
                   return GestureDetector(
                     onTapDown: (position){
+                      if(controller.from.value == "routine"){
+                        Get.back(result: controller.myExercisesHistory[index].name);
+                      }
                       final RenderBox renderBox = context.findRenderObject() as RenderBox;
                       controller.tapPosition.value = renderBox.globalToLocal(position.globalPosition);
                     },

@@ -24,6 +24,7 @@ dependencies:
   simple_circular_progress_bar: ^1.0.2
   simple_animation_progress_bar: ^1.6.0
   fl_chart: ^0.62.0
+  objectid: ^3.0.0
 
 dev_dependencies:
   flutter_test:

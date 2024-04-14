@@ -13,15 +13,19 @@ import java.util.List;
 @Setter
 public class RoutineDTO {
     //use for user
+    private String routId;
     private String routineName;
     private String description;
     private double plannedVolume;
-    private double duration;
     private double caloriesBurned;
-    private List<Exercise> exercises;
+    private List<ExerciseDTO> exercises;
 
     //use for admin
     private String video;
     private String type;
     private String category;
+
+    // use both
+    private double duration;
+
 }

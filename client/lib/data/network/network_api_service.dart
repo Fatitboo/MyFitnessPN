@@ -48,7 +48,7 @@ class NetworkApiService extends BaseApiService {
   @override
   Future<http.Response> putApi(String path, Object body) async {
     dynamic responseJson;
-    token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE1NDAzMzQ5fQ.oMaKzAbGCpAvPxJS7PBnDON6bqqRxeUsLHbt6hLRG8c";
+    token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE1NjY5NzM1fQ.7xCyyvbmgdi4T81nGsLPG61NRu16EqpIm58yQ3eoUQQ";
     try {
       final response = await http.put(Uri.parse(baseUrl + path),
           headers: {
