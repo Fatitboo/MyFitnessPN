@@ -5,6 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 import '../../../res/routes/names.dart';
+import '../../../res/values/constants.dart';
+
 
 class DiaryPage extends GetView<DiaryController>{
   @override
@@ -22,7 +24,15 @@ class DiaryPage extends GetView<DiaryController>{
           }, child: Text("Log Cardio")),
           ElevatedButton(onPressed: () {
             Get.toNamed(AppRoutes.ROUTINE);
-          }, child: Text("Log Routine"))
+          }, child: Text("Log Routine")),
+          ElevatedButton(onPressed: () {
+            Get.toNamed(AppRoutes.EXERCISE, arguments: {"type": Constant.EXERCISE_cardio}, preventDuplicates: false);
+          }, child: Text("Log Cardio")),
+          Center(
+            child: Text('Diary page: '+ controller.str.value),
+
+          ),
+          ElevatedButton(onPressed: (){Get.toNamed(AppRoutes.FOOD_OVERVIEW);}, child: Text("Log food"))
         ],
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:do_an_2/model/exerciseDTO.dart';
-import 'package:objectid/objectid.dart';
 
 class RoutineDTO {
   //use for user
@@ -10,6 +9,8 @@ class RoutineDTO {
   double? duration;
   double? caloriesBurned;
   List<ExerciseDTO>? exercises;
+  String? workoutOverview;
+  String? thumbNail;
 
   //use for admin
   String? video;
@@ -24,6 +25,8 @@ class RoutineDTO {
     this.duration,
     this.caloriesBurned,
     this.exercises,
+    this.workoutOverview,
+    this.thumbNail,
 
     //use for admin
     this.video,
@@ -40,6 +43,8 @@ class RoutineDTO {
       double.tryParse(json["duration"].toString()) ?? 0,
       json["caloriesBurned"] ?? "",
       List<ExerciseDTO>.from(json["exercises"].map((model)=> ExerciseDTO.fromJson(model))),
+      json["workoutOverview"] ?? "",
+      json["thumbNail"] ?? "",
       json["video"] ?? "",
       json["type"] ?? "",
       json["category"] ?? "",

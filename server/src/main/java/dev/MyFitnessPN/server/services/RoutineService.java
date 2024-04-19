@@ -72,7 +72,6 @@ public class RoutineService {
         routineDTO.setRoutId(routine.getRoutineId().toString());
         return routineDTO;
     }
-
     public MessageResponse updateRoutine(RoutineDTO routineDTO, String userId, String routineId) throws Exception {
         //check type
         MessageResponse res = new MessageResponse();
@@ -114,7 +113,6 @@ public class RoutineService {
         res.makeRes(Constant.MessageType.warning, "Don't have this routine in user");
         return res;
     }
-
     public MessageResponse deleteRoutine(String userId, String routineId) throws Exception {
         //check type
         MessageResponse res = new MessageResponse();
@@ -147,26 +145,30 @@ public class RoutineService {
         res.makeRes(Constant.MessageType.warning, "Don't have this routine in user");
         return res;
     }
-//
-//    //admin
-//    public List<RoutineModel> getAllRoutineAdmin() throws Exception {
-//        return routineRepository.findAll();
-//    }
-//    public Routine createRoutineAdmin(Routine routineDTO) throws Exception {
-//        //create new routine
-//        RoutineModel routine = RoutineModel.builder()
-//                .category(routineDTO.getCategory())
-//                .video(routineDTO.getVideo())
-//                .duration(routineDTO.getDuration())
-//                .type(routineDTO.getType())
-//                .routineName(routineDTO.getRoutineName())
-//                .description(routineDTO.getDescription())
-//                .exercises(routineDTO.getExercises()).build();
-//
-//        routineDTO.setRoutId(routineRepository.save(routine).getRoutineId().toString());
-//        routineRepository.save(routine);
-//        return routineDTO;
-//    }
+
+    //admin
+    public List<RoutineModel> getAllRoutineAdmin() throws Exception {
+        return routineRepository.findAll();
+    }
+    public RoutineDTO createRoutineAdmin(RoutineDTO routineDTO) throws Exception {
+        //create new routine
+        RoutineModel routine = RoutineModel.builder()
+                .routineName(routineDTO.getRoutineName())
+                .category(routineDTO.getCategory())
+                .duration(routineDTO.getDuration())
+                .type(routineDTO.getType())
+                .category(routineDTO.getCategory())
+                .workoutOverview(routineDTO.getWorkoutOverview())
+                .video(routineDTO.getVideo())
+                .thumbNail(routineDTO.getThumbNail())
+                .description(routineDTO.getDescription())
+                .exercises(routineDTO.getExercises()).build();
+
+        routineDTO.setRoutId(routineRepository.save(routine).getRoutineId().toString());
+        routine.setRoutId(routineDTO.getRoutId());
+        routineRepository.save(routine);
+        return routineDTO;
+    }
 //    public MessageResponse updateExerciseAdmin(Routine routineDTO, String routineId) throws Exception {
 //        //check type
 //        MessageResponse res = new MessageResponse();

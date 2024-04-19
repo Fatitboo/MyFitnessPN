@@ -111,38 +111,38 @@ public class RoutineController {
 
     //admin
 //
-//    @GetMapping("/admin")
-//    public ResponseEntity<?> getAllRoutineAdmin() {
-//        HashMap<String, Object> Response = new HashMap<>();
-//        try {
-//            List<RoutineModel> routines = routineService.getAllRoutineAdmin();
-//            return ResponseEntity.status(HttpStatus.OK).body(routines);
-//        } catch (Exception e) {
-//            Response.put("message", e.getMessage());
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
-//        }
-//    }
-//
-//    @PostMapping("/create-routine-admin")
-//    public ResponseEntity<?> createRoutineAdmin(@Valid @RequestBody Routine routineDTO, BindingResult result) {
-//
-//        HashMap<String, Object> Response = new HashMap<>();
-//        if (result.hasErrors()) {
-//            List<String> errMsgs = result.getFieldErrors()
-//                    .stream()
-//                    .map(FieldError::getDefaultMessage)
-//                    .toList();
-//            Response.put("message", errMsgs.toString());
-//            return ResponseEntity.badRequest().body(Response);
-//        }
-//        try {
-//            Routine routine = routineService.createRoutineAdmin(routineDTO);
-//            return ResponseEntity.status(HttpStatus.CREATED).body(routine);
-//        } catch (Exception e) {
-//            Response.put("message", e.getMessage());
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
-//        }
-//    }
+    @GetMapping("/admin")
+    public ResponseEntity<?> getAllRoutineAdmin() {
+        HashMap<String, Object> Response = new HashMap<>();
+        try {
+            List<RoutineModel> routines = routineService.getAllRoutineAdmin();
+            return ResponseEntity.status(HttpStatus.OK).body(routines);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+
+    @PostMapping("/create-routine-admin")
+    public ResponseEntity<?> createRoutineAdmin(@Valid @RequestBody RoutineDTO routineDTO, BindingResult result) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+        if (result.hasErrors()) {
+            List<String> errMsgs = result.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .toList();
+            Response.put("message", errMsgs.toString());
+            return ResponseEntity.badRequest().body(Response);
+        }
+        try {
+            RoutineDTO routine = routineService.createRoutineAdmin(routineDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(routine);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
 //
 //    @PutMapping("/update-routine-admin/{routineId}")
 //    public ResponseEntity<?> updateRoutineAdmin(@Valid @RequestBody Routine routineDTO, @PathVariable String routineId, BindingResult result) {

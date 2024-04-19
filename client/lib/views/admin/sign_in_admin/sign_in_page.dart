@@ -1,3 +1,4 @@
+import 'package:do_an_2/res/routes/names.dart';
 import 'package:do_an_2/res/widgets/my_button.dart';
 import 'package:do_an_2/res/widgets/my_textfield.dart';
 import 'package:do_an_2/res/widgets/round_button.dart';
@@ -89,10 +90,11 @@ class SignInAdminPage extends GetView<SignInAdminController> {
                           title: "Sign In",
                           onPressed: () {
                             // controller.signAdminIn();
-                            if(controller.formField.currentState!
-                                .validate()){
-
-                            }
+                            // if(controller.formField.currentState!
+                            //     .validate()){
+                            //
+                            // }
+                            Get.offAndToNamed(AppRoutes.APPLICATION_ADMIN);
                           }),
 
                       const SizedBox(height: 50),

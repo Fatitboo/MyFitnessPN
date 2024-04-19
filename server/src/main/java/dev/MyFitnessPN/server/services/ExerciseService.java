@@ -165,13 +165,10 @@ public class ExerciseService {
         ExerciseModel exercise = ExerciseModel.builder()
                 .name(exerciseDTO.getName())
                 .type(exerciseDTO.getType())
-                .minutes(exerciseDTO.getMinutes())
-                .caloriesBurn(exerciseDTO.getCaloriesBurn())
                 .instruction(exerciseDTO.getInstruction())
-                .video(exerciseDTO.getVideo())
-                .sets(exerciseDTO.getSets()).build();
-
+                .video(exerciseDTO.getVideo()).build();
         exercise.setExeId(exerciseRepository.save(exercise).getExerciseId().toString());
+        exerciseRepository.save(exercise);
         return exercise;
     }
     public MessageResponse updateExerciseAdmin(ExerciseDTO exerciseDTO, String exerciseId) throws Exception {
@@ -185,14 +182,10 @@ public class ExerciseService {
         }
 
         ExerciseModel exercise = exerciseOptional.get();
-            exercise.setExeId(exerciseDTO.getExeId());
             exercise.setName(exerciseDTO.getName());
             exercise.setType(exerciseDTO.getType());
-            exercise.setMinutes(exerciseDTO.getMinutes());
-            exercise.setCaloriesBurn(exerciseDTO.getCaloriesBurn());
             exercise.setInstruction(exerciseDTO.getInstruction());
             exercise.setVideo(exerciseDTO.getVideo());
-            exercise.setSets(exerciseDTO.getSets());
         res.makeRes(Constant.MessageType.success, "Update exercise successfully!");
         exerciseRepository.save(exercise);
         return res;

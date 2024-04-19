@@ -24,8 +24,9 @@ public class RoutineDTO {
     private String video;
     private String type;
     private String category;
+    private String workoutOverview;
+    private String thumbNail;
 
     // use both
     private double duration;
-
 }

@@ -24,7 +24,14 @@ dependencies:
   simple_circular_progress_bar: ^1.0.2
   simple_animation_progress_bar: ^1.6.0
   fl_chart: ^0.62.0
-  objectid: ^3.0.0
+  dropdown_button2: ^2.3.9
+  video_player: ^2.8.6
+  image_picker: ^1.0.8
+  video_editor: ^3.0.0
+  cloudinary_flutter: ^1.0.0
+  cloudinary_url_gen: ^1.0.0
+  flutter_quill: ^9.3.7
+  cloudinary_sdk: ^5.0.0+1
 
 dev_dependencies:
   flutter_test:

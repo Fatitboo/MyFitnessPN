@@ -25,9 +25,6 @@ public class ExerciseModel {
     private String exeId;
     private String name;
     private String type;
-    private double minutes;
-    private double caloriesBurn;
     private String instruction;
     private String video;
-    private List<Set> sets;
 }

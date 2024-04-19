@@ -19,7 +19,7 @@ class MyExercisePage extends GetView<ExerciseController> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: LoadingWidget(loading: controller.loading.value)),
+            Center(child: LoadingWidget(loading: controller.loading.value)),
           Expanded(
             child: ListView.builder(
                 itemCount: controller.myExercises.length,

@@ -124,8 +124,8 @@ public class ExerciseController {
         }
     }
 
-    @PostMapping("{userId}/create-exercise-admin")
-    public ResponseEntity<?> createExerciseAdmin(@Valid @RequestBody ExerciseDTO exerciseDTO, @PathVariable String userId, BindingResult result) {
+    @PostMapping("/admin/create-exercise-admin")
+    public ResponseEntity<?> createExerciseAdmin(@Valid @RequestBody ExerciseDTO exerciseDTO, BindingResult result) {
 
         HashMap<String, Object> Response = new HashMap<>();
         if (result.hasErrors()) {
@@ -197,6 +197,4 @@ public class ExerciseController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
         }
     }
-
 }
-
