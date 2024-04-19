@@ -19,7 +19,7 @@ class MyExercisePage extends GetView<ExerciseController> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: LoadingWidget(loading: controller.loading.value)),
+            Center(child: LoadingWidget(loading: controller.loading.value)),
           Expanded(
             child: ListView.builder(
                 itemCount: controller.myExercises.length,
@@ -27,6 +27,9 @@ class MyExercisePage extends GetView<ExerciseController> {
                   ExerciseDTO exerciseDTO = controller.myExercises.value.elementAt(index);
                   return GestureDetector(
                     onTapDown: (position){
+                      if(controller.from.value == "routine"){
+                        Get.back(result: controller.myExercises[index].name);
+                      }
                       final RenderBox renderBox = context.findRenderObject() as RenderBox;
                       controller.tapPosition.value = renderBox.globalToLocal(position.globalPosition);
                     },

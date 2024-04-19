@@ -13,6 +13,8 @@ class AppRoutes {
   static const PROFILE_USER = '/profile_user';
   static const FOOD_OVERVIEW = '/food_overview';
   static const EXERCISE = '/user/exercise';
+  static const ROUTINE = '/user/routine';
+  static const ADD_ROUTINE = '/user/routine/add';
   static const ADD_FOOD = '/add_food';
   static const LOG_FOOD = '/log_food';
   static const INGREDIENTS = '/ingredients';
@@ -20,7 +22,7 @@ class AppRoutes {
   static const MEAL_ACTION = '/meal_action';
   static const ADD_MEAL_ITEM = '/add_meal_item';
 
-
+  
   // admin routes
   static const SIGN_IN_ADMIN = '/sign_in_admin';
   static const APPLICATION_ADMIN = '/application_admin';
@@ -29,5 +31,10 @@ class AppRoutes {
   static const WORKOUT_MANAGEMENT = '/workout_management';
   static const BLOG_MANAGEMENT = '/blog_management';
   static const PROFILE_ADMIN = '/profile_admin';
+
+
+  static const WORKOUT_MANAGEMENT_ADD = '/workout_management/add';
+  static const ROUTINE_MANAGEMENT_ADD = '/routine_management/add';
+
 
 }

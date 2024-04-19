@@ -22,8 +22,12 @@ public class ExerciseDTO {
     private String type;
     private double minutes;
     private double caloriesBurn;
-    private String instruction;
-    private String video;
     private List<Set> sets;
     private LocalDateTime logAt;
+
+
+    //admin
+    private String instruction;
+    private String video;
+
 }

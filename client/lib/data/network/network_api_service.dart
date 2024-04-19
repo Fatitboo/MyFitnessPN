@@ -20,7 +20,7 @@ class NetworkApiService extends BaseApiService {
         'content-type': 'application/json',
         'Authorization': 'Bearer $token'
       });
-      // print(response.body);
+      print(response.body);
       return response;
     } on SocketException {
       throw InternetException();
@@ -38,7 +38,7 @@ class NetworkApiService extends BaseApiService {
             'Authorization': 'Bearer $token'
           },
           body: body);
-      // print(response.body);
+      print(response.body);
       return response;
     } on SocketException {
       throw InternetException();

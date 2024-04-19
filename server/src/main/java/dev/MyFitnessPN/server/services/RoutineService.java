@@ -4,7 +4,9 @@ import dev.MyFitnessPN.server.component.exercise.Exercise;
 import dev.MyFitnessPN.server.component.exercise.Routine;
 import dev.MyFitnessPN.server.component.messageresponse.MessageResponse;
 import dev.MyFitnessPN.server.dtos.RoutineDTO;
+import dev.MyFitnessPN.server.models.RoutineModel;
 import dev.MyFitnessPN.server.models.User;
+import dev.MyFitnessPN.server.repositories.RoutineRepository;
 import dev.MyFitnessPN.server.repositories.UserRepository;
 import dev.MyFitnessPN.server.value.Constant;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RoutineService {
     private final UserRepository userRepository;
+    private final RoutineRepository routineRepository;
     public List<Routine> getAllRoutine(String userId) throws Exception {
         //check type
         Optional<User> userOptional = userRepository.findById(new ObjectId(userId));
@@ -27,10 +30,9 @@ public class RoutineService {
             throw new DataIntegrityViolationException("Error when get user in database");
         }
         User user = userOptional.get();
-
         return user.getRoutines();
     }
-    public Routine createRoutine(RoutineDTO routineDTO, String userId) throws Exception {
+    public RoutineDTO createRoutine(RoutineDTO routineDTO, String userId) throws Exception {
         //check type
         Optional<User> userOptional = userRepository.findById(new ObjectId(userId));
         if(userOptional.isEmpty()){
@@ -39,13 +41,15 @@ public class RoutineService {
 
         //create new routine
         Routine routine = Routine.builder()
-                .routineId(new ObjectId(new java.util.Date()))
+                .routineId(new ObjectId())
                 .routineName(routineDTO.getRoutineName())
                 .description(routineDTO.getDescription())
                 .plannedVolume(routineDTO.getPlannedVolume())
                 .duration(routineDTO.getDuration())
                 .caloriesBurned(routineDTO.getCaloriesBurned())
                 .exercises(routineDTO.getExercises()).build();
+
+        routine.setRoutId(routine.getRoutineId().toString());
 
         //add routine to user
         User user = userOptional.get();
@@ -65,10 +69,10 @@ public class RoutineService {
 
         userRepository.save(user);
 
-        return routine;
+        routineDTO.setRoutId(routine.getRoutineId().toString());
+        return routineDTO;
     }
-
-    public MessageResponse updateExercise(RoutineDTO routineDTO, String userId, String routineId) throws Exception {
+    public MessageResponse updateRoutine(RoutineDTO routineDTO, String userId, String routineId) throws Exception {
         //check type
         MessageResponse res = new MessageResponse();
 
@@ -90,7 +94,8 @@ public class RoutineService {
         for(int i = 0; i < routineList.size(); i++){
             if(routineList.get(i).getRoutineId().toString().equals(routineId)){
                 Routine routine = Routine.builder()
-                        .routineId(new ObjectId(new java.util.Date()))
+                        .routineId(routineList.get(i).getRoutineId())
+                        .routId(routineId)
                         .routineName(routineDTO.getRoutineName())
                         .description(routineDTO.getDescription())
                         .plannedVolume(routineDTO.getPlannedVolume())
@@ -108,7 +113,6 @@ public class RoutineService {
         res.makeRes(Constant.MessageType.warning, "Don't have this routine in user");
         return res;
     }
-
     public MessageResponse deleteRoutine(String userId, String routineId) throws Exception {
         //check type
         MessageResponse res = new MessageResponse();
@@ -141,5 +145,69 @@ public class RoutineService {
         res.makeRes(Constant.MessageType.warning, "Don't have this routine in user");
         return res;
     }
+
+    //admin
+    public List<RoutineModel> getAllRoutineAdmin() throws Exception {
+        return routineRepository.findAll();
+    }
+    public RoutineDTO createRoutineAdmin(RoutineDTO routineDTO) throws Exception {
+        //create new routine
+        RoutineModel routine = RoutineModel.builder()
+                .routineName(routineDTO.getRoutineName())
+                .category(routineDTO.getCategory())
+                .duration(routineDTO.getDuration())
+                .type(routineDTO.getType())
+                .category(routineDTO.getCategory())
+                .workoutOverview(routineDTO.getWorkoutOverview())
+                .video(routineDTO.getVideo())
+                .thumbNail(routineDTO.getThumbNail())
+                .description(routineDTO.getDescription())
+                .exercises(routineDTO.getExercises()).build();
+
+        routineDTO.setRoutId(routineRepository.save(routine).getRoutineId().toString());
+        routine.setRoutId(routineDTO.getRoutId());
+        routineRepository.save(routine);
+        return routineDTO;
+    }
+//    public MessageResponse updateExerciseAdmin(Routine routineDTO, String routineId) throws Exception {
+//        //check type
+//        MessageResponse res = new MessageResponse();
+//
+//        Optional<RoutineModel> routineModelOptional = routineRepository.findById(new ObjectId(routineId));
+//        if(routineModelOptional.isEmpty()){
+//            res.makeRes(Constant.MessageType.error, "Error when get routine in database");
+//            return res;
+//        }
+//
+//        RoutineModel routineModel = routineModelOptional.get();
+//        routineModel.setCategory(routineDTO.getCategory());
+//        routineModel.setVideo(routineDTO.getVideo());
+//        routineModel.setDuration(routineDTO.getDuration());
+//        routineModel.setType(routineDTO.getType());
+//        routineModel.setRoutineName(routineDTO.getRoutineName());
+//        routineModel.setDescription(routineDTO.getDescription());
+//        routineModel.setExercises(routineDTO.getExercises());
+//
+//        routineRepository.save(routineModel);
+//        res.makeRes(Constant.MessageType.success, "Update routine successfully");
+//        return res;
+//    }
+//    public MessageResponse deleteRoutineAdmin(String routineId) throws Exception {
+//        //check type
+//        MessageResponse res = new MessageResponse();
+//
+//        Optional<RoutineModel> routineOptional = routineRepository.findById(new ObjectId(routineId));
+//        if(routineOptional.isEmpty()){
+//            res.makeRes(Constant.MessageType.error, "Error when get routine in database");
+//            return res;
+//        }
+//
+//        RoutineModel routineModel = routineOptional.get();
+//
+//        routineRepository.deleteById(routineModel.getRoutineId());
+//
+//        res.makeRes(Constant.MessageType.success, "Delete routine successfully!");
+//        return res;
+//    }
 
 }

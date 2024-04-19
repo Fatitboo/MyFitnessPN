@@ -3,7 +3,9 @@ package dev.MyFitnessPN.server.services;
 import dev.MyFitnessPN.server.component.messageresponse.MessageResponse;
 import dev.MyFitnessPN.server.dtos.ExerciseDTO;
 import dev.MyFitnessPN.server.component.exercise.Exercise;
+import dev.MyFitnessPN.server.models.ExerciseModel;
 import dev.MyFitnessPN.server.models.User;
+import dev.MyFitnessPN.server.repositories.ExerciseRepository;
 import dev.MyFitnessPN.server.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -19,6 +21,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ExerciseService {
     private final UserRepository userRepository;
+    private final ExerciseRepository exerciseRepository;
     public List<Exercise> getAllExercise(String userId, String type) throws Exception {
         //check type
         Optional<User> userOptional = userRepository.findById(new ObjectId(userId));
@@ -76,7 +79,6 @@ public class ExerciseService {
 
         return exercise;
     }
-
     public MessageResponse updateExercise(ExerciseDTO exerciseDTO, String userId, String exerciseId) throws Exception {
         //check type
         MessageResponse res = new MessageResponse();
@@ -120,7 +122,6 @@ public class ExerciseService {
         res.makeRes(Constant.MessageType.warning, "Don't have this exercise in user");
         return res;
     }
-
     public MessageResponse deleteExercise(String userId, String exerciseId) throws Exception {
         //check type
         MessageResponse res = new MessageResponse();
@@ -151,6 +152,55 @@ public class ExerciseService {
         }
 
         res.makeRes(Constant.MessageType.warning, "Don't have this exercise in user");
+        return res;
+    }
+
+
+    //admin
+    public List<ExerciseModel> getAllExerciseAdmin() throws Exception {
+        return exerciseRepository.findAll();
+    }
+    public ExerciseModel createExerciseAdmin(ExerciseDTO exerciseDTO) throws Exception {
+        //create new exercise
+        ExerciseModel exercise = ExerciseModel.builder()
+                .name(exerciseDTO.getName())
+                .type(exerciseDTO.getType())
+                .instruction(exerciseDTO.getInstruction())
+                .video(exerciseDTO.getVideo()).build();
+        exercise.setExeId(exerciseRepository.save(exercise).getExerciseId().toString());
+        exerciseRepository.save(exercise);
+        return exercise;
+    }
+    public MessageResponse updateExerciseAdmin(ExerciseDTO exerciseDTO, String exerciseId) throws Exception {
+        //check type
+        MessageResponse res = new MessageResponse();
+
+        Optional<ExerciseModel> exerciseOptional = exerciseRepository.findById(new ObjectId(exerciseId));
+        if(exerciseOptional.isEmpty()){
+            res.makeRes(Constant.MessageType.error, "Error when get exercise in database");
+            return res;
+        }
+
+        ExerciseModel exercise = exerciseOptional.get();
+            exercise.setName(exerciseDTO.getName());
+            exercise.setType(exerciseDTO.getType());
+            exercise.setInstruction(exerciseDTO.getInstruction());
+            exercise.setVideo(exerciseDTO.getVideo());
+        res.makeRes(Constant.MessageType.success, "Update exercise successfully!");
+        exerciseRepository.save(exercise);
+        return res;
+    }
+    public MessageResponse deleteExerciseAdmin(String exerciseId) throws Exception {
+        //check type
+        MessageResponse res = new MessageResponse();
+
+        Optional<ExerciseModel> exerciseOptional = exerciseRepository.findById(new ObjectId(exerciseId));
+        if(exerciseOptional.isEmpty()){
+            res.makeRes(Constant.MessageType.error, "Error when find exercise in database");
+            return res;
+        }
+        exerciseRepository.deleteById(exerciseOptional.get().getExerciseId());
+        res.makeRes(Constant.MessageType.success, "Delete exercise successfully");
         return res;
     }
 }
