@@ -19,8 +19,18 @@ import 'package:do_an_2/views/user/application_user/application_binding.dart';
 import 'package:do_an_2/views/user/application_user/application_page.dart';
 import 'package:do_an_2/views/user/diary/diary_binding.dart';
 import 'package:do_an_2/views/user/diary/diary_page.dart';
+import 'package:do_an_2/views/user/food_overview/add_food/add_food_binding.dart';
+import 'package:do_an_2/views/user/food_overview/add_food/add_food_page.dart';
 import 'package:do_an_2/views/user/food_overview/food_overview_binding.dart';
 import 'package:do_an_2/views/user/food_overview/food_overview_page.dart';
+import 'package:do_an_2/views/user/food_overview/log_food/log_food_binding.dart';
+import 'package:do_an_2/views/user/food_overview/log_food/log_food_page.dart';
+import 'package:do_an_2/views/user/food_overview/meal/add_meal_item/add_meal_item_binding.dart';
+import 'package:do_an_2/views/user/food_overview/meal/meal_binding.dart';
+import 'package:do_an_2/views/user/food_overview/meal/meal_page.dart';
+import 'package:do_an_2/views/user/food_overview/recipe/add_recipe_binding.dart';
+import 'package:do_an_2/views/user/food_overview/recipe/add_recipe_page.dart';
+import 'package:do_an_2/views/user/food_overview/recipe/ingredients/search_ingredient_page.dart';
 import 'package:do_an_2/views/user/home/home_binding.dart';
 import 'package:do_an_2/views/user/home/home_page.dart';
 import 'package:do_an_2/views/user/profile/profile_binding.dart';
@@ -34,6 +44,7 @@ import 'package:do_an_2/views/user/welcome/welcome_page.dart';
 import 'package:do_an_2/views/user/workout/exercise/exercise_binding.dart';
 import 'package:get/get.dart';
 
+import '../../views/user/food_overview/meal/add_meal_item/add_meal_item_page.dart';
 import '../../views/user/workout/exercise/exercise_page.dart';
 
 class AppPages {
@@ -99,6 +110,42 @@ class AppPages {
       binding: FoodOverviewBinding(),
       transition: Transition.native,
     ),
+    GetPage(
+      name: AppRoutes.ADD_FOOD,
+      page: () => AddFoodPage(),
+      binding: AddFoodBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.LOG_FOOD,
+      page: () => LogFoodPage(),
+      binding: LogFoodBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.ADD_RECIPE,
+      page: () => AddRecipePage(),
+      binding: AddRecipeBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.INGREDIENTS,
+      page: () => SearchIngredientPage(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.MEAL_ACTION,
+      page: () => MealPage(),
+      binding: MealBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.ADD_MEAL_ITEM,
+      page: () => AddMealItemPage(),
+      binding: AddMealItemBinding(),
+      transition: Transition.native,
+    ),
+
 
 
 

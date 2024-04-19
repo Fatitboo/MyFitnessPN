@@ -1,4 +1,4 @@
-import 'package:do_an_2/models/login_response.dart';
+import 'package:do_an_2/model/login_response.dart';
 
 class CustomResponse{
   String? message;

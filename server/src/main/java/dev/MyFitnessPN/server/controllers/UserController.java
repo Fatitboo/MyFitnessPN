@@ -38,7 +38,7 @@ public class UserController {
         }
         try {
             UserResponseLogin u = userServices.createUser(userDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(u);
+            return ResponseEntity.status(HttpStatus.OK).body(u);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);

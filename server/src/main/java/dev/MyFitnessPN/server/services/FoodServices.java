@@ -33,6 +33,34 @@ public class FoodServices {
 
         return foods;
     }
+    public List<Recipe> getAllRecipesOfUser( String userId){
+        Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
+        if (optionalUser.isEmpty()) {
+            throw new DataIntegrityViolationException("User is not exist!");
+        }
+        User user = optionalUser.get();
+
+        List<Recipe> r = user.getRecipes();
+
+        if(r==null) r = new ArrayList<>();
+
+
+        return r;
+    }
+    public List<Meal> getAllMealsOfUser( String userId){
+        Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
+        if (optionalUser.isEmpty()) {
+            throw new DataIntegrityViolationException("User is not exist!");
+        }
+        User user = optionalUser.get();
+
+        List<Meal> m = user.getMeals();
+
+        if(m==null) m = new ArrayList<>();
+
+
+        return m;
+    }
     public Food createFood(Food foodDto, String userId){
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {

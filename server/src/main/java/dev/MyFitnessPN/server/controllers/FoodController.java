@@ -32,7 +32,43 @@ public class FoodController {
             Response.put("message","Get all foods successfully!");
             Response.put("foods",f);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+    @GetMapping("/{userId}/getRecipes")
+    public ResponseEntity<?> getAllRecipesbyUserId(@PathVariable String userId) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+
+        try {
+            List<Recipe> r = foodServices.getAllRecipesOfUser( userId);
+
+
+            Response.put("message","Get all recipes successfully!");
+            Response.put("recipes",r);
+
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+    @GetMapping("/{userId}/getMeals")
+    public ResponseEntity<?> getAllMealsbyUserId(@PathVariable String userId) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+
+        try {
+            List<Meal> m = foodServices.getAllMealsOfUser( userId);
+
+
+            Response.put("message","Get all meals successfully!");
+            Response.put("meals",m);
+
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
@@ -57,7 +93,7 @@ public class FoodController {
             Response.put("message","Add food successfully!");
             Response.put("addedFood",f);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
@@ -73,7 +109,7 @@ public class FoodController {
             Response.put("message","Update food successfully!");
             Response.put("updatedFood",foodDto);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
@@ -89,7 +125,7 @@ public class FoodController {
             Response.put("message","Delete food successfully!");
             Response.put("deletedFoodId",fooId);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
@@ -107,7 +143,7 @@ public class FoodController {
             Response.put("message","Add recipe successfully!");
             Response.put("addedRecipe",recipe);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
@@ -123,7 +159,7 @@ public class FoodController {
             Response.put("message","Update Recipe successfully!");
             Response.put("updatedRecipe",recipeDto);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
@@ -138,7 +174,7 @@ public class FoodController {
             foodServices.deleteRecipe(recipeId,userId);
             Response.put("message","Delete Recipe successfully!");
             Response.put("deletedRecipeId",recipeId);
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
@@ -156,7 +192,7 @@ public class FoodController {
             Response.put("message","Add Meal successfully!");
             Response.put("addedMeal",meal);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
@@ -172,7 +208,7 @@ public class FoodController {
             Response.put("message","Update Meal successfully!");
             Response.put("updatedMeal",mealDto);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
@@ -187,7 +223,7 @@ public class FoodController {
             foodServices.deleteMeal(mealId,userId);
             Response.put("message","Delete Meal successfully!");
             Response.put("deletedMealId",mealId);
-            return ResponseEntity.status(HttpStatus.CREATED).body(Response);
+            return ResponseEntity.status(HttpStatus.OK).body(Response);
         } catch (Exception e) {
             Response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);

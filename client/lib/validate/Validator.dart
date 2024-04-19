@@ -24,6 +24,16 @@ class Validator{
               break outer_loop;
             }
             break;
+          case ERROR_TYPE.optionalAndNumber:
+            if(vlsForm[item]!.text.toString().trim().isEmpty){
+              val = Val(false, "");
+              break outer_loop;
+            }
+            if(!isNumeric(vlsForm[item]!.text.toString().trim())){
+              val = Val(true, value);
+              break outer_loop;
+            }
+            break;
         }
       }
       results[item] = val;

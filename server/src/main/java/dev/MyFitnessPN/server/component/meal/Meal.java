@@ -15,5 +15,6 @@ public class Meal {
     private double numberOfServing;
     private Recipe[] recipes;
     private Food[] foods;
+    private String direction;
 
 }
