@@ -122,18 +122,24 @@ class MyMealPage extends GetView<FoodOverviewController> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Text(
-                                      m.description ?? "",
-                                      style: const TextStyle(fontSize: 16),
+                                    Image.network(m.photo!, width: 40,),
+                                    const SizedBox(width: 10,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          m.description ?? "",
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                        Text(
+                                          m.getStringDescription(),
+                                          style: const TextStyle(
+                                              color: Colors.black54),
+                                        )
+                                      ],
                                     ),
-                                    Text(
-                                      m.getStringDescription(),
-                                      style: const TextStyle(
-                                          color: Colors.black54),
-                                    )
                                   ],
                                 ),
                                 InkWell(

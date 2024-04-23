@@ -27,4 +27,8 @@ class DiaryController extends GetxController {
     super.onInit();
     getFoodSaved();
   }
+
+  void onDateChange(DateTime d){
+
+  }
 }

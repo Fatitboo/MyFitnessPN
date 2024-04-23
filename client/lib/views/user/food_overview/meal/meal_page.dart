@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:do_an_2/model/recipeDTO.dart';
 import 'package:do_an_2/views/user/food_overview/meal/meal_controller.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +30,12 @@ class MealPage extends GetView<MealController> {
           elevation: 1,
           actions: [
             IconButton(onPressed: () {
-              controller.handleAddMeal();
+              if(controller.type.value == "createMeal"){
+                controller.handleAddMeal();
+              }
+              if(controller.type.value == "updateMeal"){
+                controller.handleUpdateMeal();
+              }
             }, icon: const Icon(Icons.check))
           ],
         ),
@@ -37,11 +45,26 @@ class MealPage extends GetView<MealController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Container(
-                  height: MediaQuery.of(context).size.width / 2,
-                  width: double.maxFinite,
-                  color: AppColor.gray.withOpacity(0.3),
-                  child: Image.asset("assets/icons/camera_tab.png"),
+                Stack(
+                  children:[
+                     Container(
+                            height: MediaQuery.of(context).size.width / 2,
+                            width: double.maxFinite,
+                            child: controller.thumbnail.value.path.isNotEmpty ? Image.file(controller.thumbnail.value):
+                                 controller.thumbnailLink.value.isNotEmpty ?Image.network(controller.thumbnailLink.value)
+                                :Container()
+                       ),
+                    Container(
+                        height: MediaQuery.of(context).size.width / 2,
+                        width: double.maxFinite,
+                        color: Colors.transparent,
+                        child:  (controller.type.value == "logMeal")
+                            ? Image.asset("assets/icons/camera_tab.png")
+                            : InkWell(
+                          onTap: (){controller.pickThumbnail();},
+                            child: Image.asset("assets/icons/camera_tab.png"))
+                    ),
+                   ]
                 ),
                 Padding(
                   padding:
@@ -602,7 +625,7 @@ class MealPage extends GetView<MealController> {
                                         ],
                                       ),
                                       (controller.type.value == "logMeal")
-                                      ? const SizedBox(height: 0)
+                                      ? const SizedBox(height: 0, width: 0,)
                                       : InkWell(
                                         onTap: () {
                                           controller.myFood.removeAt(index);
@@ -654,7 +677,9 @@ class MealPage extends GetView<MealController> {
                                           Text(h.getStringDescription() , style: const TextStyle(color: Colors.black54),)
                                         ],
                                       ),
-                                      InkWell(
+                                      (controller.type.value == "logMeal")
+                                      ? const SizedBox(height: 0)
+                                      :InkWell(
                                         onTap: () {
                                           controller.myRecipe.removeAt(index);
                                           controller.updateData();
@@ -716,6 +741,7 @@ class MealPage extends GetView<MealController> {
                     textAlign: TextAlign.left,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
+                    style: TextStyle(color: AppColor.black),
                     onSubmitted: (item){controller.isEnable.value = false;},
                     enabled: controller.isEnable.value ,
                     focusNode: controller.focusNode,

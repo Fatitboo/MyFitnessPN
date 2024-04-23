@@ -47,6 +47,9 @@ class AddFoodController extends GetxController {
     "sugar_g": Val(false, ""),
   }.obs;
   var foodId = "".obs;
+  final List<String> itemsMeal = ['Breakfast', 'Lunch', 'Dinner', 'Snack',];
+
+  var selectedMeal = "Breakfast".obs;
   late FoodDTO fdto;
   @override
   void onInit() {

@@ -20,6 +20,7 @@ import 'package:do_an_2/views/user/application_user/application_page.dart';
 import 'package:do_an_2/views/user/diary/diary_binding.dart';
 import 'package:do_an_2/views/user/diary/diary_page.dart';
 import 'package:do_an_2/views/user/food_overview/add_food/add_food_binding.dart';
+import 'package:do_an_2/views/user/food_overview/add_food/add_food_controller.dart';
 import 'package:do_an_2/views/user/food_overview/add_food/add_food_page.dart';
 import 'package:do_an_2/views/user/food_overview/food_overview_binding.dart';
 import 'package:do_an_2/views/user/food_overview/food_overview_page.dart';
@@ -28,6 +29,7 @@ import 'package:do_an_2/views/user/food_overview/log_food/log_food_page.dart';
 import 'package:do_an_2/views/user/food_overview/meal/add_meal_item/add_meal_item_binding.dart';
 import 'package:do_an_2/views/user/food_overview/meal/meal_binding.dart';
 import 'package:do_an_2/views/user/food_overview/meal/meal_page.dart';
+import 'package:do_an_2/views/user/food_overview/page/quick_add_page.dart';
 import 'package:do_an_2/views/user/food_overview/recipe/add_recipe_binding.dart';
 import 'package:do_an_2/views/user/food_overview/recipe/add_recipe_page.dart';
 import 'package:do_an_2/views/user/food_overview/recipe/ingredients/search_ingredient_page.dart';
@@ -111,6 +113,12 @@ class AppPages {
       name: AppRoutes.FOOD_OVERVIEW,
       page: () => FoodOverviewPage(),
       binding: FoodOverviewBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.QUICK_ADD,
+      page: () => QuickAddPage(),
+      binding: AddFoodBinding(),
       transition: Transition.native,
     ),
     GetPage(

@@ -1,15 +1,18 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:do_an_2/model/mealDTO.dart';
 import 'package:do_an_2/model/recipeDTO.dart';
 import 'package:do_an_2/views/user/food_overview/food_overview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:image_picker/image_picker.dart';
+import '../../../../data/network/cloudinary.dart';
 import '../../../../data/network/network_api_service.dart';
 import '../../../../model/foodDTO.dart';
 import '../../../../model/historyDTO.dart';
 import '../../../../res/service/remote_service.dart';
+import '../../../../res/values/constants.dart';
 import '../../../../validate/Validator.dart';
 import '../../../../validate/error_type.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +26,10 @@ class MealController extends GetxController {
   var isEnable = false.obs;
   var type = "".obs;
   var indexV = "".obs;
+  var thumbnailLink = "".obs;
+  var mealId = "".obs;
+
+  final picker = ImagePicker();
   @override
   void dispose() {
     focusNode.dispose();
@@ -63,6 +70,8 @@ class MealController extends GetxController {
       FoodOverviewController f = Get.find<FoodOverviewController>();
       MealDTO mdto = f.myMeal.elementAt(int.parse(indexV.value));
       print(mdto.recipes?.length);
+      mealId.value = mdto.mealId!;
+      thumbnailLink.value = mdto.photo??"";
       List<RecipeDTO> rl = mdto.recipes!;
       myRecipe.assignAll(rl);
       List<FoodDTO> fl = mdto.foods!;
@@ -74,7 +83,13 @@ class MealController extends GetxController {
 
     updateData();
   }
-
+  Rx<File> thumbnail = File('').obs;
+  void pickThumbnail() async{
+    final _image = await picker.pickImage(source: ImageSource.gallery);
+    if(_image != null){
+      thumbnail.value = File(_image.path);
+    }
+  }
   void updateData() {
     var item = {
       "calories": 0.0,
@@ -152,6 +167,16 @@ class MealController extends GetxController {
   }
 
   Future<void> handleAddMeal() async {
+    if(myFood.isEmpty && myRecipe.isEmpty){
+      Get.defaultDialog(
+          radius: 8,
+          title: "Please add meal item",
+          middleText: "Please add meal item to track nutrient.",
+          textCancel: "OK",
+          onCancel: (){}
+      );
+      return;
+    }
     if(formController["description"]!.text.toString().trim().isEmpty){
       Get.defaultDialog(
           radius: 8,
@@ -163,12 +188,29 @@ class MealController extends GetxController {
     }
     else {
       var item;
+      String url = "";
+      if(thumbnail.value.path.isNotEmpty){
+        Map<String, dynamic> resImg = await CloudinaryNetWork().upload(Constant.CLOUDINARY_USER_MEAL_IMAGE, thumbnail.value, Constant.FILE_TYPE_image);
+        if(resImg["isSuccess"]){
+         url = resImg["imageUrl"];
+
+        }
+        else{
+          print(resImg["message"]);
+          Get.defaultDialog(
+              radius: 8,
+              title: "Have some error?",
+              middleText: "Have some error when upload image.",
+              textCancel: "Dismiss");
+          return;
+        }
+      }
 
       item = {
         "mealId": "",
         "description": formController["description"]!.text.toString().trim()??"",
         "direction": formController["direction"]!.text.toString().trim()??"",
-        "photo": "",
+        "photo": url,
         "numberOfServing": 1,
         "foods": myFood.toJson(),
         "recipes": myRecipe.toJson()
@@ -205,4 +247,89 @@ class MealController extends GetxController {
 
 
   }
+  Future<void> handleUpdateMeal() async {
+    if(myFood.isEmpty && myRecipe.isEmpty){
+      Get.defaultDialog(
+          radius: 8,
+          title: "Please add meal item",
+          middleText: "Please add meal item to track nutrient.",
+          textCancel: "OK",
+          onCancel: (){}
+      );
+      return;
+    }
+    if(formController["description"]!.text.toString().trim().isEmpty){
+      Get.defaultDialog(
+          radius: 8,
+          title: "Please fill input",
+          middleText: "Fill input required.",
+          textCancel: "Dismiss",
+          onCancel: (){}
+      );
+    }
+    else {
+      var item;
+      String url = thumbnailLink.value;
+      if(thumbnail.value.path.isNotEmpty){
+        if(thumbnailLink.value.isNotEmpty){
+          bool isSuccess = await CloudinaryNetWork().delete(thumbnailLink.value!, Constant.FILE_TYPE_image);
+        }
+        Map<String, dynamic> resImg = await CloudinaryNetWork().upload(Constant.CLOUDINARY_USER_MEAL_IMAGE, thumbnail.value, Constant.FILE_TYPE_image);
+        if(resImg["isSuccess"]){
+          url = resImg["imageUrl"];
+        }
+        else{
+          print(resImg["message"]);
+          Get.defaultDialog(
+              radius: 8,
+              title: "Have some error?",
+              middleText: "Have some error when upload image.",
+              textCancel: "Dismiss");
+          return;
+        }
+
+      }
+
+      item = {
+        "mealId": mealId.value,
+        "description": formController["description"]!.text.toString().trim()??"",
+        "direction": formController["direction"]!.text.toString().trim()??"",
+        "photo": url,
+        "numberOfServing": 1,
+        "foods": myFood.toJson(),
+        "recipes": myRecipe.toJson()
+      };
+      Object obj = jsonEncode(item);
+      print(obj);
+
+      NetworkApiService networkApiService = NetworkApiService();
+      FoodOverviewController clr = Get.find<FoodOverviewController>();
+      // loading.value = true;
+      http.Response res = await networkApiService.postApi("/foods/${clr.loginResponse.userId}/updateMeal", obj);
+      // loading.value = false;
+      if (res.statusCode == 200) {
+        clr.myHistory.refresh();
+
+        http.Response res = await networkApiService.getApi("/foods/${clr.loginResponse.userId}/getMeals");
+        // loading.value = false;
+
+        if (res.statusCode == 200) {
+          Map<String, dynamic> i = json.decode(utf8.decode(res.bodyBytes));
+
+          List<MealDTO> rec = List<MealDTO>.from(i["meals"].map((model) => MealDTO.fromJson(model))).toList();
+          clr.myMeal.refresh();
+
+          clr.myMeal = rec.obs;
+
+          clr.update();
+
+        }
+        Get.back();
+      }
+    }
+
+
+
+  }
+
 }

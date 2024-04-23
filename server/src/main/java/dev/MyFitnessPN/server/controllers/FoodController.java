@@ -63,8 +63,6 @@ public class FoodController {
 
         try {
             List<Meal> m = foodServices.getAllMealsOfUser( userId);
-
-
             Response.put("message","Get all meals successfully!");
             Response.put("meals",m);
 

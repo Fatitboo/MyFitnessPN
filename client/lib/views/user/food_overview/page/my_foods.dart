@@ -49,16 +49,22 @@ class MyFoodsPage extends GetView<FoodOverviewController> {
                   width: 20,
                 ),
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.circular(10)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/icons/fire.png", width: media.width / 10),
-                        SizedBox(height: media.width / 40,),
-                        Text('Quick Add', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.orange.shade800),
-                        )
-                      ],
+                  child: InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.QUICK_ADD,
+                      parameters: {"type":"quickAdd"});
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/icons/fire.png", width: media.width / 10),
+                          SizedBox(height: media.width / 40,),
+                          Text('Quick Add', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.orange.shade800),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )
