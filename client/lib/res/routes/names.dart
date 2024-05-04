@@ -15,6 +15,13 @@ class AppRoutes {
   static const EXERCISE = '/user/exercise';
   static const ROUTINE = '/user/routine';
   static const ADD_ROUTINE = '/user/routine/add';
+  static const ADD_FOOD = '/add_food';
+  static const LOG_FOOD = '/log_food';
+  static const INGREDIENTS = '/ingredients';
+  static const ADD_RECIPE = '/add_recipe';
+  static const MEAL_ACTION = '/meal_action';
+  static const ADD_MEAL_ITEM = '/add_meal_item';
+  static const QUICK_ADD = '/quick_add';
 
   
   // admin routes

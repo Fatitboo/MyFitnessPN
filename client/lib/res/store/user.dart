@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:do_an_2/models/login_response.dart';
+import 'package:do_an_2/model/login_response.dart';
 import 'package:do_an_2/res/store/storage.dart';
 import 'package:get/get.dart';
 

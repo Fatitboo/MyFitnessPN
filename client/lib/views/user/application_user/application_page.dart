@@ -84,8 +84,8 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
       bottomNavigationBar: _buildBottomNavigation(context),
       body: _buildPageView(),
       floatingActionButton: SizedBox(
-        width: 70,
-        height: 70,
+        width: 65,
+        height: 65,
         child: InkWell(
           onTap: () {},
           child: Container(
@@ -103,15 +103,14 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
                   )
                 ]),
             child: Icon(
-              Icons.search,
+              Icons.add,
               color: AppColor.white,
-              size: 35,
+              size: 48,
             ),
           ),
         ),
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

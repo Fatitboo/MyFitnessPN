@@ -1,14 +1,38 @@
 import 'package:do_an_2/res/routes/names.dart';
+import 'package:do_an_2/views/admin/application_admin/application_binding.dart';
+import 'package:do_an_2/views/admin/application_admin/application_page.dart';
+import 'package:do_an_2/views/admin/blog_management/blog_management_binding.dart';
+import 'package:do_an_2/views/admin/blog_management/blog_management_page.dart';
+import 'package:do_an_2/views/admin/meal_management/meal_management_binding.dart';
+import 'package:do_an_2/views/admin/meal_management/meal_management_page.dart';
+import 'package:do_an_2/views/admin/plan_management/plan_management_binding.dart';
+import 'package:do_an_2/views/admin/plan_management/plan_management_page.dart';
+import 'package:do_an_2/views/admin/profile_admin/profile_admin_binding.dart';
+import 'package:do_an_2/views/admin/profile_admin/profile_admin_page.dart';
 import 'package:do_an_2/views/admin/sign_in_admin/sign_in_binding.dart';
 import 'package:do_an_2/views/admin/sign_in_admin/sign_in_page.dart';
-import 'package:do_an_2/views/admin/workout_management/exercise/exercise_binding.dart';
-import 'package:do_an_2/views/admin/workout_management/routine/routine_binding.dart';
+import 'package:do_an_2/views/admin/workout_management/workout_management_binding.dart';
+import 'package:do_an_2/views/admin/workout_management/workout_management_page.dart';
 import 'package:do_an_2/views/intro/intro_binding.dart';
 import 'package:do_an_2/views/intro/intro_page.dart';
 import 'package:do_an_2/views/user/application_user/application_binding.dart';
 import 'package:do_an_2/views/user/application_user/application_page.dart';
 import 'package:do_an_2/views/user/diary/diary_binding.dart';
 import 'package:do_an_2/views/user/diary/diary_page.dart';
+import 'package:do_an_2/views/user/food_overview/add_food/add_food_binding.dart';
+import 'package:do_an_2/views/user/food_overview/add_food/add_food_controller.dart';
+import 'package:do_an_2/views/user/food_overview/add_food/add_food_page.dart';
+import 'package:do_an_2/views/user/food_overview/food_overview_binding.dart';
+import 'package:do_an_2/views/user/food_overview/food_overview_page.dart';
+import 'package:do_an_2/views/user/food_overview/log_food/log_food_binding.dart';
+import 'package:do_an_2/views/user/food_overview/log_food/log_food_page.dart';
+import 'package:do_an_2/views/user/food_overview/meal/add_meal_item/add_meal_item_binding.dart';
+import 'package:do_an_2/views/user/food_overview/meal/meal_binding.dart';
+import 'package:do_an_2/views/user/food_overview/meal/meal_page.dart';
+import 'package:do_an_2/views/user/food_overview/page/quick_add_page.dart';
+import 'package:do_an_2/views/user/food_overview/recipe/add_recipe_binding.dart';
+import 'package:do_an_2/views/user/food_overview/recipe/add_recipe_page.dart';
+import 'package:do_an_2/views/user/food_overview/recipe/ingredients/search_ingredient_page.dart';
 import 'package:do_an_2/views/user/home/home_binding.dart';
 import 'package:do_an_2/views/user/home/home_page.dart';
 import 'package:do_an_2/views/user/profile/profile_binding.dart';
@@ -22,22 +46,7 @@ import 'package:do_an_2/views/user/welcome/welcome_page.dart';
 import 'package:do_an_2/views/user/workout/exercise/exercise_binding.dart';
 import 'package:get/get.dart';
 
-import '../../views/admin/application_admin/application_binding.dart';
-import '../../views/admin/application_admin/application_page.dart';
-import '../../views/admin/blog_management/blog_management_binding.dart';
-import '../../views/admin/blog_management/blog_management_page.dart';
-import '../../views/admin/meal_management/meal_management_binding.dart';
-import '../../views/admin/meal_management/meal_management_page.dart';
-import '../../views/admin/plan_management/plan_management_binding.dart';
-import '../../views/admin/plan_management/plan_management_page.dart';
-import '../../views/admin/profile_admin/profile_admin_binding.dart';
-import '../../views/admin/profile_admin/profile_admin_page.dart';
-import '../../views/admin/workout_management/exercise/exercise_form.dart';
-import '../../views/admin/workout_management/routine/add_routine_page.dart';
-import '../../views/admin/workout_management/workout_management_binding.dart';
-import '../../views/admin/workout_management/workout_management_page.dart';
-import '../../views/user/food_overview/food_overview_binding.dart';
-import '../../views/user/food_overview/food_overview_page.dart';
+import '../../views/user/food_overview/meal/add_meal_item/add_meal_item_page.dart';
 import '../../views/user/workout/exercise/exercise_page.dart';
 import '../../views/user/workout/routine/add_routine_page.dart';
 import '../../views/user/workout/routine/routine_binding.dart';
@@ -106,6 +115,48 @@ class AppPages {
       binding: FoodOverviewBinding(),
       transition: Transition.native,
     ),
+    GetPage(
+      name: AppRoutes.QUICK_ADD,
+      page: () => QuickAddPage(),
+      binding: AddFoodBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.ADD_FOOD,
+      page: () => AddFoodPage(),
+      binding: AddFoodBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.LOG_FOOD,
+      page: () => LogFoodPage(),
+      binding: LogFoodBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.ADD_RECIPE,
+      page: () => AddRecipePage(),
+      binding: AddRecipeBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.INGREDIENTS,
+      page: () => SearchIngredientPage(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.MEAL_ACTION,
+      page: () => MealPage(),
+      binding: MealBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.ADD_MEAL_ITEM,
+      page: () => AddMealItemPage(),
+      binding: AddMealItemBinding(),
+      transition: Transition.native,
+    ),
+
 
 
 
@@ -181,18 +232,6 @@ class AppPages {
       name: AppRoutes.PROFILE_ADMIN,
       page: () => ProfileAdminPage(),
       binding: ProfileAdminBinding(),
-      transition: Transition.native,
-    ),
-    GetPage(
-      name: AppRoutes.WORKOUT_MANAGEMENT_ADD,
-      page: () => ExerciseForm(),
-      binding: ExerciseAdminBinding(),
-      transition: Transition.native,
-    ),
-    GetPage(
-      name: AppRoutes.ROUTINE_MANAGEMENT_ADD,
-      page: () => AddRoutineAdminPage(),
-      binding: RoutineAdminBinding(),
       transition: Transition.native,
     ),
   ];

@@ -5,9 +5,7 @@ import 'package:do_an_2/views/user/food_overview/page/my_foods.dart';
 import 'package:do_an_2/views/user/food_overview/page/my_meals.dart';
 import 'package:do_an_2/views/user/food_overview/page/my_recipes.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 class FoodOverviewPage extends GetView<FoodOverviewController> {
@@ -26,7 +24,7 @@ class FoodOverviewPage extends GetView<FoodOverviewController> {
         length: _tabs.length,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: AppColor.primaryColor1,
+            backgroundColor: AppColor.white,
             leading: IconButton(
               onPressed: () {
                 Get.back();
@@ -34,30 +32,12 @@ class FoodOverviewPage extends GetView<FoodOverviewController> {
               icon: const Icon(Icons.arrow_back),
             ),
             centerTitle: true,
-            title: DropdownButtonHideUnderline(
-              child: DropdownButton2<String>(
-                isExpanded: true,
-                hint: Text(
-                  controller.selectedMeal.value,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.black,
-                  ),
-                ),
-                items: controller.itemsMeal
-                    .map((String item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.black,
-                            ),
-                          ),
-                        ))
-                    .toList(),
+            title:DropdownButtonHideUnderline(
+                  child: DropdownButton2<String>(
+                     isExpanded: true,
+                     hint: Text(controller.selectedMeal.value, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColor.black,),),
+                    items: controller.itemsMeal.map((String item) => DropdownMenuItem<String>(value: item,child: Text(item, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: AppColor.black,),),
+                        )).toList(),
                 value: controller.selectedMeal.value,
                 onChanged: (String? value) {
                   controller.onChangeValueDropdownBtn(value!);
@@ -81,15 +61,15 @@ class FoodOverviewPage extends GetView<FoodOverviewController> {
                 Container(
                   height: 112,
                   padding: const EdgeInsets.only(top: 6),
-                  color: AppColor.primaryColor1,
+                  color: AppColor.white,
                   child: Column(
                     children: [
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 20),
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
-                            color: AppColor.white,
-                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(0),
                             boxShadow: const [
                               BoxShadow(
                                   color: Colors.black12,
@@ -100,35 +80,42 @@ class FoodOverviewPage extends GetView<FoodOverviewController> {
                           children: [
                             Expanded(
                                 child: TextField(
+                              onSubmitted: (value) {
+                                controller.getFoodsFromApi(value);
+                              },
                               controller: controller.txtSearch,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 focusedBorder: InputBorder.none,
                                 enabledBorder: InputBorder.none,
-                                prefixIcon: Icon(Icons.search),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: AppColor.black,
+                                ),
                                 hintText: "Search",
                               ),
                             )),
                             InkWell(
-                                onTap: () {}, child: const Icon(Icons.close))
+                                onTap: () {
+                                  controller.resetHis();
+                                },
+                                child: const Icon(Icons.close))
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       TabBar(
                         labelStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: AppColor.black
-                        ),
-
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.black,
+                            fontSize: 16),
                         tabAlignment: TabAlignment.center,
                         isScrollable: true,
-                        onTap: (index) {
-                          controller.onClickTopTabItem(index);
-                        },
                         tabs: const [
-                          Tab(text: 'All'),
+                          Tab(
+                            text: 'All',
+                          ),
                           Tab(text: 'My Meals'),
                           Tab(text: 'My Recipes'),
                           Tab(text: 'My Foods'),
@@ -138,8 +125,7 @@ class FoodOverviewPage extends GetView<FoodOverviewController> {
                   ),
                 ),
                 SizedBox(
-
-                  height: MediaQuery.of(context).size.height*0.8,
+                  height: MediaQuery.of(context).size.height * 0.8,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [

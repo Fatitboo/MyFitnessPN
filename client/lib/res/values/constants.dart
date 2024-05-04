@@ -17,4 +17,6 @@ class Constant {
   static const CLOUDINARY_ADMIN_EXERICSE_VIDEO = "admin/exercise/videos";
   static const CLOUDINARY_ADMIN_ROUTINE_VIDEO = "admin/routine/videos";
   static const CLOUDINARY_ADMIN_ROUTINE_IMAGE = "admin/routine/images";
+  static const CLOUDINARY_USER_MEAL_IMAGE = "user/meal/images";
+
 }

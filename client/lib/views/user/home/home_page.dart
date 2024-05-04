@@ -16,14 +16,16 @@ class HomePage extends GetView<HomeController> {
       return Scaffold(
         backgroundColor: const Color(0xffEEEEEE),
         appBar: AppBar(
-          backgroundColor: AppColor.primaryColor1,
+          elevation: 1,
+          shadowColor: AppColor.black,
+          backgroundColor: Colors.white,
           leading: Image.asset(
             'assets/images/food.png',
             width: 80,
           ),
-          title: const Text(
-            "MyFitnessPN",
-            style: TextStyle(color: Colors.white),
+          title:  Text(
+            "MyFitnessPN"+controller.token.value,
+            style: TextStyle(color: AppColor.primaryColor1),
           ),
           centerTitle: true,
           titleTextStyle: TextStyle(
@@ -37,17 +39,17 @@ class HomePage extends GetView<HomeController> {
             )
           ],
         ),
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 15,
                   ),
-                  Text( controller.token.value),
+                      
                   Container(
                       height: media.width * 0.55,
                       decoration: BoxDecoration(
@@ -127,7 +129,7 @@ class HomePage extends GetView<HomeController> {
                                                     ),
                                                   ),
                                                   SimpleCircularProgressBar(
-                                                    size: 120,
+                                                    size: media.height * 0.15,
                                                     progressStrokeWidth: 12,
                                                     backStrokeWidth: 10,
                                                     progressColors:
@@ -355,8 +357,8 @@ class HomePage extends GetView<HomeController> {
                                               fontSize: 14),
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 10,
+                                       SizedBox(
+                                        height: media.height*0.23,
                                       ),
                                       InkWell(
                                         onTap: () {},
@@ -397,7 +399,7 @@ class HomePage extends GetView<HomeController> {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 15, horizontal: 15),
                                   decoration: BoxDecoration(
-
+                      
                                     // gradient: LinearGradient(colors: [AppColor.secondaryColor2,AppColor.lightSecondaryColor2, ]),
                                       borderRadius: BorderRadius.circular(25),
                                       boxShadow: const [
@@ -409,14 +411,14 @@ class HomePage extends GetView<HomeController> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "BMI (Body Mass Index)",
+                                        "BMI ",
                                         style: TextStyle(
                                             color: AppColor.black,
-                                            fontSize: 13,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.w700),
                                       ),
                                       const SizedBox(
-                                        height: 10,
+                                        height: 5,
                                       ),
                                       Text(
                                         "20.1",
@@ -437,7 +439,7 @@ class HomePage extends GetView<HomeController> {
                                         height: 10,
                                       ),
                                       Text(
-                                        "You have a normal weight",
+                                        "Normal weight",
                                         style: TextStyle(
                                             color: AppColor.black,
                                             fontSize: 12,
@@ -485,7 +487,7 @@ class HomePage extends GetView<HomeController> {
                                       ),
                                       SizedBox(
                                           width: 120,
-                                          height: 35,
+                                          height: media.width*0.08,
                                           child: RoundButton(
                                               title: "Update weight",
                                               type: RoundButtonType.bgSGradient,

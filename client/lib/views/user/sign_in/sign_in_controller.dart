@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:do_an_2/data/response/custom_response.dart';
-import 'package:do_an_2/models/login_response.dart';
+import 'package:do_an_2/model/login_response.dart';
 import 'package:do_an_2/res/store/store.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,7 +57,6 @@ class SignInController extends GetxController {
     http.Response postApi =
         await NetworkApiService().postApi("/users/login", object);
 
-
     CustomResponse customResponse =
         CustomResponse.fromJson(jsonDecode(postApi.body));
     if (postApi.statusCode == 200) {
@@ -69,6 +68,7 @@ class SignInController extends GetxController {
               token: customResponse.user?.token,
               userType: customResponse.user?.userType));
       UserStore.to.setToken(customResponse.user!.token ?? "");
+      print("gg");
       Get.offAndToNamed(AppRoutes.APPLICATION_USER);
     } else {
       print(customResponse.message);
