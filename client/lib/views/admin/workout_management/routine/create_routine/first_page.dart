@@ -308,6 +308,7 @@ class FirstPage extends GetView<RoutineController> {
                       controller.errors.value = Validator.ValidateForm(controller.validate.value, controller.textEditController.value);
                       var result = controller.errors.values.toList().firstWhere((e) => e.isError, orElse: () => Val(false, ""));
                       if(!result.isError){
+                        print("do2");
                         if(controller.workoutOverviewController.document.toPlainText().trim().isEmpty){
                           showDialog(
                             context: context,
@@ -329,9 +330,14 @@ class FirstPage extends GetView<RoutineController> {
                           );
                         }
                         else{
+                          print("do3q");
+
                           onTap();
                         }
                       }
+
+                      print("do4");
+
                     },
                     bgColor: AppColor.blackText,
                     textString: 'Next',

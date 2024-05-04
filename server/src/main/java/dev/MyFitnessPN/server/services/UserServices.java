@@ -3,11 +3,15 @@ package dev.MyFitnessPN.server.services;
 import com.google.gson.Gson;
 import dev.MyFitnessPN.server.component.indexBody.HealthDataResponse;
 import dev.MyFitnessPN.server.component.JwtTokenUtils;
+import dev.MyFitnessPN.server.component.plan.SubTask;
+import dev.MyFitnessPN.server.component.plan.Task;
 import dev.MyFitnessPN.server.dtos.UserDTO;
 import dev.MyFitnessPN.server.dtos.UserLoginDTO;
 
+import dev.MyFitnessPN.server.models.Plan;
 import dev.MyFitnessPN.server.models.User;
 import dev.MyFitnessPN.server.models.UserHealth;
+import dev.MyFitnessPN.server.repositories.PlanRepository;
 import dev.MyFitnessPN.server.repositories.UserHealthRepository;
 import dev.MyFitnessPN.server.repositories.UserRepository;
 import dev.MyFitnessPN.server.response.UserResponseLogin;
@@ -22,7 +26,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.Year;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -32,6 +39,7 @@ import java.util.Optional;
 public class UserServices {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final PlanRepository planRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtils jwtTokenUtils;
     private final UserHealthRepository userHealthRepository;
@@ -221,4 +229,49 @@ public class UserServices {
                 .build();
     }
 
+    public void setupPlan(String userId, String planId){
+        Optional<User> userOptional = userRepository.findById(new ObjectId(userId));
+        if(userOptional.isEmpty()){
+            throw new DataIntegrityViolationException("User is not exist!");
+        }
+        Optional<Plan> planOptional = planRepository.findById(new ObjectId(planId));
+        if(planOptional.isEmpty()){
+            throw new DataIntegrityViolationException("Cannot find plan in database");
+        }
+        User user = userOptional.get();
+        Plan plan = planOptional.get();
+
+
+        user.setPlan(plan.getTaskList());
+        user.setDateStartPlan(LocalDateTime.now());
+
+        userRepository.save(user);
+    }
+
+    public void maskDoneSubTask(String userId, String planId, int index){
+        Optional<User> userOptional = userRepository.findById(new ObjectId(userId));
+        if(userOptional.isEmpty()){
+            throw new DataIntegrityViolationException("User is not exist!");
+        }
+        Optional<Plan> planOptional = planRepository.findById(new ObjectId(planId));
+        if(planOptional.isEmpty()){
+            throw new DataIntegrityViolationException("Cannot find plan in database");
+        }
+        User user = userOptional.get();
+        List<Task> taskList = user.getPlan();
+
+//        SubTask subTask = taskList.get;
+        LocalDateTime currentDate = LocalDateTime.now();
+
+        long length = ChronoUnit.HOURS.between(user.getDateStartPlan(), currentDate) / 24;
+        Task task = taskList.get(Integer.parseInt(String.valueOf(length)));
+
+        List<SubTask> subTaskList = task.getSubTaskList();
+        SubTask subTask = subTaskList.get(index);
+        subTask.setFinish(!subTask.isFinish());
+
+        user.setPlan(taskList);
+
+        userRepository.save(user);
+    }
 }

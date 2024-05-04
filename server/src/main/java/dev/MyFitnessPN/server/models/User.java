@@ -7,6 +7,7 @@ import dev.MyFitnessPN.server.component.meal.Meal;
 import dev.MyFitnessPN.server.component.meal.Recipe;
 import dev.MyFitnessPN.server.component.exercise.Exercise;
 import dev.MyFitnessPN.server.component.exercise.Routine;
+import dev.MyFitnessPN.server.component.plan.Task;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
@@ -56,6 +57,8 @@ public class User implements UserDetails {
     // exercise
     private List<Exercise> exercises;
     private List<Routine> routines;
+    private List<Task> plan;
+    private LocalDateTime dateStartPlan;
 
     // date create and update
     @CreatedDate

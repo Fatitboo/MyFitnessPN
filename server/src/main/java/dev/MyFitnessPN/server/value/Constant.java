@@ -36,4 +36,24 @@ public class Constant {
         public static final String info = "info";
         public static final String success = "success";
     }
+
+    public static class PlanType {
+        public static final String mealplan = "mealplan";
+        public static final String nutrion = "nutrion";
+        public static final String walking = "walking";
+        public static final String workout = "workout";
+    }
+
+    public static class PlanDifficulty {
+        public static final String beginner = "beginner";
+        public static final String intermediate = "intermediate";
+        public static final String advanced = "advanced";
+    }
+
+    public static class TaskType {
+        public static final String notice = "notice";
+        public static final String config = "config";
+        public static final String article = "article";
+        public static final String workout = "workout";
+    }
 }
