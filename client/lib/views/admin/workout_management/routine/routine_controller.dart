@@ -332,46 +332,36 @@ class RoutineController extends GetxController{
   void resetValue(){
     textEditController.value = {
       "routineName": TextEditingController(),
-      "description": TextEditingController(),
-      "plannedVolume": TextEditingController(),
       "duration": TextEditingController(),
-      "caloriesBurned": TextEditingController(),
     };
     validate.value = {
       "routineName": {
         ERROR_TYPE.require: "Name is required"
       },
-      "plannedVolume": {
-        ERROR_TYPE.require: "Required",
-        ERROR_TYPE.number: "Type number",
-      },
       "duration": {
-        ERROR_TYPE.require: "Required",
-        ERROR_TYPE.number: "Type number",
-      },
-      "caloriesBurned": {
         ERROR_TYPE.require: "Required",
         ERROR_TYPE.number: "Type number",
       },
     };
     errors.value = {
       "routineName": Val(false, ""),
-      "plannedVolume": Val(false, ""),
       "duration": Val(false, ""),
-      "caloriesBurned": Val(false, ""),
+      "workoutOverview": Val(false, ""),
     };
     textEditExercise.value = [];
+    listExercises.value = [];
     validateExes.value = [];
     errorExes.value = [];
     typeForm.value = "";
-    isVisibleVideo = false.obs;
-    isPlayVideo = false.obs;
-    loadingUpload = false.obs;
+    isVisibleVideo.value = false;
+    isPlayVideo.value = false;
+    loadingUpload.value = false;
     video = null;
+    thumbnail.value = File('');
     workoutOverviewController = QuillController.basic();
     descriptionController = QuillController.basic();
-    progressValue = 0.0.obs;
-    index = 0.obs;
+    progressValue.value = 0;
+    index.value = 0;
   }
 
   void onChangeValueDropdownRoutineType(String value){

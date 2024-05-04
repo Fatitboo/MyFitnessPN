@@ -59,10 +59,9 @@ class RoutineExploreItemWidget extends StatelessWidget{
                                   color: Colors.grey,
                                   size: 16,
                                 ),
-                                SizedBox(width: 5,),
+                                const SizedBox(width: 5,),
                                 Text("$duration:00  |  "),
-                                Text(type),
-
+                                SizedBox(width: 100,child: Text(type, overflow: TextOverflow.ellipsis,)),
                               ],
                             ),
                             SizedBox(width: MediaQuery.of(context).size.width - 190, child: Text(routineName, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800),)),

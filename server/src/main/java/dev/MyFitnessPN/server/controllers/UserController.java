@@ -88,4 +88,31 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
+    @PutMapping("{userId}/set-up-plan/{planId}")
+    public ResponseEntity<?> setupPlan(@PathVariable String userId, @PathVariable String planId){
+        HashMap<String, Object> response = new HashMap<>();
+
+        try {
+            userServices.setupPlan(userId, planId);
+            response.put("message", "Set up plan successfully!");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Exception e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+    @PutMapping("/{userId}/mask-done-task/{planId}")
+    public ResponseEntity<?> maskDoneSubTask(@PathVariable String userId, @PathVariable String planId,@RequestParam(value="index", required = true) int index){
+        HashMap<String, Object> response = new HashMap<>();
+
+        try {
+            userServices.maskDoneSubTask(userId, planId, index);
+            response.put("message", "Mask done sub task successfully!");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Exception e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
 }

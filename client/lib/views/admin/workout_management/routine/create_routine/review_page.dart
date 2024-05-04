@@ -125,6 +125,7 @@ class ReviewPage extends GetView<RoutineController>{
                           children: [
                             MyButton(
                               onTap: () async{
+                                controller.loadingUpload.value = true;
                                 List<dynamic> exes = [];
                                 for(int i = 0; i < controller.textEditExercise.length; i++){
                                   List<dynamic> sets = [];
@@ -158,37 +159,39 @@ class ReviewPage extends GetView<RoutineController>{
 
                                 print("alo");
 
-                                //
-                                // Map<String, dynamic> res = await Cloudinary().uploadFile(controller.video!.path);
-                                // print("1");
-                                // Map<String, dynamic> resThumbnail = await Cloudinary().uploadFile(controller.thumbnail.value!.path);
-                                // print("2");
-                                // if(res["isSuccess"]){
-                                //   if(resThumbnail["isSuccess"]){
-                                //     var obj = {
-                                //       "routineName": controller.textEditController["routineName"]?.text,
-                                //       "duration": double.parse(controller.textEditController["duration"]!.text),
-                                //       "type": controller.selectedType.value,
-                                //       "category": controller.selectedCategory.value,
-                                //       "workoutOverview": jsonEncode(controller.workoutOverviewController.document.toDelta().toJson()),
-                                //       "video": res["imageUrl"],
-                                //       "thumbNail": resThumbnail["imageUrl"],
-                                //       "description": jsonEncode(controller.descriptionController.document.toDelta().toJson()),
-                                //       "exercises": exes
-                                //     };
-                                //
-                                //     if(await controller.createRoutine(jsonEncode(obj))){
-                                //       Get.back();
-                                //     }
-                                //   }
-                                //   else{
-                                //     print(res["message"]);
-                                //   }
-                                // }
-                                // else{
-                                //   print("alooooo");
-                                //   print(res["message"]);
-                                // }
+                                Map<String, dynamic> res = await CloudinaryNetWork().upload(Constant.CLOUDINARY_ADMIN_ROUTINE_VIDEO, controller.video!, Constant.FILE_TYPE_video);
+
+                                print("1");
+                                Map<String, dynamic> resThumbnail = await CloudinaryNetWork().upload(Constant.CLOUDINARY_ADMIN_ROUTINE_IMAGE, controller.thumbnail.value!, Constant.FILE_TYPE_image);
+
+                                print("2");
+                                if(res["isSuccess"]){
+                                  if(resThumbnail["isSuccess"]){
+                                    var obj = {
+                                      "routineName": controller.textEditController["routineName"]?.text,
+                                      "duration": double.parse(controller.textEditController["duration"]!.text),
+                                      "type": controller.selectedType.value,
+                                      "category": controller.listCategory.value.firstWhereOrNull((element) => controller.selectedCategory.value == element.name)?.routCategoryId ?? controller.selectedCategory.value,
+                                      "workoutOverview": jsonEncode(controller.workoutOverviewController.document.toDelta().toJson()),
+                                      "video": res["imageUrl"],
+                                      "thumbNail": resThumbnail["imageUrl"],
+                                      "description": jsonEncode(controller.descriptionController.document.toDelta().toJson()),
+                                      "exercises": exes
+                                    };
+
+                                    if(await controller.createRoutine(jsonEncode(obj))){
+                                      Get.back();
+                                    }
+                                  }
+                                  else{
+                                    print(res["message"]);
+                                  }
+                                }
+                                else{
+                                  print("alooooo");
+                                  print(res["message"]);
+                                }
+                                controller.loadingUpload.value = false;
                               },
                               bgColor: AppColor.blackText,
                               textString: 'Create',

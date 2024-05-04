@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../../data/network/network_api_service.dart';
+import '../../../../model/routineCategoryDTO.dart';
 import '../../../../model/routineDTO.dart';
 import '../../../../validate/Validator.dart';
 import '../../../../validate/error_type.dart';
@@ -17,6 +18,8 @@ class RoutineController extends GetxController{
   String userId = "660779c774cb604465279dcf";
   Rx<String> selectedId = "".obs;
   RxList myRoutineList = [].obs;
+  RxList myExploreRoutineList = [].obs;
+  RxList listCategory = [].obs;
 
   RxMap<String, TextEditingController> textEditController = {
     "routineName": TextEditingController(),
@@ -164,9 +167,41 @@ class RoutineController extends GetxController{
     }
   }
 
+  void getAllRoutineExplore () async {
+    loading.value = true;
+    http.Response res = await networkApiService.getApi("${baseUri}admin");
+    loading.value = false;
+    if(res.statusCode == HttpStatus.ok){
+      Iterable i = json.decode(utf8.decode(res.bodyBytes));
+      List<RoutineDTO> routines = List<RoutineDTO>.from(i.map((model)=> RoutineDTO.fromJson(model)));
+      myExploreRoutineList.value = routines;
+    }
+    else{
+      Map<String, dynamic> resMessage = json.decode(utf8.decode(res.bodyBytes));
+      print(resMessage["message"]);
+    }
+  }
+  void getAllRoutineCategory() async{
+    loading.value = true;
+    http.Response res = await networkApiService.getApi("/admin/routine-categories");
+    loading.value = false;
+    if(res.statusCode == HttpStatus.ok){
+      Iterable i = json.decode(utf8.decode(res.bodyBytes));
+      List<RoutineCategoryDTO> routineCategories = List<RoutineCategoryDTO>.from(i.map((model)=> RoutineCategoryDTO.fromJson(model))).toList();
+      listCategory.value = routineCategories.toList();
+    }
+    else{
+      Map<String, dynamic> resMessage = json.decode(utf8.decode(res.bodyBytes));
+      print(resMessage["message"]);
+    }
+  }
 
   void onClickTopTabItem(int index){
     switch(index){
+      case 0:
+        getAllRoutineCategory();
+        getAllRoutineExplore();
+        break;
       case 1:
         getAllRoutineUser();
         break;
@@ -250,5 +285,10 @@ class RoutineController extends GetxController{
     validateExes.value = [];
     errorExes.value = [];
     typeForm.value = "";
+  }
+
+  List<dynamic> getRoutinesBy(String categoryId){
+    print(categoryId);
+    return myExploreRoutineList.where((e) => e.category == categoryId).toList();
   }
 }
