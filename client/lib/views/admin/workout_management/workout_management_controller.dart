@@ -12,4 +12,5 @@ class WorkoutManagementController extends GetxController{
   void onInit() {
     super.onInit();
   }
+
 }

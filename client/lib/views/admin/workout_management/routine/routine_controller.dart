@@ -54,13 +54,13 @@ class RoutineController extends GetxController{
     "routineName": TextEditingController(),
     "duration": TextEditingController(),
   }.obs;
-    // selected type
-    // selectedCategory
+  // selected type
+  // selectedCategory
 
   QuillController workoutOverviewController = QuillController.basic();
 
   //page 2
-    //video
+  //video
   //page 3
   QuillController descriptionController = QuillController.basic();
 
@@ -143,17 +143,17 @@ class RoutineController extends GetxController{
           }
       );
       validateExes.add(
-        {
-          "minutes": {
-            ERROR_TYPE.require: "Required",
-            ERROR_TYPE.number: "Type number!",
-          },
-        }
+          {
+            "minutes": {
+              ERROR_TYPE.require: "Required",
+              ERROR_TYPE.number: "Type number!",
+            },
+          }
       );
       errorExes.add(
-        {
-          "minutes": Val(false, ""),
-        }
+          {
+            "minutes": Val(false, ""),
+          }
       );
     }
   }
@@ -392,7 +392,6 @@ class RoutineController extends GetxController{
   File? video;
 
   final picker = ImagePicker();
-
   pickVideo() async {
     final _video = await picker.pickVideo(source: ImageSource.gallery);
     if(_video != null){

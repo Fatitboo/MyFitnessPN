@@ -10,12 +10,19 @@ import 'package:do_an_2/views/admin/meal_management/discover_recipes/discover_re
 import 'package:do_an_2/views/admin/meal_management/discover_recipes/discover_recipes_page.dart';
 import 'package:do_an_2/views/admin/meal_management/meal_management_binding.dart';
 import 'package:do_an_2/views/admin/meal_management/meal_management_page.dart';
+import 'package:do_an_2/views/admin/plan_management/plan/add_plan_page.dart';
+import 'package:do_an_2/views/admin/plan_management/plan/create_plan/success_create_page.dart';
+import 'package:do_an_2/views/admin/plan_management/plan/manage_task/manage_task_binding.dart';
+import 'package:do_an_2/views/admin/plan_management/plan/manage_task/manage_task_page.dart';
+import 'package:do_an_2/views/admin/plan_management/plan/plan_binding.dart';
 import 'package:do_an_2/views/admin/plan_management/plan_management_binding.dart';
 import 'package:do_an_2/views/admin/plan_management/plan_management_page.dart';
 import 'package:do_an_2/views/admin/profile_admin/profile_admin_binding.dart';
 import 'package:do_an_2/views/admin/profile_admin/profile_admin_page.dart';
 import 'package:do_an_2/views/admin/sign_in_admin/sign_in_binding.dart';
 import 'package:do_an_2/views/admin/sign_in_admin/sign_in_page.dart';
+import 'package:do_an_2/views/admin/workout_management/routine/add_routine_page.dart';
+import 'package:do_an_2/views/admin/workout_management/routine/routine_binding.dart';
 import 'package:do_an_2/views/admin/workout_management/workout_management_binding.dart';
 import 'package:do_an_2/views/admin/workout_management/workout_management_page.dart';
 import 'package:do_an_2/views/intro/intro_binding.dart';
@@ -256,6 +263,24 @@ class AppPages {
       name: AppRoutes.PROFILE_ADMIN,
       page: () => ProfileAdminPage(),
       binding: ProfileAdminBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.PLAN_MANAGEMENT_ADD,
+      page: () => AddPlanAdminPage(),
+      binding: PlanAdminBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.ROUTINE_MANAGEMENT_ADD,
+      page: () => AddRoutineAdminPage(),
+      binding: RoutineAdminBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.PLAN_TASK_MANAGEMENT,
+      page: () => ManageTaskPage(),
+      binding: ManageTaskBinding(),
       transition: Transition.native,
     ),
   ];

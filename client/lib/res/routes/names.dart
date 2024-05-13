@@ -40,6 +40,8 @@ class AppRoutes {
 
   static const WORKOUT_MANAGEMENT_ADD = '/workout_management/add';
   static const ROUTINE_MANAGEMENT_ADD = '/routine_management/add';
+  static const PLAN_MANAGEMENT_ADD = '/plan_management/add';
+  static const PLAN_TASK_MANAGEMENT = '/plan_management/task_management';
 
 
 }
