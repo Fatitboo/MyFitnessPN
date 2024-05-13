@@ -16,6 +16,8 @@ import 'package:do_an_2/views/admin/profile_admin/profile_admin_binding.dart';
 import 'package:do_an_2/views/admin/profile_admin/profile_admin_page.dart';
 import 'package:do_an_2/views/admin/sign_in_admin/sign_in_binding.dart';
 import 'package:do_an_2/views/admin/sign_in_admin/sign_in_page.dart';
+import 'package:do_an_2/views/admin/workout_management/exercise/exercise_binding.dart';
+import 'package:do_an_2/views/admin/workout_management/exercise/exercise_form.dart';
 import 'package:do_an_2/views/admin/workout_management/routine/add_routine_page.dart';
 import 'package:do_an_2/views/admin/workout_management/routine/routine_binding.dart';
 import 'package:do_an_2/views/admin/workout_management/workout_management_binding.dart';
@@ -245,6 +247,12 @@ class AppPages {
       name: AppRoutes.PLAN_MANAGEMENT_ADD,
       page: () => AddPlanAdminPage(),
       binding: PlanAdminBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.WORKOUT_MANAGEMENT_ADD,
+      page: () => ExerciseForm(),
+      binding: ExerciseAdminBinding(),
       transition: Transition.native,
     ),
     GetPage(
