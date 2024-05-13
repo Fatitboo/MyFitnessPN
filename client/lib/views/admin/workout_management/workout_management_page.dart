@@ -11,11 +11,11 @@ import 'package:get/get.dart';
 class WorkoutManagementPage extends GetView<WorkoutManagementController> {
   WorkoutManagementPage({super.key});
 
-  final List<Widget> _tabs = [
-    MyExercisePage(),
-    MyRoutinePage(),
-    CategoryPage(),
-  ];
+    final List<Widget> _tabs = [
+      MyExercisePage(),
+      MyRoutinePage(),
+      CategoryPage(),
+    ];
 
   @override
   Widget build(BuildContext context) {

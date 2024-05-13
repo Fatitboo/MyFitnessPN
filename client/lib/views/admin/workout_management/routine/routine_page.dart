@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 import '../../../../../res/routes/names.dart';
 import '../../../../../res/widgets/loading_widget.dart';
 import '../../../../res/values/color_extension.dart';
-import '../../../common_widgets/routine_item.dart';
 
 class MyRoutinePage extends GetView<RoutineController> {
   @override

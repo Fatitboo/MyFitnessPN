@@ -2,6 +2,7 @@
 import 'package:do_an_2/views/admin/application_admin/application_controller.dart';
 import 'package:do_an_2/views/admin/blog_management/blog_management_controller.dart';
 import 'package:do_an_2/views/admin/meal_management/meal_management_controller.dart';
+import 'package:do_an_2/views/admin/plan_management/plan/plan_controller.dart';
 import 'package:do_an_2/views/admin/plan_management/plan_management_controller.dart';
 import 'package:do_an_2/views/admin/profile_admin/profile_admin_controller.dart';
 import 'package:do_an_2/views/admin/workout_management/exercise/exercise_controller.dart';
@@ -20,6 +21,7 @@ class ApplicationAdminBinding extends Bindings {
       Get.lazyPut<PlanManagementController>(() => PlanManagementController());
       Get.lazyPut<ExerciseController>(() => ExerciseController());
       Get.lazyPut<RoutineController>(() => RoutineController());
+      Get.lazyPut<PlanAdminController>(() => PlanAdminController());
   }
   
 }
