@@ -105,7 +105,7 @@ class HomeController extends GetxController {
           .getApi("/users/get_user_health/${loginResponse.userId}");
       Map<String, dynamic> i = json.decode(utf8.decode(getApi.bodyBytes));
       userHealthDTO.value = UserHealthDTO.fromJson(i["userHealth"]);
-      perWater.value = ((getLogInfor()["water"])??1) / (userHealthDTO.value.waterIntake ?? 1000);
+      perWater.value = ((getLogInfor()["water"])??0) / (userHealthDTO.value.waterIntake ?? 1000);
     } catch (err) {
       print(err);
     }

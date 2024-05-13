@@ -75,7 +75,7 @@ class DiaryController extends GetxController {
   }
   double getTotalWater(){
     double tt = 0.0;
-    if (water.isEmpty) return 0.1;
+    if (water.isEmpty) return 0.0;
     for (var item in water) {
       if (item.logDiaryType == "Exercise") {
       } else if (item.logDiaryType == "Water") {

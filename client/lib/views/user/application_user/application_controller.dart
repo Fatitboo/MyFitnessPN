@@ -21,7 +21,8 @@ class ApplicationUserController extends GetxController {
     }
     if(index==0){
       HomeController homeController = Get.find<HomeController>();
-      homeController.percent.value = (homeController.getLogInfor()["food"]!/ homeController.userHealthDTO.value.getCaloriesNeed())*100;
+      homeController.percent.value = (homeController.getLogInfor()["food"]!/ homeController.userHealthDTO.value.getCaloriesNeed()) *100;
+      homeController.perWater.value = ((homeController.getLogInfor()["water"])??0) / (homeController.userHealthDTO.value.waterIntake ?? 1000);
 
     }
     pageController.jumpToPage(index);

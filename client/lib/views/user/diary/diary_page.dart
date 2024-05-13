@@ -261,8 +261,10 @@ class DiaryPage extends GetView<DiaryController> {
                                             crossAxisAlignment: CrossAxisAlignment
                                                 .start,
                                             children: [
-                                              Text("${ld.foodLogItem?.food?.foodName??ld.foodLogItem?.recipe?.title??ld.foodLogItem?.meal?.description }",
-                                                style: const TextStyle(fontSize: 16, color: Colors.black),),
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.width*60/100,
+                                                child: Text("${ld.foodLogItem?.food?.foodName??ld.foodLogItem?.recipe?.title??ld.foodLogItem?.meal?.description }",
+                                                style: const TextStyle(fontSize: 16, color: Colors.black),)),
                                               Text("${ld.foodLogItem?.food?.getStringDescription()??ld.foodLogItem?.recipe?.getStringDescription()??ld.foodLogItem?.meal?.getStringDescription() }",
                                                 style: const TextStyle(
                                                     color: Colors.black54),)
@@ -395,9 +397,11 @@ class DiaryPage extends GetView<DiaryController> {
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.width*60/100,
+                                                child: Text(
                                                 "${ld.foodLogItem?.food?.foodName??ld.foodLogItem?.recipe?.title??ld.foodLogItem?.meal?.description }",
-                                                style: const TextStyle(fontSize: 16, color: Colors.black),),
+                                                style: const TextStyle(fontSize: 16, color: Colors.black),)),
                                               Text(
                                                 "${ld.foodLogItem?.food?.getStringDescription()??ld.foodLogItem?.recipe?.getStringDescription()??ld.foodLogItem?.meal?.getStringDescription() }",
                                                 style: const TextStyle(color: Colors.black54),)
@@ -523,9 +527,11 @@ class DiaryPage extends GetView<DiaryController> {
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.width*60/100,
+                                                child: Text(
                                                 "${ld.foodLogItem?.food?.foodName??ld.foodLogItem?.recipe?.title??ld.foodLogItem?.meal?.description }",
-                                                style: const TextStyle(fontSize: 16, color: Colors.black),),
+                                                style: const TextStyle(fontSize: 16, color: Colors.black),)),
                                               Text(
                                                 "${ld.foodLogItem?.food?.getStringDescription()??ld.foodLogItem?.recipe?.getStringDescription()??ld.foodLogItem?.meal?.getStringDescription() }",
                                                 style: const TextStyle(color: Colors.black54),)
@@ -658,9 +664,11 @@ class DiaryPage extends GetView<DiaryController> {
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.width*60/100,
+                                                child:  Text(
                                                 "${ld.foodLogItem?.food?.foodName??ld.foodLogItem?.recipe?.title??ld.foodLogItem?.meal?.description }",
-                                                style: const TextStyle(fontSize: 16, color: Colors.black),),
+                                                style: const TextStyle(fontSize: 16, color: Colors.black),)),
                                               Text(
                                                 "${ld.foodLogItem?.food?.getStringDescription()??ld.foodLogItem?.recipe?.getStringDescription()??ld.foodLogItem?.meal?.getStringDescription() }",
                                                 style: const TextStyle(color: Colors.black54),)
@@ -821,7 +829,39 @@ class DiaryPage extends GetView<DiaryController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(width: 20,),
-                          Text("ADD EXERCISE", style: TextStyle(fontSize: 16,
+                          Text("ADD STRENGTH", style: TextStyle(fontSize: 16,
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.w600),),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 15,),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.EXERCISE, arguments: {"type": Constant.EXERCISE_cardio, "from": "diary"}, preventDuplicates: false);
+                      },
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(width: 20,),
+                          Text("ADD CADIO", style: TextStyle(fontSize: 16,
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.w600),),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 15,),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.ROUTINE, preventDuplicates: false);
+                      },
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(width: 20,),
+                          Text("ADD ROUTINE", style: TextStyle(fontSize: 16,
                               color: Colors.blueAccent,
                               fontWeight: FontWeight.w600),),
                         ],

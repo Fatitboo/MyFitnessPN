@@ -84,14 +84,17 @@ class MealPage extends GetView<MealController> {
                            Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               Text(
-                                 (controller.type.value == "logMeal"
-                                     || controller.type.value == "logMealFromDiscoverPage")
-                                     ? controller.formController["description"]!.text
-                                 : "Meal name",
-                                style:const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
-                              ),
+                               SizedBox(
+                                 width: MediaQuery.of(context).size.width-40,
+                                 child: Text(
+                                   (controller.type.value == "logMeal"
+                                       || controller.type.value == "logMealFromDiscoverPage")
+                                       ? controller.formController["description"]!.text
+                                   : "Meal name",
+                                  style:const TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.w600),
+                                   overflow: TextOverflow.ellipsis),
+                               ),
                               (controller.type.value == "logMeal"
                               || controller.type.value == "logMealFromDiscoverPage")
                               ? const SizedBox(height: 0)
@@ -110,7 +113,7 @@ class MealPage extends GetView<MealController> {
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
-                                style: TextStyle(color: AppColor.black),
+                                style: TextStyle(color: AppColor.black, ),
                                 enabled: (controller.type.value == "logMeal") ? false : true,
                                 decoration: const InputDecoration(
                                     enabledBorder: InputBorder.none,
@@ -643,7 +646,9 @@ class MealPage extends GetView<MealController> {
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("${h.numberOfServing!*h.servingSize!} g ${h.foodName} "?? "", style: const TextStyle(fontSize: 16),),
+                                          SizedBox(
+                                              width: MediaQuery.of(context).size.width*60/100,
+                                              child: Text("${h.numberOfServing!*h.servingSize!} g ${h.foodName} "?? "", style: const TextStyle(fontSize: 16), overflow: TextOverflow.ellipsis,)),
                                           Text(h.getCalDes() , style: const TextStyle(color: Colors.black54),)
                                         ],
                                       ),
@@ -697,8 +702,11 @@ class MealPage extends GetView<MealController> {
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            "${h.numberOfServing} p ${h.title}" ?? "", style: const TextStyle(fontSize: 16),),
+                                          SizedBox(
+                                            width:MediaQuery.of(context).size.width-50,
+                                            child: Text(
+                                              "${h.numberOfServing} p ${h.title}" ?? "", style: const TextStyle(fontSize: 16,), overflow: TextOverflow.ellipsis,),
+                                          ),
                                           Text(h.getCaloriesDesStr() , style: const TextStyle(color: Colors.black54),)
                                         ],
                                       ),

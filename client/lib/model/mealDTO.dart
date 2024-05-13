@@ -43,7 +43,7 @@ class MealDTO {
   String getStringDescription(){
     double tt = 0;
     for(FoodDTO f in foods!){
-      tt+= f.nutrition!.first.amount;
+      tt+= f.nutrition!.first.amount * f.numberOfServing! * f.servingSize! / 100;
     }
     for(RecipeDTO r in recipes!){
       for(FoodDTO c in r.foods!){
