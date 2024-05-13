@@ -47,15 +47,22 @@ class MyRecipesPage extends GetView<FoodOverviewController> {
                 ),
                 const SizedBox(width: 20,),
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: AppColor.white,borderRadius: BorderRadius.circular(10)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.account_tree_outlined, size: media.width / 10, color: Colors.purple,),
-                        SizedBox(height: media.width / 40,),
-                        const Text('Discover the Recipe', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.purple),)
-                      ],
+                  child: InkWell(
+                    onTap: (){
+                      Get.toNamed(
+                          AppRoutes.DISCOVER_RECIPES_MANAGEMENT,
+                          parameters: {"type": "fromUserDiscoverRecipe"});
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(color: AppColor.white,borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.account_tree_outlined, size: media.width / 10, color: Colors.purple,),
+                          SizedBox(height: media.width / 40,),
+                          const Text('Discover the Recipe', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.purple),)
+                        ],
+                      ),
                     ),
                   ),
                 )

@@ -61,9 +61,7 @@ class AddRecipeController extends GetxController {
       recipeId.value = r.recipeId!;
       formController["title"]!.text = "${r.title}";
       formController["numberOfServing"]!.text = "${r.numberOfServing}";
-      for(int i = 0; i<myIngredients.length; i++){
-        myIngredients[i].servingSize = (myIngredients[i].servingSize! * (double.parse( formController["numberOfServing"]!.text.toString().trim())))!;
-      }
+
 
     }
 
@@ -85,6 +83,7 @@ class AddRecipeController extends GetxController {
     };
     for (FoodDTO f in myIngredients) {
       double cv = (f.numberOfServing??1)*(f.servingSize??100)/100;
+      print(cv);
       item["calories"] = item["calories"]! + f.nutrition!.elementAt(0).amount*cv?? 0.0 ;
       item["fat_total_g"] = item["fat_total_g"]! + f.nutrition!.elementAt(2).amount*cv ?? 0.0;
       item["fat_saturated_g"] = item["fat_saturated_g"]! + f.nutrition!.elementAt(3).amount*cv ?? 0.0;
@@ -96,7 +95,7 @@ class AddRecipeController extends GetxController {
       item["fiber_g"] = item["fiber_g"]! + f.nutrition!.elementAt(9).amount*cv ?? 0.0;
       item["sugar_g"] = item["sugar_g"]! + f.nutrition!.elementAt(10).amount*cv ?? 0.0;
     }
-    double i = double.parse(formController["numberOfServing"]!.text ?? "1" );
+    double i = double.parse(formController["numberOfServing"]!.text );
     formController["calories"]!.text = "${item["calories"]!/i}";
     formController["fat_total_g"]!.text = "${item["fat_total_g"]!/i}";
     formController["fat_saturated_g"]!.text = "${item["fat_saturated_g"]!/i}";
@@ -141,9 +140,7 @@ class AddRecipeController extends GetxController {
     Object obj;
     Map<String, dynamic> item;
     if (!result.isError) {
-      for(int i = 0; i<myIngredients.length; i++){
-        myIngredients[i].servingSize = (myIngredients[i].servingSize! / (double.parse( formController["numberOfServing"]!.text.toString().trim())))!;
-      }
+
       item = {
         "recipeId": "",
         "title": formController["title"]?.text.toString().trim(),
@@ -186,9 +183,6 @@ class AddRecipeController extends GetxController {
     Object obj;
     Map<String, dynamic> item;
     if (!result.isError) {
-      for(int i = 0; i<myIngredients.length; i++){
-        myIngredients[i].servingSize = (myIngredients[i].servingSize! / (double.parse( formController["numberOfServing"]!.text.toString().trim())))!;
-      }
       item = {
         "recipeId": recipeId.value,
         "title": formController["title"]?.text.toString().trim(),

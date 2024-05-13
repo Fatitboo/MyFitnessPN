@@ -251,7 +251,7 @@ class AddFoodPage extends GetView<AddFoodController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "Nutrition Facts",
+                          "Nutrition Facts per serving",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         )

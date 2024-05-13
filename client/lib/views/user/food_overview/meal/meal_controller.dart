@@ -7,15 +7,20 @@ import 'package:do_an_2/views/user/food_overview/food_overview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import '../../../../data/network/cloudinary.dart';
 import '../../../../data/network/network_api_service.dart';
 import '../../../../model/foodDTO.dart';
 import '../../../../model/historyDTO.dart';
+import '../../../../model/logDiaryDTO.dart';
 import '../../../../res/service/remote_service.dart';
 import '../../../../res/values/constants.dart';
 import '../../../../validate/Validator.dart';
 import '../../../../validate/error_type.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../admin/meal_management/discover_recipes/discover_recipes_controller.dart';
+import '../../diary/diary_controller.dart';
 
 class MealController extends GetxController {
   TextEditingController txtSearch = TextEditingController();
@@ -58,28 +63,72 @@ class MealController extends GetxController {
   RxList myIngredients = <FoodDTO>[].obs;
   RxList myFood = <FoodDTO>[].obs;
   RxList myRecipe = <RecipeDTO>[].obs;
+  MealDTO disMeal = MealDTO("", "", "", "", 1, [], [], "");
+
   @override
   void onInit() {
     super.onInit();
     type.value = Get.parameters["type"]!;
     print(type.value);
     validate = {"description": {ERROR_TYPE.require: "Required"}, "numberOfServing": {ERROR_TYPE.require: "Required", ERROR_TYPE.number: "Required a number",}};
-
-    if(type.value == "logMeal"||type.value == "updateMeal"){
+    formController["numberOfServing"]!.text = "${1.0}";
+    if(type.value == "updateMeal"){
       indexV.value = Get.parameters['index']!;
       FoodOverviewController f = Get.find<FoodOverviewController>();
       MealDTO mdto = f.myMeal.elementAt(int.parse(indexV.value));
+      disMeal = mdto;
       print(mdto.recipes?.length);
       mealId.value = mdto.mealId!;
       thumbnailLink.value = mdto.photo??"";
       List<RecipeDTO> rl = mdto.recipes!;
       myRecipe.assignAll(rl);
+      formController["numberOfServing"]!.text = mdto.numberOfServing.toString() ??"1.0";
+
       List<FoodDTO> fl = mdto.foods!;
       myFood.assignAll(fl);
       formController["description"]!.text = "${mdto.description}";
       formController["direction"]!.text = "${mdto.direction}";
-
     }
+    if(type.value == "logMeal" ){
+      indexV.value = Get.parameters['index']!;
+      FoodOverviewController f = Get.find<FoodOverviewController>();
+      MealDTO mdto = f.myMeal.elementAt(int.parse(indexV.value));
+      disMeal = mdto;
+      print(mdto.recipes?.length);
+      mealId.value = mdto.mealId!;
+      thumbnailLink.value = mdto.photo??"";
+      List<RecipeDTO> rl = mdto.recipes!;
+      myRecipe.assignAll(rl);
+      formController["numberOfServing"]!.text = "1.0";
+
+      List<FoodDTO> fl = mdto.foods!;
+      myFood.assignAll(fl);
+      formController["description"]!.text = "${mdto.description}";
+      formController["direction"]!.text = "${mdto.direction}";
+    }
+    if(type.value == "logMealFromDiscoverPage"){
+      DiscoverRecipesController discoverRecipesController = Get.find<DiscoverRecipesController>();
+      int index = int.parse(Get.parameters["index"]!);
+      String? mealType = Get.parameters["mealType"];
+      formController["numberOfServing"]!.text = "1.0";
+
+      for (var element in discoverRecipesController.listMealByCategory) {
+        if(mealType == element.mealType){
+          disMeal = element.meals.elementAt(index);
+          break;
+        }
+      }
+      formController["direction"]!.text = disMeal.direction! ;
+      formController["description"]!.text = disMeal.description!;
+      thumbnailLink.value = disMeal.photo!;
+      mealId.value = disMeal.mealId!;
+      List<FoodDTO> fl = disMeal.foods!;
+      myFood.assignAll(fl);
+    }
+
+    updateData();
+  }
+  void onChangeSize(String item){
 
     updateData();
   }
@@ -105,42 +154,59 @@ class MealController extends GetxController {
     };
     for (FoodDTO f in myFood) {
       double cv = (f.numberOfServing??1)*(f.servingSize??100)/100;
-      item["calories"] = item["calories"]! + f.nutrition!.elementAt(0).amount*cv ?? 0.0;
-      item["fat_total_g"] = item["fat_total_g"]! + f.nutrition!.elementAt(2).amount*cv ?? 0.0;
-      item["fat_saturated_g"] = item["fat_saturated_g"]! + f.nutrition!.elementAt(3).amount*cv ?? 0.0;
-      item["protein_g"] = item["protein_g"]! + f.nutrition!.elementAt(4).amount*cv ?? 0.0;
-      item["sodium_mg"] = item["sodium_mg"]! + f.nutrition!.elementAt(5).amount*cv ?? 0.0;
-      item["potassium_mg"] = item["potassium_mg"]! + f.nutrition!.elementAt(6).amount*cv ?? 0.0;
-      item["cholesterol_mg"] = item["cholesterol_mg"]! + f.nutrition!.elementAt(7).amount*cv ?? 0.0;
-      item["carbohydrates_total_g"] = item["carbohydrates_total_g"]! + f.nutrition!.elementAt(8).amount*cv ?? 0.0;
-      item["fiber_g"] = item["fiber_g"]! + f.nutrition!.elementAt(9).amount*cv ?? 0.0;
-      item["sugar_g"] = item["sugar_g"]! + f.nutrition!.elementAt(10).amount *cv?? 0.0;
+      item["calories"] = item["calories"]! + f.nutrition!.elementAt(0).amount*cv;
+      item["fat_total_g"] = item["fat_total_g"]! + f.nutrition!.elementAt(2).amount*cv;
+      item["fat_saturated_g"] = item["fat_saturated_g"]! + f.nutrition!.elementAt(3).amount*cv;
+      item["protein_g"] = item["protein_g"]! + f.nutrition!.elementAt(4).amount*cv;
+      item["sodium_mg"] = item["sodium_mg"]! + f.nutrition!.elementAt(5).amount*cv;
+      item["potassium_mg"] = item["potassium_mg"]! + f.nutrition!.elementAt(6).amount*cv;
+      item["cholesterol_mg"] = item["cholesterol_mg"]! + f.nutrition!.elementAt(7).amount*cv;
+      item["carbohydrates_total_g"] = item["carbohydrates_total_g"]! + f.nutrition!.elementAt(8).amount*cv;
+      item["fiber_g"] = item["fiber_g"]! + f.nutrition!.elementAt(9).amount*cv;
+      item["sugar_g"] = item["sugar_g"]! + f.nutrition!.elementAt(10).amount *cv;
     }
     for(RecipeDTO r in myRecipe){
       for (FoodDTO f in r.foods??[]) {
         double cv = (f.numberOfServing??1)*(f.servingSize??100)/100;
-        item["calories"] = item["calories"]! + f.nutrition!.elementAt(0).amount*cv *(r.numberOfServing??1) ?? 0.0;
-        item["fat_total_g"] = item["fat_total_g"]! + f.nutrition!.elementAt(2).amount*cv*(r.numberOfServing??1)  ?? 0.0;
-        item["fat_saturated_g"] = item["fat_saturated_g"]! + f.nutrition!.elementAt(3).amount*cv*(r.numberOfServing??1)  ?? 0.0;
-        item["protein_g"] = item["protein_g"]! + f.nutrition!.elementAt(4).amount*cv*(r.numberOfServing??1)  ?? 0.0;
-        item["sodium_mg"] = item["sodium_mg"]! + f.nutrition!.elementAt(5).amount*cv*(r.numberOfServing??1)  ?? 0.0;
-        item["potassium_mg"] = item["potassium_mg"]! + f.nutrition!.elementAt(6).amount*cv*(r.numberOfServing??1)  ?? 0.0;
-        item["cholesterol_mg"] = item["cholesterol_mg"]! + f.nutrition!.elementAt(7).amount*cv*(r.numberOfServing??1)  ?? 0.0;
-        item["carbohydrates_total_g"] = item["carbohydrates_total_g"]! + f.nutrition!.elementAt(8).amount*cv*(r.numberOfServing??1)  ?? 0.0;
-        item["fiber_g"] = item["fiber_g"]! + f.nutrition!.elementAt(9).amount*cv*(r.numberOfServing??1)  ?? 0.0;
-        item["sugar_g"] = item["sugar_g"]! + f.nutrition!.elementAt(10).amount *cv*(r.numberOfServing??1) ?? 0.0;
+        item["calories"] = item["calories"]! + f.nutrition!.elementAt(0).amount*cv *(r.numberOfServing??1);
+        item["fat_total_g"] = item["fat_total_g"]! + f.nutrition!.elementAt(2).amount*cv*(r.numberOfServing??1);
+        item["fat_saturated_g"] = item["fat_saturated_g"]! + f.nutrition!.elementAt(3).amount*cv*(r.numberOfServing??1);
+        item["protein_g"] = item["protein_g"]! + f.nutrition!.elementAt(4).amount*cv*(r.numberOfServing??1);
+        item["sodium_mg"] = item["sodium_mg"]! + f.nutrition!.elementAt(5).amount*cv*(r.numberOfServing??1);
+        item["potassium_mg"] = item["potassium_mg"]! + f.nutrition!.elementAt(6).amount*cv*(r.numberOfServing??1);
+        item["cholesterol_mg"] = item["cholesterol_mg"]! + f.nutrition!.elementAt(7).amount*cv*(r.numberOfServing??1);
+        item["carbohydrates_total_g"] = item["carbohydrates_total_g"]! + f.nutrition!.elementAt(8).amount*cv*(r.numberOfServing??1);
+        item["fiber_g"] = item["fiber_g"]! + f.nutrition!.elementAt(9).amount*cv*(r.numberOfServing??1);
+        item["sugar_g"] = item["sugar_g"]! + f.nutrition!.elementAt(10).amount *cv*(r.numberOfServing??1);
       }
     }
-    formController["calories"]!.text = "${item["calories"]}";
-    formController["fat_total_g"]!.text = "${item["fat_total_g"]}";
-    formController["fat_saturated_g"]!.text = "${item["fat_saturated_g"]}";
-    formController["protein_g"]!.text = "${item["protein_g"]}";
-    formController["sodium_mg"]!.text = "${item["sodium_mg"]}";
-    formController["potassium_mg"]!.text = "${item["potassium_mg"]}";
-    formController["cholesterol_mg"]!.text = "${item["cholesterol_mg"]}";
-    formController["carbohydrates_total_g"]!.text = "${item["carbohydrates_total_g"]}";
-    formController["fiber_g"]!.text = "${item["fiber_g"]}";
-    formController["sugar_g"]!.text = "${item["sugar_g"]}";
+    double i = double.parse(formController["numberOfServing"]?.text ?? "1" );
+
+    if(type.value == "logMealFromDiscoverPage"||type.value == "logMeal"){
+      formController["calories"]!.text = (item["calories"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+      formController["fat_total_g"]!.text = (item["fat_total_g"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+      formController["fat_saturated_g"]!.text = (item["fat_saturated_g"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+      formController["protein_g"]!.text = (item["protein_g"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+      formController["sodium_mg"]!.text = (item["sodium_mg"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+      formController["potassium_mg"]!.text = (item["potassium_mg"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+      formController["cholesterol_mg"]!.text = (item["cholesterol_mg"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+      formController["carbohydrates_total_g"]!.text = (item["carbohydrates_total_g"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+      formController["fiber_g"]!.text = (item["fiber_g"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+      formController["sugar_g"]!.text = (item["sugar_g"]!*i / disMeal.numberOfServing!).toStringAsFixed(2);
+    }
+    else{
+      formController["calories"]!.text = (item["calories"]!/i ).toStringAsFixed(2);
+      formController["fat_total_g"]!.text = (item["fat_total_g"]!/i ).toStringAsFixed(2);
+      formController["fat_saturated_g"]!.text = (item["fat_saturated_g"]!/i ).toStringAsFixed(2);
+      formController["protein_g"]!.text = (item["protein_g"]!/i ).toStringAsFixed(2);
+      formController["sodium_mg"]!.text = (item["sodium_mg"]!/i ).toStringAsFixed(2);
+      formController["potassium_mg"]!.text = (item["potassium_mg"]!/i ).toStringAsFixed(2);
+      formController["cholesterol_mg"]!.text = (item["cholesterol_mg"]!/i ).toStringAsFixed(2);
+      formController["carbohydrates_total_g"]!.text = (item["carbohydrates_total_g"]!/i ).toStringAsFixed(2);
+      formController["fiber_g"]!.text = (item["fiber_g"]!/i ).toStringAsFixed(2);
+      formController["sugar_g"]!.text = (item["sugar_g"]!/i ).toStringAsFixed(2);
+    }
+
   }
 
   void getFoodsFromApi(String queryString) async {
@@ -211,7 +277,8 @@ class MealController extends GetxController {
         "description": formController["description"]!.text.toString().trim()??"",
         "direction": formController["direction"]!.text.toString().trim()??"",
         "photo": url,
-        "numberOfServing": 1,
+        "mealType":"PersonalAdd",
+        "numberOfServing": formController["numberOfServing"]?.text.toString().trim(),
         "foods": myFood.toJson(),
         "recipes": myRecipe.toJson()
       };
@@ -295,7 +362,8 @@ class MealController extends GetxController {
         "description": formController["description"]!.text.toString().trim()??"",
         "direction": formController["direction"]!.text.toString().trim()??"",
         "photo": url,
-        "numberOfServing": 1,
+        "mealType":"PersonalAdd",
+        "numberOfServing": formController["numberOfServing"]?.text.toString().trim(),
         "foods": myFood.toJson(),
         "recipes": myRecipe.toJson()
       };
@@ -327,9 +395,44 @@ class MealController extends GetxController {
         Get.back();
       }
     }
-
-
-
   }
+
+  Future<void> logFood( ) async {
+    DateTime now = DateTime.now();
+    print("cc");
+    String formattedDateTime = DateFormat('yyyy-MM-ddTHH:mm:ss').format(now);
+    var item;
+      item = {
+        "logDiaryId": "",
+        "dateLog": formattedDateTime,
+        "foodLogItem": {
+          "meal": disMeal.toJson(),
+          "numberOfServing": double.tryParse(formController["numberOfServing"]?.text.toString().trim() ?? "0.0"),
+          "foodLogType": "meal"
+        },
+        "logDiaryType": selectedMeal.value
+      };
+
+    Object obj = jsonEncode(item);
+    NetworkApiService networkApiService = NetworkApiService();
+    FoodOverviewController clr = Get.find<FoodOverviewController>();
+    http.Response res = await networkApiService.postApi("/log-diary/add-log/${clr.loginResponse.userId}", obj);
+
+    if(res.statusCode == 200){
+      LogDiaryDTO logDiaryDTO = LogDiaryDTO.fromJson(json.decode(utf8.decode(res.bodyBytes)));
+      DiaryController diaryController = Get.find<DiaryController>();
+      if(selectedMeal.value == "Breakfast"){
+        diaryController.breakfast.add(logDiaryDTO);
+      }else if(selectedMeal.value == "Lunch"){
+        diaryController.lunch.add(logDiaryDTO);
+      }else if(selectedMeal.value == "Dinner"){
+        diaryController.dinner.add(logDiaryDTO);
+      }else if(selectedMeal.value == "Snack"){
+        diaryController.snack.add(logDiaryDTO);
+      }
+    }
+    Get.close(2);
+  }
+
 
 }

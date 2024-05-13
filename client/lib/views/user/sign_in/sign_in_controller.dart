@@ -68,7 +68,6 @@ class SignInController extends GetxController {
               token: customResponse.user?.token,
               userType: customResponse.user?.userType));
       UserStore.to.setToken(customResponse.user!.token ?? "");
-      print("gg");
       Get.offAndToNamed(AppRoutes.APPLICATION_USER);
     } else {
       print(customResponse.message);

@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 class ApplicationUserBinding extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut<DiaryController>(() => DiaryController());
     Get.lazyPut<ApplicationUserController>(() => ApplicationUserController());
     Get.lazyPut<HomeController>(() => HomeController());
-    Get.lazyPut<DiaryController>(() => DiaryController());
   }
   
 }

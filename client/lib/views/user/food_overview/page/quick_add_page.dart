@@ -1,6 +1,5 @@
 import 'package:do_an_2/res/values/color_extension.dart';
 import 'package:do_an_2/views/user/food_overview/add_food/add_food_controller.dart';
-import 'package:do_an_2/views/user/food_overview/food_overview_controller.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -113,7 +112,7 @@ class QuickAddPage extends GetView<AddFoodController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "Nutrition Facts",
+                          "Nutrition Facts per serving",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         )

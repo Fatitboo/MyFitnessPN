@@ -19,7 +19,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FoodServices {
     private final UserRepository userRepository;
-    public List<Food> getAllFoodOfUser( String userId){
+
+    public List<Food> getAllFoodOfUser(String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -28,12 +29,13 @@ public class FoodServices {
 
         List<Food> foods = user.getFoods();
 
-        if(foods==null) foods = new ArrayList<>();
+        if (foods == null) foods = new ArrayList<>();
 
 
         return foods;
     }
-    public List<Recipe> getAllRecipesOfUser( String userId){
+
+    public List<Recipe> getAllRecipesOfUser(String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -42,12 +44,13 @@ public class FoodServices {
 
         List<Recipe> r = user.getRecipes();
 
-        if(r==null) r = new ArrayList<>();
+        if (r == null) r = new ArrayList<>();
 
 
         return r;
     }
-    public List<Meal> getAllMealsOfUser( String userId){
+
+    public List<Meal> getAllMealsOfUser(String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -56,12 +59,13 @@ public class FoodServices {
 
         List<Meal> m = user.getMeals();
 
-        if(m==null) m = new ArrayList<>();
+        if (m == null) m = new ArrayList<>();
 
 
         return m;
     }
-    public Food createFood(Food foodDto, String userId){
+
+    public Food createFood(Food foodDto, String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -70,7 +74,7 @@ public class FoodServices {
 
         List<Food> foods = user.getFoods();
         foodDto.setFoodId(UUID.randomUUID().toString());
-        if(foods==null) foods = new ArrayList<>();
+        if (foods == null) foods = new ArrayList<>();
         foods.add(foodDto);
 
         user.setFoods(foods);
@@ -79,7 +83,8 @@ public class FoodServices {
 
         return foodDto;
     }
-    public void updateFood(Food foodDto, String userId){
+
+    public void updateFood(Food foodDto, String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -91,9 +96,9 @@ public class FoodServices {
 
         List<Food> foods = user.getFoods();
 
-        if(foods==null) foods = new ArrayList<>();
-        for(Food f : foods){
-            if(f.getFoodId().equals(foodDto.getFoodId())){
+        if (foods == null) foods = new ArrayList<>();
+        for (Food f : foods) {
+            if (f.getFoodId().equals(foodDto.getFoodId())) {
                 foods.set(foods.indexOf(f), foodDto);
                 break;
             }
@@ -103,7 +108,8 @@ public class FoodServices {
 
         userRepository.save(user);
     }
-    public void deleteFood(String foodId, String userId){
+
+    public void deleteFood(String foodId, String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -113,9 +119,9 @@ public class FoodServices {
 
         List<Food> foods = user.getFoods();
 
-        if(foods==null) foods = new ArrayList<>();
-        for(Food f : foods){
-            if(f.getFoodId().equals(foodId)){
+        if (foods == null) foods = new ArrayList<>();
+        for (Food f : foods) {
+            if (f.getFoodId().equals(foodId)) {
                 foods.remove(f);
                 break;
             }
@@ -125,7 +131,8 @@ public class FoodServices {
 
         userRepository.save(user);
     }
-    public Recipe createRecipe(Recipe recipeDto, String userId){
+
+    public Recipe createRecipe(Recipe recipeDto, String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -134,7 +141,7 @@ public class FoodServices {
 
         List<Recipe> recipes = user.getRecipes();
         recipeDto.setRecipeId(UUID.randomUUID().toString());
-        if(recipes==null) recipes = new ArrayList<>();
+        if (recipes == null) recipes = new ArrayList<>();
         recipes.add(recipeDto);
 
         user.setRecipes(recipes);
@@ -143,7 +150,8 @@ public class FoodServices {
 
         return recipeDto;
     }
-    public void updateRecipe(Recipe RecipeDto, String userId){
+
+    public void updateRecipe(Recipe RecipeDto, String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -155,9 +163,9 @@ public class FoodServices {
 
         List<Recipe> recipes = user.getRecipes();
 
-        if(recipes==null) recipes = new ArrayList<>();
-        for(Recipe r : recipes){
-            if(r.getRecipeId().equals(RecipeDto.getRecipeId())){
+        if (recipes == null) recipes = new ArrayList<>();
+        for (Recipe r : recipes) {
+            if (r.getRecipeId().equals(RecipeDto.getRecipeId())) {
                 recipes.set(recipes.indexOf(r), RecipeDto);
                 break;
             }
@@ -167,7 +175,8 @@ public class FoodServices {
 
         userRepository.save(user);
     }
-    public void deleteRecipe(String RecipeId, String userId){
+
+    public void deleteRecipe(String RecipeId, String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -175,11 +184,10 @@ public class FoodServices {
         User user = optionalUser.get();
 
 
-
         List<Recipe> recipes = user.getRecipes();
-        if(recipes==null) recipes = new ArrayList<>();
-        for(Recipe r : recipes){
-            if(r.getRecipeId().equals(RecipeId)){
+        if (recipes == null) recipes = new ArrayList<>();
+        for (Recipe r : recipes) {
+            if (r.getRecipeId().equals(RecipeId)) {
                 recipes.remove(r);
                 break;
             }
@@ -190,7 +198,7 @@ public class FoodServices {
         userRepository.save(user);
     }
 
-    public Meal createMeal(Meal MealDto, String userId){
+    public Meal createMeal(Meal MealDto, String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -199,7 +207,7 @@ public class FoodServices {
 
         List<Meal> meals = user.getMeals();
         MealDto.setMealId(UUID.randomUUID().toString());
-        if(meals==null) meals = new ArrayList<>();
+        if (meals == null) meals = new ArrayList<>();
         meals.add(MealDto);
 
         user.setMeals(meals);
@@ -208,7 +216,8 @@ public class FoodServices {
 
         return MealDto;
     }
-    public void updateMeal(Meal mealDto, String userId){
+
+    public void updateMeal(Meal mealDto, String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -220,9 +229,9 @@ public class FoodServices {
 
         List<Meal> meals = user.getMeals();
 
-        if(meals==null) meals = new ArrayList<>();
-        for(Meal r : meals){
-            if(r.getMealId().equals(mealDto.getMealId())){
+        if (meals == null) meals = new ArrayList<>();
+        for (Meal r : meals) {
+            if (r.getMealId().equals(mealDto.getMealId())) {
                 meals.set(meals.indexOf(r), mealDto);
                 break;
             }
@@ -232,7 +241,8 @@ public class FoodServices {
 
         userRepository.save(user);
     }
-    public void deleteMeal(String mealId, String userId){
+
+    public void deleteMeal(String mealId, String userId) {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");
@@ -240,11 +250,10 @@ public class FoodServices {
         User user = optionalUser.get();
 
 
-
         List<Meal> meals = user.getMeals();
-        if(meals==null) meals = new ArrayList<>();
-        for(Meal r : meals){
-            if(r.getMealId().equals(mealId)){
+        if (meals == null) meals = new ArrayList<>();
+        for (Meal r : meals) {
+            if (r.getMealId().equals(mealId)) {
                 meals.remove(r);
                 break;
             }

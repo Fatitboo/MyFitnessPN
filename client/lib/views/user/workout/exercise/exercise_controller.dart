@@ -16,14 +16,13 @@ class ExerciseController extends GetxController{
   late ExerciseDTO selected;
   Rx<String> from = "".obs;
 
-  late final NetworkApiService networkApiService;
+   final NetworkApiService networkApiService = NetworkApiService();
   Rx<Offset> tapPosition = Offset.zero.obs;
 
   final String baseUri = "/user/exercises/";
   @override
   void onInit() {
     var params = Get.arguments;
-    networkApiService = NetworkApiService();
     currentWorkoutType.value = params["type"].toString();
     from.value = params["from"];
     getAllExercise();
@@ -31,6 +30,7 @@ class ExerciseController extends GetxController{
 
   void getAllExercise () async {
     loading.value = true;
+
     http.Response res = await networkApiService.getApi(baseUri + userId);
     loading.value = false;
     if(res.statusCode == HttpStatus.ok){

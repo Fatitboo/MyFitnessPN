@@ -1,19 +1,24 @@
 import 'dart:convert';
 
 import 'package:do_an_2/views/user/food_overview/food_overview_controller.dart';
+import 'package:do_an_2/views/user/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '../../../../data/network/network_api_service.dart';
 import '../../../../model/foodDTO.dart';
 import '../../../../model/historyDTO.dart';
+import '../../../../model/logDiaryDTO.dart';
 import '../../../../validate/Validator.dart';
 import '../../../../validate/error_type.dart';
+import '../../diary/diary_controller.dart';
 
 class AddFoodController extends GetxController {
   Map<String, TextEditingController> formController = {
+    "water": TextEditingController(),
     "foodName": TextEditingController(),
     "description": TextEditingController(),
     "servingSize": TextEditingController(),
@@ -48,7 +53,7 @@ class AddFoodController extends GetxController {
   }.obs;
   var foodId = "".obs;
   final List<String> itemsMeal = ['Breakfast', 'Lunch', 'Dinner', 'Snack',];
-
+  var title ="".obs;
   var selectedMeal = "Breakfast".obs;
   late FoodDTO fdto;
   @override
@@ -56,6 +61,7 @@ class AddFoodController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     var type = Get.parameters["type"];
+    title.value = type!;
     if (type == "edit") {
       FoodOverviewController f = Get.find<FoodOverviewController>();
       int index = int.parse(Get.parameters["index"]!);
@@ -373,5 +379,46 @@ class AddFoodController extends GetxController {
         }
       }
     }
+  }
+
+  Future<void> logWater( ) async {
+    if(formController["water"]!.text.isEmpty){
+      Get.defaultDialog(
+          radius: 8,
+          title: "Please add water",
+          middleText: "Please add water.",
+          textCancel: "OK",
+          onCancel: (){}
+      );
+      return;
+    }
+    else{
+      DateTime now = DateTime.now();
+      print("cc");
+      String formattedDateTime = DateFormat('yyyy-MM-ddTHH:mm:ss').format(now);
+      var item;
+
+
+      item = {
+        "logDiaryId": "",
+        "dateLog": formattedDateTime,
+        "water": double.parse(formController["water"]!.text),
+        "logDiaryType": "Water"
+      };
+
+
+      Object obj = jsonEncode(item);
+      NetworkApiService networkApiService = NetworkApiService();
+      HomeController clr = Get.find<HomeController>();
+      http.Response res = await networkApiService.postApi("/log-diary/add-log/${clr.loginResponse.userId}", obj);
+
+      if(res.statusCode == 200){
+        LogDiaryDTO logDiaryDTO = LogDiaryDTO.fromJson(json.decode(utf8.decode(res.bodyBytes)));
+        DiaryController diaryController = Get.find<DiaryController>();
+        diaryController.water.add(logDiaryDTO);
+      }
+      Get.close(1);
+    }
+
   }
 }
