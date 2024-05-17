@@ -609,13 +609,13 @@ class AddRecipePage extends GetView<AddRecipeController> {
                               children: [
                                 !controller.isShow.value
                                     ? const Text(
-                                  "Show Nutrition Facts",
+                                  "Show Nutrition Facts per serving",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15),
                                 )
                                     : const Text(
-                                  "Hide Nutrition Facts",
+                                  "Hide Nutrition Facts per serving",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15),

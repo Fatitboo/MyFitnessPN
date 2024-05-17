@@ -18,6 +18,7 @@ public class HealthDataResponse {
     private String exercise;
     private String goal;
     private double goalWeight;
+    private double waterIntake;
 
     BodyMassIndex bodyMassIndex;
     BodyFatPercentage bodyFatPercentage;

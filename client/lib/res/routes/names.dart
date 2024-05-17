@@ -22,6 +22,7 @@ class AppRoutes {
   static const MEAL_ACTION = '/meal_action';
   static const ADD_MEAL_ITEM = '/add_meal_item';
   static const QUICK_ADD = '/quick_add';
+  static const ADD_WATER = '/add_water';
 
   
   // admin routes
@@ -32,7 +33,10 @@ class AppRoutes {
   static const WORKOUT_MANAGEMENT = '/workout_management';
   static const BLOG_MANAGEMENT = '/blog_management';
   static const PROFILE_ADMIN = '/profile_admin';
+  static const INGREDIENTS_ADMIN = '/ingredients_admin';
 
+  static const DISCOVER_RECIPES_MANAGEMENT = '/discover_recipes_management';
+  static const DISCOVER_RECIPES_MANAGEMENT_ADD = '/discover_recipes_management_add';
 
   static const WORKOUT_MANAGEMENT_ADD = '/workout_management/add';
   static const ROUTINE_MANAGEMENT_ADD = '/routine_management/add';

@@ -219,6 +219,7 @@ public class UserServices {
                 .exercise(healthDataResponse.getExercise())
                 .goal(healthDataResponse.getGoal())
                 .goalWeight(healthDataResponse.getGoalWeight())
+                .waterIntake(healthDataResponse.getWaterIntake())
                 .bodyMassIndex(healthDataResponse.getBodyMassIndex())
                 .bodyFatPercentage(healthDataResponse.getBodyFatPercentage())
                 .leanBodyMass(healthDataResponse.getLeanBodyMass())

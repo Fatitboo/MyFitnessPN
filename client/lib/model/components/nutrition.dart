@@ -20,7 +20,7 @@ class Nutrition {
   }
    Map<String, dynamic> toJson() => {
      "nutritionName": nutritionName,
-     "amount": amount,
+     "amount": amount.toStringAsFixed(2),
      "unit": unit,
    };
 }

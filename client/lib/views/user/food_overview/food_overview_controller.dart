@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:do_an_2/model/foodDTO.dart';
 import 'package:do_an_2/model/historyDTO.dart';
 import 'package:do_an_2/model/recipeDTO.dart';
-import 'package:do_an_2/res/routes/routes.dart';
 import 'package:do_an_2/res/service/remote_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,6 +34,9 @@ class FoodOverviewController extends GetxController {
   void onInit() {
     super.onInit();
     networkApiService = NetworkApiService();
+    var mealType = Get.arguments["mealType"];
+    selectedMeal.value = mealType;
+
     getAllFood();
     getAllRecipe();
     getAllMeal();

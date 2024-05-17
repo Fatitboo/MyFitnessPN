@@ -109,13 +109,12 @@ class HomePage extends GetView<HomeController> {
                                                     decoration: BoxDecoration(
                                                       color: Colors.transparent,
                                                       borderRadius:
-                                                      BorderRadius.circular(
-                                                          media.width *
-                                                              0.1),
+                                                      BorderRadius.circular(media.width * 0.1),
                                                     ),
                                                     child: FittedBox(
                                                       child: Text(
-                                                        "230kCal\nRemaining",
+                                                        "${(controller.userHealthDTO.value.getCaloriesNeed()
+                                                            - controller.getLogInfor()["food"]!).toStringAsFixed(0)} Cal\nRemaining",
                                                         textAlign:
                                                         TextAlign.center,
                                                         style: TextStyle(
@@ -130,14 +129,12 @@ class HomePage extends GetView<HomeController> {
                                                   ),
                                                   SimpleCircularProgressBar(
                                                     size: media.height * 0.15,
+
                                                     progressStrokeWidth: 12,
                                                     backStrokeWidth: 10,
-                                                    progressColors:
-                                                    AppColor.secondaryG,
-                                                    backColor:
-                                                    Colors.grey.shade100,
-                                                    valueNotifier:
-                                                    ValueNotifier(75),
+                                                    progressColors: AppColor.secondaryG,
+                                                    backColor: Colors.grey.shade100,
+                                                    valueNotifier: ValueNotifier(controller.percent.value),
                                                     startAngle: -180,
                                                   ),
                                                 ],
@@ -171,9 +168,9 @@ class HomePage extends GetView<HomeController> {
                                                         color: AppColor.black,
                                                         fontSize: 12),
                                                   ),
-                                                  const Text(
-                                                    "1500",
-                                                    style: TextStyle(
+                                                   Text(
+                                                    controller.userHealthDTO.value?.getCaloriesNeed().toStringAsFixed(0)??"0",
+                                                    style: const TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 14,
                                                         fontWeight:
@@ -207,9 +204,9 @@ class HomePage extends GetView<HomeController> {
                                                         color: AppColor.black,
                                                         fontSize: 12),
                                                   ),
-                                                  const Text(
-                                                    "500",
-                                                    style: TextStyle(
+                                                   Text(
+                                                    "${(controller.getLogInfor()["food"]?.toStringAsFixed(0))}",
+                                                    style: const TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 14,
                                                         fontWeight:
@@ -287,7 +284,7 @@ class HomePage extends GetView<HomeController> {
                                   width: media.width * 0.07,
                                   backgroundColor: Colors.grey.shade100,
                                   foregrondColor: Colors.purple,
-                                  ratio: 0.5,
+                                  ratio:controller.perWater.value,
                                   direction: Axis.vertical,
                                   curve: Curves.fastLinearToSlowEaseIn,
                                   duration: const Duration(seconds: 3),
@@ -322,7 +319,7 @@ class HomePage extends GetView<HomeController> {
                                               bounds.width, bounds.height));
                                         },
                                         child: Text(
-                                          "4 Liters",
+                                          "${((controller.userHealthDTO.value.waterIntake ?? 0 )/1000).toStringAsFixed(1)} Liters",
                                           style: TextStyle(
                                               color: AppColor.white,
                                               fontWeight: FontWeight.w700,
@@ -350,7 +347,7 @@ class HomePage extends GetView<HomeController> {
                                               bounds.width, bounds.height));
                                         },
                                         child: Text(
-                                          "1.4 Liters",
+                                          "${(controller.getLogInfor()["water"]??0)/1000} Liters",
                                           style: TextStyle(
                                               color: AppColor.white,
                                               fontWeight: FontWeight.w700,
@@ -421,7 +418,7 @@ class HomePage extends GetView<HomeController> {
                                         height: 5,
                                       ),
                                       Text(
-                                        "20.1",
+                                        (controller.userHealthDTO.value?.getBmi() ?? 0 ).toStringAsFixed(1),
                                         style: TextStyle(
                                             color: AppColor.black,
                                             fontSize: 30,
@@ -439,7 +436,7 @@ class HomePage extends GetView<HomeController> {
                                         height: 10,
                                       ),
                                       Text(
-                                        "Normal weight",
+                                        controller.userHealthDTO.value?.getBmiStatus() ?? "",
                                         style: TextStyle(
                                             color: AppColor.black,
                                             fontSize: 12,
@@ -476,7 +473,7 @@ class HomePage extends GetView<HomeController> {
                                         height: 10,
                                       ),
                                       Text(
-                                        "70Kg",
+                                        "${controller.userHealthDTO.value?.weight?.toStringAsFixed(0)}kg",
                                         style: TextStyle(
                                             color: AppColor.black,
                                             fontSize: 30,

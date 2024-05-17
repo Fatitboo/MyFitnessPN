@@ -80,9 +80,14 @@ class FoodDTO {
     return item;
   }
   String getStringDescription() {
-    return "${nutrition!.elementAt(0).amount*servingSize!*numberOfServing!/100} cal, $numberOfServing portions";
+    return "${(nutrition!.elementAt(0).amount*servingSize!*numberOfServing!/100).toStringAsFixed(2)} cal for 1 serving = ${servingSize!*numberOfServing!} g ";
   }
-
+  String getCalDes() {
+    return "${(nutrition!.elementAt(0).amount*servingSize!*numberOfServing!/100).toStringAsFixed(0)} cal";
+  }
+  double getCals(){
+    return (nutrition!.elementAt(0).amount*servingSize!*numberOfServing!/100);
+  }
   void multiplyIndex(double multiply) {
     nutrition?.forEach((element) {
       element.amount *= multiply;

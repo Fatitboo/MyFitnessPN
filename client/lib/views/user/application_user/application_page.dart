@@ -7,6 +7,8 @@ import 'package:do_an_2/views/user/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../res/routes/names.dart';
+
 class ApplicationUserPage extends GetView<ApplicationUserController> {
   ApplicationUserPage({super.key});
   var selectTab = 0.obs;
@@ -87,7 +89,12 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
         width: 65,
         height: 65,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+              Get.toNamed(
+                  AppRoutes.FOOD_OVERVIEW,
+                  arguments: {"mealType":"Breakfast"}
+              );
+          },
           child: Container(
             width: 65,
             height: 65,

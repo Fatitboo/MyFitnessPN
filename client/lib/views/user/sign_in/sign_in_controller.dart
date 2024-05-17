@@ -54,11 +54,9 @@ class SignInController extends GetxController {
     };
     Object object = jsonEncode(information);
     print(object);
-    http.Response postApi =
-        await NetworkApiService().postApi("/users/login", object);
+    http.Response postApi = await NetworkApiService().postApi("/users/login", object);
 
-    CustomResponse customResponse =
-        CustomResponse.fromJson(jsonDecode(postApi.body));
+    CustomResponse customResponse = CustomResponse.fromJson(jsonDecode(postApi.body));
     if (postApi.statusCode == 200) {
       UserStore.to.saveProfile(customResponse.user ??
           LoginResponse(
@@ -68,7 +66,6 @@ class SignInController extends GetxController {
               token: customResponse.user?.token,
               userType: customResponse.user?.userType));
       UserStore.to.setToken(customResponse.user!.token ?? "");
-      print("gg");
       Get.offAndToNamed(AppRoutes.APPLICATION_USER);
     } else {
       print(customResponse.message);

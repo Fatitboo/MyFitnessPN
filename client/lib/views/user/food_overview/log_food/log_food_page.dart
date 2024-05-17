@@ -27,11 +27,14 @@ class LogFoodPage extends GetView<LogFoodController> {
           actions: [
             IconButton(
                 onPressed: () {
-                  if(Get.parameters["type"] == "fromMyFoodPage"){
-                    // controller.logFood();
+                  if(Get.parameters["type"] == "fromMyFoodPage"
+                  || Get.parameters["type"] == "fromMyRecipePage"){
+                    controller.logFood();
                   }
                   if(Get.parameters["type"] == "fromIngredientPage"
-                      || Get.parameters["type"] == "fromAddRecipePage"){
+                      || Get.parameters["type"] == "fromAddRecipePage"
+                      || Get.parameters["type"] == "fromIngredientAdminPage"
+                      || Get.parameters["type"] == "fromUpdateDisRecipePage"){
                     controller.logIngredientToRecipe();
                   }
                   if((controller.type.value == "fromAddMealItemRecipePage")
@@ -75,34 +78,35 @@ class LogFoodPage extends GetView<LogFoodController> {
                       ),
                       const SizedBox(height: 10,),
                       Container(height: 0.5, width: MediaQuery.of(context).size.width, color: Colors.grey.shade300,),
-                      const SizedBox(height: 10,),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Serving Size (g)", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-                          Container(
-                            constraints: BoxConstraints(minWidth: 70, maxHeight: 40, maxWidth: MediaQuery.of(context).size.width),
-                            child: IntrinsicWidth(
-                              child: TextField(
-                                controller: controller.formController["servingSize"],
-                                onChanged: (item) {controller.errors["servingSize"]?.isError = false;},
-                                onSubmitted: (item) {controller.onChangeSize(item);},
-                                enabled: (Get.parameters["type"] == "fromMyRecipePage"||Get.parameters["type"] == "fromAddRecipePage"||Get.parameters["type"] == "fromAddMealItemRecipePage")?false:true,
-                                textAlign: TextAlign.right,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.only(top: 10, right: 10), enabledBorder: const OutlineInputBorder(),
-                                    errorText: controller.errors["servingSize"]!.isError
-                                        ? controller.errors["servingSize"]!.message
-                                        : null,
-                                    focusedBorder:  const OutlineInputBorder(),
-                                    hintText: "2"),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // const SizedBox(height: 10,),
+                      //
+                      // Row(
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     const Text("Serving Size (g)", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                      //     Container(
+                      //       constraints: BoxConstraints(minWidth: 70, maxHeight: 40, maxWidth: MediaQuery.of(context).size.width),
+                      //       child: IntrinsicWidth(
+                      //         child: TextField(
+                      //           controller: controller.formController["servingSize"],
+                      //           onChanged: (item) {controller.errors["servingSize"]?.isError = false;},
+                      //           onSubmitted: (item) {controller.onChangeSize(item);},
+                      //           enabled: (Get.parameters["type"] == "fromMyRecipePage"||Get.parameters["type"] == "fromAddRecipePage"||Get.parameters["type"] == "fromAddMealItemRecipePage")?false:true,
+                      //           textAlign: TextAlign.right,
+                      //           keyboardType: TextInputType.number,
+                      //           decoration: InputDecoration(
+                      //               contentPadding: const EdgeInsets.only(top: 10, right: 10), enabledBorder: const OutlineInputBorder(),
+                      //               errorText: controller.errors["servingSize"]!.isError
+                      //                   ? controller.errors["servingSize"]!.message
+                      //                   : null,
+                      //               focusedBorder:  const OutlineInputBorder(),
+                      //               hintText: "2"),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -137,8 +141,11 @@ class LogFoodPage extends GetView<LogFoodController> {
                           ),
                         ],
                       ),
-                      (controller.type.value== "fromIngredientPage")||(controller.type.value == "fromAddRecipePage")
+                      (controller.type.value== "fromIngredientPage")
+                          ||(controller.type.value == "fromAddRecipePage")
                           ||(controller.type.value == "fromAddMealItemRecipePage")
+                          ||(controller.type.value == "fromIngredientAdminPage")
+                          ||(controller.type.value == "fromUpdateDisRecipePage")
                           ? const SizedBox(height: 0,)
                           : Column(
                               children: [
@@ -558,27 +565,7 @@ class LogFoodPage extends GetView<LogFoodController> {
                                 ),
                               ],
                             ),
-                            (Get.parameters["type"] == "fromIngredientPage")
-                                ||(Get.parameters["type"] == "fromAddRecipePage")
-                                ||(Get.parameters["type"] == "fromAddMealItemRecipePage")
-                                ||(Get.parameters["type"] == "fromAddMealItemFoodPage")
-                                ?const SizedBox(height: 0,)
-                                : Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.only(left: 45, right: 45, bottom: 25, top: 10),
-                                    child: OutlinedButton(
-                                        style: OutlinedButton.styleFrom(side: const BorderSide(width: 1, color: Colors.red)),
-                                        onPressed: () {
-                                          controller.deleteItem();
-                                        },
-                                        child: const Text("Delete", style: TextStyle(fontSize: 16, color: Colors.red),)),
-                                  ),
-                                ),
-                              ],
-                            )
+
                           ],
                         ),
                       ),

@@ -26,6 +26,7 @@ dependencies:
   fl_chart: ^0.62.0
   dropdown_button2: ^2.3.9
   uuid: ^4.4.0
+  intl: ^0.18.1
   image_picker: ^1.0.8
   video_player: ^2.8.6
   video_editor: ^3.0.0

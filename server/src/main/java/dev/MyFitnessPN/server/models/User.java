@@ -2,6 +2,7 @@ package dev.MyFitnessPN.server.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import dev.MyFitnessPN.server.component.logDiary.DiaryDate;
 import dev.MyFitnessPN.server.component.meal.Food;
 import dev.MyFitnessPN.server.component.meal.Meal;
 import dev.MyFitnessPN.server.component.meal.Recipe;
@@ -52,6 +53,9 @@ public class User implements UserDetails {
     // token + expired
     private String tokenResetPassword;
     private LocalDateTime expiredDateTokenResetPassword;
+
+    private List<DiaryDate> diaryDates;
+
 
     private String userType;
     // exercise

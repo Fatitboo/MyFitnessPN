@@ -56,4 +56,13 @@ public class Constant {
         public static final String article = "article";
         public static final String workout = "workout";
     }
+
+    public static class LogDiaryType {
+        public static final String log_water = "log_water";
+        public static final String log_exercise = "log_exercise";
+        public static final String log_food_breakfast = "log_food_breakfast";
+        public static final String log_food_lunch = "log_food_lunch";
+        public static final String log_food_dinner = "log_food_dinner";
+        public static final String log_food_snack = "log_food_snack";
+    }
 }
