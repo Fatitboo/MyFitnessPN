@@ -1,6 +1,7 @@
 package dev.MyFitnessPN.server.controllers;
 
 import dev.MyFitnessPN.server.component.messageresponse.MessageResponse;
+import dev.MyFitnessPN.server.component.plan.Task;
 import dev.MyFitnessPN.server.dtos.ExerciseDTO;
 import dev.MyFitnessPN.server.dtos.PlanDTO;
 import dev.MyFitnessPN.server.models.ExerciseModel;
@@ -90,6 +91,37 @@ public class PlanController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
         }
     }
+
+    @PutMapping("/update-plan-tasks/{planId}")
+    public ResponseEntity<?> updatePlanTasks(@Valid @RequestBody List<Task> tasks, @PathVariable String planId, BindingResult result) {
+        HashMap<String, Object> Response = new HashMap<>();
+        if (result.hasErrors()) {
+            List<String> errMsgs = result.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .toList();
+            Response.put("message", errMsgs.toString());
+            return ResponseEntity.badRequest().body(Response);
+        }
+        try {
+            MessageResponse res;
+            res = planService.updateTasks(tasks, planId);
+            switch (res.getResType()) {
+                case Constant.MessageType.error, Constant.MessageType.warning:
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res.getResMessage());
+                case Constant.MessageType.success:
+                    Response.put("planId", planId);
+                    Response.put("messageResponse", res.getResMessage());
+                    return ResponseEntity.status(HttpStatus.OK).body(Response);
+                default:
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("System Failure!");
+            }
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
+
 
     @DeleteMapping("/delete-plan/{planId}")
     public ResponseEntity<?> deletePlan(@PathVariable String planId){

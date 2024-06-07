@@ -1,21 +1,16 @@
 package dev.MyFitnessPN.server.services;
 
-import dev.MyFitnessPN.server.component.exercise.Exercise;
 import dev.MyFitnessPN.server.component.messageresponse.MessageResponse;
 import dev.MyFitnessPN.server.component.plan.Task;
-import dev.MyFitnessPN.server.dtos.ExerciseDTO;
 import dev.MyFitnessPN.server.dtos.PlanDTO;
-import dev.MyFitnessPN.server.models.ExerciseModel;
 import dev.MyFitnessPN.server.models.Plan;
-import dev.MyFitnessPN.server.models.User;
 import dev.MyFitnessPN.server.repositories.PlanRepository;
+import dev.MyFitnessPN.server.repositories.RoutineRepository;
 import dev.MyFitnessPN.server.value.Constant;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +20,7 @@ import java.util.Optional;
 public class PlanService {
 
     private final PlanRepository planRepository;
+    private final RoutineRepository routineRepository;
 
     public List<Plan> getAllPlan() throws Exception {
         return planRepository.findAll();
@@ -82,6 +78,30 @@ public class PlanService {
         planRepository.deleteById(planOptional.get().getPlanId());
         res.makeRes(Constant.MessageType.success, "Delete plan successfully");
         return res;
+    }
+    public MessageResponse updateTasks(List<Task> tasks, String planId) throws Exception {
+        //check type
+        MessageResponse res = new MessageResponse();
+
+        Optional<Plan> planOptional = planRepository.findById(new ObjectId(planId));
+        if(planOptional.isEmpty()){
+            res.makeRes(Constant.MessageType.error, "Error when get plan in database");
+            return res;
+        }
+
+        Plan plan = planOptional.get();
+        plan.setTaskList(tasks);
+
+        res.makeRes(Constant.MessageType.success, "Update plan successfully!");
+        planRepository.save(plan);
+        return res;
+    }
+    public List<Task> getAllTasks(String planId) throws Exception {
+        Optional<Plan> planOptional = planRepository.findById(new ObjectId(planId));
+        if(planOptional.isEmpty()){
+            return new ArrayList<>();
+        }
+        return planOptional.get().getTaskList();
     }
 
 }

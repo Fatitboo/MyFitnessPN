@@ -1,7 +1,5 @@
-import 'package:do_an_2/model/planTypeDTO.dart';
 import 'package:do_an_2/validate/Validator.dart';
 import 'package:do_an_2/views/admin/plan_management/plan/plan_controller.dart';
-import 'package:do_an_2/views/admin/workout_management/routine/routine_controller.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -340,7 +338,8 @@ class FirstPage extends GetView<PlanAdminController> {
                             child: QuillEditor.basic(
                               configurations: QuillEditorConfigurations(
                                 controller: controller.overviewController,
-                                readOnly: false,
+                                // readOnly: false,
+                                checkBoxReadOnly: false,
                                 sharedConfigurations: const QuillSharedConfigurations(
                                   locale: Locale('de'),
                                 ),

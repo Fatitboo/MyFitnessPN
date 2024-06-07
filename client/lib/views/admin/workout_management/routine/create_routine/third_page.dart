@@ -104,7 +104,7 @@ class ThirdPage extends GetView<RoutineController> {
                 child: QuillEditor.basic(
                   configurations: QuillEditorConfigurations(
                     controller: controller.descriptionController,
-                    readOnly: false,
+                    // readOnly: false,
                     sharedConfigurations: const QuillSharedConfigurations(
                       locale: Locale('de'),
                     ),

@@ -11,7 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Task {
-    private String taskName;
     private String taskDescription;
     private List<SubTask> subTaskList;
+    private int week;
+    private int dayOfWeek;
 }

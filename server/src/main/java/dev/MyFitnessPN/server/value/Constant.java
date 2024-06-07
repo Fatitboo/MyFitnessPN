@@ -1,6 +1,7 @@
 package dev.MyFitnessPN.server.value;
 
 public class Constant {
+    enum DayOfWeek {MonDay, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday  }
 
     // calculate water for people
     public static final double WATER_INTAKE = 32.59923015;
@@ -49,7 +50,6 @@ public class Constant {
         public static final String intermediate = "intermediate";
         public static final String advanced = "advanced";
     }
-
     public static class TaskType {
         public static final String notice = "notice";
         public static final String config = "config";

@@ -65,7 +65,8 @@ class RoutineExploreItemUserWidget extends StatelessWidget{
                         configurations: QuillEditorConfigurations(
                           maxHeight: 45,
                           controller: workoutOverview,
-                          readOnly: true,
+                          // readOnly: true,
+                          checkBoxReadOnly: true,
                           sharedConfigurations: const QuillSharedConfigurations(
                             locale: Locale('de'),
                           ),

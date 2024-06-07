@@ -279,7 +279,7 @@ class FirstPage extends GetView<RoutineController> {
                             child: QuillEditor.basic(
                               configurations: QuillEditorConfigurations(
                                 controller: controller.workoutOverviewController,
-                                readOnly: false,
+                                // readOnly: false,
                                 sharedConfigurations: const QuillSharedConfigurations(
                                   locale: Locale('de'),
                                 ),

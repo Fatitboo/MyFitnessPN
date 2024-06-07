@@ -14,6 +14,10 @@ class Constant {
   static const EXC_ACTIVE_heavy = "heavy";
 
 
+  static const SUBTASK_normal = "normal";
+  static const SUBTASK_workout = "workout";
+  static const SUBTASK_link = "link";
+
   // exercise type
   static const EXERCISE_strength = "Strength";
   static const EXERCISE_cardio = "Cardio";

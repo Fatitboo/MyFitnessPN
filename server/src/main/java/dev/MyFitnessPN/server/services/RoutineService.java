@@ -12,6 +12,7 @@ import dev.MyFitnessPN.server.value.Constant;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,6 +32,16 @@ public class RoutineService {
         }
         User user = userOptional.get();
         return user.getRoutines();
+    }
+    public List<RoutineModel> getSeveralRoutine(List<String> routineIds) throws Exception{
+        List<ObjectId> ids = (List)routineIds;
+        Iterable<ObjectId> a = ids;
+        Optional<List<RoutineModel>> routineModels = Optional.of(routineRepository.findAllById(a));
+        if(routineModels.isEmpty()){
+            throw new DataIntegrityViolationException("Error when get routine in database");
+        }
+
+        return routineModels.get();
     }
     public RoutineDTO createRoutine(RoutineDTO routineDTO, String userId) throws Exception {
         //check type

@@ -33,7 +33,17 @@ public class RoutineController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
         }
     }
-
+    @PostMapping("/several")
+    public ResponseEntity<?>  getSingleRoutine(@Valid @RequestBody List<String> routineIds){
+        HashMap<String, Object> Response = new HashMap<>();
+        try {
+            List<RoutineModel> routineModel = routineService.getSeveralRoutine(routineIds);
+            return ResponseEntity.status(HttpStatus.OK).body(routineModel);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
     @PostMapping("{userId}/create-routine")
     public ResponseEntity<?> createRoutine(@Valid @RequestBody RoutineDTO routineDTO, @PathVariable String userId, BindingResult result) {
 

@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class PlanManagementPage extends GetView<PlanManagementController> {
 
   final List<Widget> _tabs = [
-    PlanPage(),
+    PlanPage("admin"),
     PlanTypePage(),
   ];
   @override
@@ -32,9 +32,6 @@ class PlanManagementPage extends GetView<PlanManagementController> {
                 case 1:
                   controller.getAllPlanTypes();
                   break;
-                // case 2:
-                //   // Get.find<RoutineController>().getAllRoutineCategory();
-                //   break;
               }
             },
             tabs: const [

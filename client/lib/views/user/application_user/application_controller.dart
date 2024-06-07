@@ -1,4 +1,4 @@
-
+import 'package:do_an_2/model/planDTO.dart';
 import 'package:do_an_2/views/user/diary/diary_controller.dart';
 import 'package:do_an_2/views/user/home/home_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,10 +9,17 @@ class ApplicationUserController extends GetxController {
   ApplicationUserController();
   var page = 0.obs;
   late final PageController pageController;
-
+  RxBool isStartPlan = false.obs;
+  late PlanDTO planDTO;
   void handleChangePage(int index){
     page.value = index;
   }
+
+  void handleNavigateUser(PlanDTO plan){
+    isStartPlan.value = true;
+    planDTO = plan;
+  }
+
   void handleNavBarTap(int index){
     if(index==1 || index == 0){
       DiaryController diaryController = Get.find<DiaryController>();
