@@ -73,7 +73,7 @@ class SignInController extends GetxController {
   }
 
   toPageSignUp() async {
-    Get.offAndToNamed(AppRoutes.SIGN_UP);
+    Get.offAndToNamed(AppRoutes.WELCOME);
     // _googleSignIn.disconnect();
   }
 

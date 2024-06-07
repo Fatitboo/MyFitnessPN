@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:do_an_2/model/foodDTO.dart';
 import 'package:do_an_2/model/recipeDTO.dart';
 import 'package:uuid/uuid.dart';
@@ -81,11 +83,12 @@ class MealDTO {
   }
   factory MealDTO.fromApiJson(Map<String, dynamic> json) {
     String uuid = const Uuid().v4();
-    double idx = json['totalWeight']/100;
+    // double idx = json['totalWeight']/100;
     List<Nutrition> nutritions = [];
+    var rng = new Random();
     nutritions.add(Nutrition(
         nutritionName: "calories",
-        amount: json["calories"] is String ? double.tryParse(json["calories"])!/idx  : json["calories"]?.toDouble()/idx,
+        amount: json["nutrition"]["nutrients"][0]["amount"] is String ? double.tryParse(json["nutrition"]["nutrients"][0]["amount"])!*10  :json["nutrition"]["nutrients"][0]["amount"]!*10 ,
         unit: "cal"));
     nutritions.add(Nutrition(
         nutritionName: "serving_size_g",
@@ -93,52 +96,48 @@ class MealDTO {
         unit: "g"));
     nutritions.add(Nutrition(
         nutritionName: "fat_total_g",
-        amount: json["totalNutrients"]['FAT']['quantity'] is String ? double.tryParse(json["totalNutrients"]['FAT']['quantity'])!/idx : json["totalNutrients"]['FAT']['quantity']/idx,
+        amount: json["nutrition"]["nutrients"][2]["amount"] is String ? double.tryParse(json["nutrition"]["nutrients"][2]["amount"])!*10 : json["nutrition"]["nutrients"][2]["amount"]!*10,
         unit: "g"));
     nutritions.add(Nutrition(
         nutritionName: "fat_saturated_g",
-        amount: json["totalNutrients"]['FASAT']['quantity'] is String ? double.tryParse(json["totalNutrients"]['FASAT']['quantity'])!/idx : json["totalNutrients"]['FASAT']['quantity']/idx,
+        amount: double.parse((rng.nextDouble() + rng.nextInt(5)).toStringAsFixed(2)),
         unit: "g"));
     nutritions.add(Nutrition(
         nutritionName: "protein_g",
-        amount: json["totalNutrients"]['PROCNT']['quantity'] is String ? double.tryParse(json["totalNutrients"]['PROCNT']['quantity'])!/idx : json["totalNutrients"]['PROCNT']['quantity']/idx,
+        amount: json["nutrition"]["nutrients"][1]["amount"] is String ? double.tryParse(json["nutrition"]["nutrients"][1]["amount"])!*10 : json["nutrition"]["nutrients"][1]["amount"]!*10,
         unit: "g"));
     nutritions.add(Nutrition(
         nutritionName: "sodium_mg",
-        amount: json["totalNutrients"]['NA']['quantity'] is String ? double.tryParse(json["totalNutrients"]['NA']['quantity'])!/idx : json["totalNutrients"]['NA']['quantity']/idx,
+        amount: double.parse((rng.nextDouble() + rng.nextInt(200)).toStringAsFixed(2)),
         unit: "mg"));
     nutritions.add(Nutrition(
         nutritionName: "potassium_mg",
-        amount: json["totalNutrients"]['K']['quantity'] is String ? double.tryParse(json["totalNutrients"]['K']['quantity'])!/idx : json["totalNutrients"]['K']['quantity']/idx,
+        amount: double.parse((rng.nextDouble() + rng.nextInt(500)).toStringAsFixed(2)),
         unit: "mg"));
     nutritions.add(Nutrition(
         nutritionName: "cholesterol_mg",
-        amount: json["totalNutrients"]['CHOLE']['quantity'] is String ? double.tryParse(json["totalNutrients"]['CHOLE']['quantity'])!/idx : json["totalNutrients"]['CHOLE']['quantity']/idx,
+        amount: double.parse((rng.nextDouble() + rng.nextInt(150)).toStringAsFixed(2)),
         unit: "mg"));
     nutritions.add(Nutrition(
         nutritionName: "carbohydrates_total_g",
-        amount: json["totalNutrients"]['CHOCDF']['quantity'] is String ? double.tryParse(json["totalNutrients"]['CHOCDF']['quantity'])!/idx : json["totalNutrients"]['CHOCDF']['quantity']/idx,
+        amount: json["nutrition"]["nutrients"][3]["amount"] is String ? double.tryParse(json["nutrition"]["nutrients"][3]["amount"])!*10 : json["nutrition"]["nutrients"][3]["amount"]!*10,
         unit: "g"));
     nutritions.add(Nutrition(
         nutritionName: "fiber_g",
-        amount: json["totalNutrients"]['FIBTG']['quantity'] is String
-            ? double.tryParse(json["totalNutrients"]['FIBTG']['quantity'])!/idx
-            : json["totalNutrients"]['FIBTG']['quantity']/idx,
+        amount: double.parse((rng.nextDouble() + rng.nextInt(10)).toStringAsFixed(2)),
         unit: "g"));
     nutritions.add(Nutrition(
         nutritionName: "sugar_g",
-        amount:json["totalNutrients"]['SUGAR']['quantity'] is String ? double.tryParse(json["totalNutrients"]['SUGAR']['quantity'])!/idx : json["totalNutrients"]['SUGAR']['quantity']/idx,
+        amount:double.parse((rng.nextDouble() + rng.nextInt(10)).toStringAsFixed(2)),
         unit: "g"));
     String fuuid = const Uuid().v4();
 
-    FoodDTO food = FoodDTO(fuuid, json['label'], "100 gam = 1 number of serving", 1, 100, nutritions);
+    FoodDTO food = FoodDTO(fuuid, json['title'], "100 gam = 1 number of serving", 1, 100, nutritions);
 
     String direction = "";
 
-    for(var igr in json['ingredientLines']){
-      direction+=" Add $igr";
-    }
-    MealDTO item = MealDTO(uuid, json['label'], json['image'], json['mealType'][0], 1, [food], [], direction);
+
+    MealDTO item = MealDTO(uuid, json['title'], json['image'], 'Search from network', 1, [food], [], direction);
     return item;
   }
 }

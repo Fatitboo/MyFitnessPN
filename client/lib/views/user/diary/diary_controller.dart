@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:do_an_2/model/logDiaryDTO.dart';
 import 'package:do_an_2/model/login_response.dart';
@@ -12,13 +13,20 @@ import '../../../data/network/network_api_service.dart';
 
 class DiaryController extends GetxController {
   var dateStr = "".obs;
+  LoginResponse loginResponse = LoginResponse.fromJson(
+      jsonDecode(StorageService.to.getString(STORAGE_USER_PROFILE_KEY)));
+
   late DateTime today;
+  late DateTime sltDate = DateTime.now();
+
   RxList breakfast = [].obs;
   RxList lunch = [].obs;
   RxList dinner = [].obs;
   RxList water = [].obs;
   RxList exercise = [].obs;
   RxList snack = [].obs;
+  Rx<Offset> tapPosition = Offset.zero.obs;
+
   Future<void> getLogDiaryByDateFoodSaved(DateTime d) async {
     String formattedDateTime = DateFormat('yyyy-MM-dd').format(d);
     try {
@@ -50,9 +58,11 @@ class DiaryController extends GetxController {
   }
 
   @override
-  void onInit()async {
+  void onInit() async {
     super.onInit();
     today = DateTime.now();
+    sltDate = DateTime.now();
+
     // HomeController homeController = Get.find<HomeController>();
     String formattedDate = DateFormat('MMM d').format(today).toUpperCase();
     dateStr.value = formattedDate;
@@ -73,7 +83,8 @@ class DiaryController extends GetxController {
     }
     return tt;
   }
-  double getTotalWater(){
+
+  double getTotalWater() {
     double tt = 0.0;
     if (water.isEmpty) return 0.0;
     for (var item in water) {
@@ -87,6 +98,7 @@ class DiaryController extends GetxController {
     }
     return tt;
   }
+
   double getTotalCaloriesOfFood() {
     return getTotalCalories(breakfast) +
         getTotalCalories(lunch) +
@@ -96,14 +108,23 @@ class DiaryController extends GetxController {
 
   void onDateChange(DateTime d) {
     print(d);
+    sltDate = d;
     String formattedDate = DateFormat('MMM d').format(d).toUpperCase();
     getLogDiaryByDateFoodSaved(d);
     dateStr.value = formattedDate;
   }
 
-  double getCaloriesNeed(){
+  double getCaloriesNeed() {
     HomeController homeController = Get.find<HomeController>();
 
     return homeController.userHealthDTO.value?.getCaloriesNeed() ?? 0;
+  }
+
+  Future<void> deleteItem(String id) async {
+    String formattedDateTime = DateFormat('yyyy-MM-dd').format(sltDate);
+
+    NetworkApiService networkApiService = NetworkApiService();
+     await networkApiService.deleteApi("/log-diary/delete-diary/${loginResponse.userId}/$formattedDateTime/$id");
+
   }
 }

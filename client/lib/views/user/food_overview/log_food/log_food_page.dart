@@ -28,7 +28,9 @@ class LogFoodPage extends GetView<LogFoodController> {
             IconButton(
                 onPressed: () {
                   if(Get.parameters["type"] == "fromMyFoodPage"
-                  || Get.parameters["type"] == "fromMyRecipePage"){
+                  || Get.parameters["type"] == "fromMyRecipePage"
+                      || Get.parameters["type"] == "updateLogFood"
+                      || Get.parameters["type"] == "updateLogRecipe"){
                     controller.logFood();
                   }
                   if(Get.parameters["type"] == "fromIngredientPage"

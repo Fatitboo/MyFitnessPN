@@ -1,3 +1,4 @@
+import 'package:do_an_2/res/store/user.dart';
 import 'package:do_an_2/views/user/profile/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -216,7 +217,9 @@ class ProfilePage extends GetView<ProfileController> {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Get.find<UserStore>().onLogout();
+                              },
                               child: SizedBox(
                                 height: 40,
                                 child: Row(

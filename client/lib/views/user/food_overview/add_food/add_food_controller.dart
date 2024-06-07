@@ -56,6 +56,10 @@ class AddFoodController extends GetxController {
   var title ="".obs;
   var selectedMeal = "Breakfast".obs;
   late FoodDTO fdto;
+  var indexV = "".obs;
+  late DateTime sltDate = DateTime.now();
+  LogDiaryDTO logDiaryDTO = LogDiaryDTO('logDiaryItemId', 'logDiaryType', 0, null, null);
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -73,6 +77,15 @@ class AddFoodController extends GetxController {
       formController["numberOfServing"]!.text = "${fdto.numberOfServing}";
       formController["servingSize"]!.text = "${fdto.servingSize}";
       setData();
+    }
+    if (type == "Update Log Water") {
+      indexV.value = Get.parameters['index']!;
+      DiaryController f = Get.find<DiaryController>();
+      LogDiaryDTO l = f.water.elementAt(int.parse(indexV.value));
+      logDiaryDTO = l;
+      formController["water"]!.text = "${l.water}";
+      sltDate=f.sltDate;
+
     }
     validate = {
       "foodName": {ERROR_TYPE.require: "Required"},
@@ -393,30 +406,48 @@ class AddFoodController extends GetxController {
       return;
     }
     else{
-      DateTime now = DateTime.now();
-      print("cc");
-      String formattedDateTime = DateFormat('yyyy-MM-ddTHH:mm:ss').format(now);
+
+      String formattedDateTime = DateFormat('yyyy-MM-ddTHH:mm:ss').format(sltDate);
       var item;
 
+      if (title == "Update Log Water") {
+        item = {
+          "logDiaryId": logDiaryDTO.logDiaryItemId,
+          "dateLog": formattedDateTime,
+          "water": double.parse(formController["water"]!.text),
+          "logDiaryType": "Water"
+        };
+        Object obj = jsonEncode(item);
+        NetworkApiService networkApiService = NetworkApiService();
+        DiaryController clr = Get.find<DiaryController>();
 
-      item = {
-        "logDiaryId": "",
-        "dateLog": formattedDateTime,
-        "water": double.parse(formController["water"]!.text),
-        "logDiaryType": "Water"
-      };
+        http.Response res = await networkApiService.postApi("/log-diary/update-diary/${clr.loginResponse.userId}", obj);
+        logDiaryDTO.water = double.parse(formController["water"]!.text);
 
+        if(res.statusCode == 200){
+          DiaryController diaryController = Get.find<DiaryController>();
+          diaryController.water.removeAt(int.parse(indexV.value));
+          diaryController.water.insert(int.parse(indexV.value), logDiaryDTO);
+        }
+      }else{
+        item = {
+          "logDiaryId": "",
+          "dateLog": formattedDateTime,
+          "water": double.parse(formController["water"]!.text),
+          "logDiaryType": "Water"
+        };
+        Object obj = jsonEncode(item);
+        NetworkApiService networkApiService = NetworkApiService();
+        HomeController clr = Get.find<HomeController>();
+        http.Response res = await networkApiService.postApi("/log-diary/add-log/${clr.loginResponse.userId}", obj);
 
-      Object obj = jsonEncode(item);
-      NetworkApiService networkApiService = NetworkApiService();
-      HomeController clr = Get.find<HomeController>();
-      http.Response res = await networkApiService.postApi("/log-diary/add-log/${clr.loginResponse.userId}", obj);
-
-      if(res.statusCode == 200){
-        LogDiaryDTO logDiaryDTO = LogDiaryDTO.fromJson(json.decode(utf8.decode(res.bodyBytes)));
-        DiaryController diaryController = Get.find<DiaryController>();
-        diaryController.water.add(logDiaryDTO);
+        if(res.statusCode == 200){
+          LogDiaryDTO logDiaryDTO = LogDiaryDTO.fromJson(json.decode(utf8.decode(res.bodyBytes)));
+          DiaryController diaryController = Get.find<DiaryController>();
+          diaryController.water.add(logDiaryDTO);
+        }
       }
+
       Get.close(1);
     }
 

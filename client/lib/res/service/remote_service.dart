@@ -26,23 +26,20 @@ class RemoteService{
   }
   Future<List<MealDTO>> getDiscoverRecipeFromApi(String searchingQuery) async {
     var client = http.Client();
-    var item = {
-      "query":searchingQuery
-    };
-    Object obj = jsonEncode(item);
-    var url = Uri.parse("https://recipe-food-nutrition14.p.rapidapi.com/recipee-search");
-    var response = await client.post(url,
+
+    var url = Uri.parse("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?query=$searchingQuery&sort=calories&sortDirection=asc&minCarbs=0&maxCarbs=1000&minProtein=0&maxProtein=1000&minCalories=0&maxCalories=1000&minFat=0&maxFat=1000&number=10");
+    var response = await client.get(url,
         headers: {
           'content-type': 'application/json',
           'X-RapidAPI-Key': '3fb34c9a9emshdf9e39788ac293dp19ac8ejsna599162717bf',
-          'X-RapidAPI-Host': 'recipe-food-nutrition14.p.rapidapi.com'
-        },
-        body:obj
-    );
+          'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        });
     List<MealDTO> meals = [];
+    print(response.statusCode);
     if (response.statusCode == 200) {
       Map<String, dynamic> i = json.decode(utf8.decode(response.bodyBytes));
-      meals = List<MealDTO>.from(i['hits'].map((model) => MealDTO.fromApiJson(model['recipe'])))
+      print(i);
+      meals = List<MealDTO>.from(i['results'].map((model) => MealDTO.fromApiJson(model)))
           .toList();
     }
     return meals;

@@ -236,10 +236,64 @@ class DiaryPage extends GetView<DiaryController> {
                           Expanded(
                             child: ListView.builder(
                                 itemCount: controller.breakfast.length,
-                                itemBuilder: (BuildContext context, int index) {
+                                itemBuilder: (BuildContext ct, int index) {
                                   LogDiaryDTO ld = controller.breakfast.elementAt(index);
                                   return GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      if(ld.foodLogItem?.foodLogType == "meal"){
+                                        Get.toNamed(
+                                            AppRoutes.MEAL_ACTION,
+                                            parameters: {
+                                              "type":"updateLogMeal",
+                                              "index":"$index",
+                                              "diaryType":"breakfast"
+                                            });
+                                      }
+
+                                      if(ld.foodLogItem?.foodLogType == "recipe"){
+                                        Get.toNamed(AppRoutes.LOG_FOOD,
+                                            parameters: {
+                                              "type": "updateLogRecipe",
+                                              "index": "$index",
+                                              "diaryType":"breakfast"
+                                            });
+                                      }
+                                      if(ld.foodLogItem?.foodLogType == "food"){
+                                        Get.toNamed(AppRoutes.LOG_FOOD,
+                                            parameters: {
+                                              "type": "updateLogFood",
+                                              "index": "$index",
+                                              "diaryType":"breakfast"
+                                            });
+                                      }
+                                    },
+                                    onTapDown: (position){
+                                      final RenderBox renderBox = context.findRenderObject() as RenderBox;
+                                      controller.tapPosition.value = renderBox.globalToLocal(position.globalPosition);
+                                    },
+                                    onLongPress: () {
+                                      final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+
+                                      showMenu(
+                                        context: context,
+                                        color: Colors.white,
+                                        items: <PopupMenuEntry> [
+                                          PopupMenuItem(
+                                            onTap: () async{
+                                              controller.deleteItem(ld.logDiaryItemId!);
+                                              controller.breakfast.removeAt(index);
+                                            },
+                                            child: const Text("Delete"),
+                                          ),
+
+                                        ],
+                                        position: RelativeRect.fromRect(
+                                          Rect.fromLTWH(controller.tapPosition.value.dx, controller.tapPosition.value.dy, 10, 10),
+                                          Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay!.paintBounds.size.height),
+                                        ),
+                                      );
+
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10, horizontal: 15),
@@ -382,7 +436,60 @@ class DiaryPage extends GetView<DiaryController> {
                                 itemBuilder: (BuildContext context, int index) {
                                   LogDiaryDTO ld = controller.lunch.elementAt(index);
                                   return GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      if(ld.foodLogItem?.foodLogType == "meal"){
+                                        Get.toNamed(
+                                            AppRoutes.MEAL_ACTION,
+                                            parameters: {
+                                              "type":"updateLogMeal",
+                                              "index":"$index",
+                                              "diaryType":"lunch"
+                                            });
+                                      }
+                                      if(ld.foodLogItem?.foodLogType == "recipe"){
+                                        Get.toNamed(AppRoutes.LOG_FOOD,
+                                            parameters: {
+                                              "type": "updateLogRecipe",
+                                              "index": "$index",
+                                              "diaryType":"lunch"
+                                            });
+                                      }
+                                      if(ld.foodLogItem?.foodLogType == "food"){
+                                        Get.toNamed(AppRoutes.LOG_FOOD,
+                                            parameters: {
+                                              "type": "updateLogFood",
+                                              "index": "$index",
+                                              "diaryType":"lunch"
+                                            });
+                                      }
+                                    },
+                                    onTapDown: (position){
+                                      final RenderBox renderBox = context.findRenderObject() as RenderBox;
+                                      controller.tapPosition.value = renderBox.globalToLocal(position.globalPosition);
+                                    },
+                                    onLongPress: () {
+                                      final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+
+                                      showMenu(
+                                        context: context,
+                                        color: Colors.white,
+                                        items: <PopupMenuEntry> [
+                                          PopupMenuItem(
+                                            onTap: () async{
+                                              controller.deleteItem(ld.logDiaryItemId!);
+                                              controller.lunch.removeAt(index);
+                                            },
+                                            child: const Text("Delete"),
+                                          ),
+
+                                        ],
+                                        position: RelativeRect.fromRect(
+                                          Rect.fromLTWH(controller.tapPosition.value.dx, controller.tapPosition.value.dy, 10, 10),
+                                          Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay!.paintBounds.size.height),
+                                        ),
+                                      );
+
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                                       margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 5),
@@ -512,7 +619,60 @@ class DiaryPage extends GetView<DiaryController> {
                                 itemBuilder: (BuildContext context, int index) {
                                   LogDiaryDTO ld = controller.dinner.elementAt(index);
                                   return GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      if(ld.foodLogItem?.foodLogType == "meal"){
+                                        Get.toNamed(
+                                            AppRoutes.MEAL_ACTION,
+                                            parameters: {
+                                              "type":"updateLogMeal",
+                                              "index":"$index",
+                                              "diaryType":"dinner"
+                                            });
+                                      }
+                                      if(ld.foodLogItem?.foodLogType == "recipe"){
+                                        Get.toNamed(AppRoutes.LOG_FOOD,
+                                            parameters: {
+                                              "type": "updateLogRecipe",
+                                              "index": "$index",
+                                              "diaryType":"dinner"
+                                            });
+                                      }
+                                      if(ld.foodLogItem?.foodLogType == "food"){
+                                        Get.toNamed(AppRoutes.LOG_FOOD,
+                                            parameters: {
+                                              "type": "updateLogFood",
+                                              "index": "$index",
+                                              "diaryType":"dinner"
+                                            });
+                                      }
+                                    },
+                                    onTapDown: (position){
+                                      final RenderBox renderBox = context.findRenderObject() as RenderBox;
+                                      controller.tapPosition.value = renderBox.globalToLocal(position.globalPosition);
+                                    },
+                                    onLongPress: () {
+                                      final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+
+                                      showMenu(
+                                        context: context,
+                                        color: Colors.white,
+                                        items: <PopupMenuEntry> [
+                                          PopupMenuItem(
+                                            onTap: () async{
+                                              controller.deleteItem(ld.logDiaryItemId!);
+                                              controller.dinner.removeAt(index);
+                                            },
+                                            child: const Text("Delete"),
+                                          ),
+
+                                        ],
+                                        position: RelativeRect.fromRect(
+                                          Rect.fromLTWH(controller.tapPosition.value.dx, controller.tapPosition.value.dy, 10, 10),
+                                          Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay!.paintBounds.size.height),
+                                        ),
+                                      );
+
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                                       margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 5),
@@ -649,7 +809,60 @@ class DiaryPage extends GetView<DiaryController> {
                                 itemBuilder: (BuildContext context, int index) {
                                   LogDiaryDTO ld = controller.snack.elementAt(index);
                                   return GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      if(ld.foodLogItem?.foodLogType == "meal"){
+                                        Get.toNamed(
+                                            AppRoutes.MEAL_ACTION,
+                                            parameters: {
+                                              "type":"updateLogMeal",
+                                              "index":"$index",
+                                              "diaryType":"snack"
+                                            });
+                                      }
+                                      if(ld.foodLogItem?.foodLogType == "recipe"){
+                                        Get.toNamed(AppRoutes.LOG_FOOD,
+                                            parameters: {
+                                              "type": "updateLogRecipe",
+                                              "index": "$index",
+                                              "diaryType":"snack"
+                                            });
+                                      }
+                                      if(ld.foodLogItem?.foodLogType == "food"){
+                                        Get.toNamed(AppRoutes.LOG_FOOD,
+                                            parameters: {
+                                              "type": "updateLogFood",
+                                              "index": "$index",
+                                              "diaryType":"snack"
+                                            });
+                                      }
+                                    },
+                                    onTapDown: (position){
+                                      final RenderBox renderBox = context.findRenderObject() as RenderBox;
+                                      controller.tapPosition.value = renderBox.globalToLocal(position.globalPosition);
+                                    },
+                                    onLongPress: () {
+                                      final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+
+                                      showMenu(
+                                        context: context,
+                                        color: Colors.white,
+                                        items: <PopupMenuEntry> [
+                                          PopupMenuItem(
+                                            onTap: () async{
+                                              controller.deleteItem(ld.logDiaryItemId!);
+                                              controller.snack.removeAt(index);
+                                            },
+                                            child: const Text("Delete"),
+                                          ),
+
+                                        ],
+                                        position: RelativeRect.fromRect(
+                                          Rect.fromLTWH(controller.tapPosition.value.dx, controller.tapPosition.value.dy, 10, 10),
+                                          Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay!.paintBounds.size.height),
+                                        ),
+                                      );
+
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                                       margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 5),
@@ -943,10 +1156,42 @@ class DiaryPage extends GetView<DiaryController> {
                           Expanded(
                             child: ListView.builder(
                                 itemCount: controller.water.length,
-                                itemBuilder: (BuildContext context, int index) {
+                                itemBuilder: (BuildContext ct, int index) {
                                   LogDiaryDTO ld = controller.water.elementAt(index);
                                   return GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Get.toNamed(
+                                          AppRoutes.ADD_WATER,
+                                          parameters: {"type": "Update Log Water", "index":"$index"}
+                                      );
+                                    },
+                                    onTapDown: (position){
+                                      final RenderBox renderBox = context.findRenderObject() as RenderBox;
+                                      controller.tapPosition.value = renderBox.globalToLocal(position.globalPosition);
+                                    },
+                                    onLongPress: () {
+                                      final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+
+                                      showMenu(
+                                          context: context,
+                                          color: Colors.white,
+                                          items: <PopupMenuEntry> [
+                                            PopupMenuItem(
+                                              onTap: () async{
+                                                controller.deleteItem(ld.logDiaryItemId!);
+                                                controller.water.removeAt(index);
+                                              },
+                                              child: const Text("Delete"),
+                                            ),
+
+                                          ],
+                                          position: RelativeRect.fromRect(
+                                            Rect.fromLTWH(controller.tapPosition.value.dx, controller.tapPosition.value.dy, 10, 10),
+                                            Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay!.paintBounds.size.height),
+                                          ),
+                                        );
+
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                                       margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 5),

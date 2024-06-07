@@ -90,9 +90,9 @@ public class UserServices {
         Request request = new Request.Builder()
                 .url("https://fitness-api.p.rapidapi.com/fitness")
                 .post(body)
-                .addHeader("content-type", "application/x-www-form-urlencoded")
-                .addHeader("X-RapidAPI-Key", "3fb34c9a9emshdf9e39788ac293dp19ac8ejsna599162717bf")
-                .addHeader("X-RapidAPI-Host", "fitness-api.p.rapidapi.com")
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("x-rapidapi-key", "3fb34c9a9emshdf9e39788ac293dp19ac8ejsna599162717bf")
+                .addHeader("x-rapidapi-host", "fitness-api.p.rapidapi.com")
                 .build();
 
         // Send api create userHealth -> save db

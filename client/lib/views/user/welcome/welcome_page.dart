@@ -1,9 +1,11 @@
-import 'package:do_an_2/res/routes/names.dart';
 import 'package:do_an_2/res/values/color_extension.dart';
 import 'package:do_an_2/views/common_widgets/keep_alive_page.dart';
+import 'package:do_an_2/views/user/welcome/pages/fifth_page.dart';
 import 'package:do_an_2/views/user/welcome/pages/final_page.dart';
 import 'package:do_an_2/views/user/welcome/pages/first_page.dart';
+import 'package:do_an_2/views/user/welcome/pages/fourth_page.dart';
 import 'package:do_an_2/views/user/welcome/pages/second_page.dart';
+import 'package:do_an_2/views/user/welcome/pages/six_page.dart';
 import 'package:do_an_2/views/user/welcome/pages/third_page.dart';
 import 'package:do_an_2/views/user/welcome/welcome_controller.dart';
 import 'package:flutter/material.dart';
@@ -116,14 +118,39 @@ class _buildPageView extends GetView<WelcomeController> {
             currentPageIndex = pageController.page!.round();
             movingPreviousPage(pageController, currentPageIndex);
           })),
+
           KeepAlivePage(
               child: ThirdPage(onTap: () {
-            currentPageIndex = pageController.page!.round();
-            movingNextPage(pageController, currentPageIndex);
-          }, back: () {
-            currentPageIndex = pageController.page!.round();
-            movingPreviousPage(pageController, currentPageIndex);
-          })),
+                currentPageIndex = pageController.page!.round();
+                movingNextPage(pageController, currentPageIndex);
+              }, back: () {
+                currentPageIndex = pageController.page!.round();
+                movingPreviousPage(pageController, currentPageIndex);
+              })),
+          KeepAlivePage(
+              child: FourthWelcomePage(onTap: () {
+                currentPageIndex = pageController.page!.round();
+                movingNextPage(pageController, currentPageIndex);
+              }, back: () {
+                currentPageIndex = pageController.page!.round();
+                movingPreviousPage(pageController, currentPageIndex);
+              })),
+          KeepAlivePage(
+              child: FifthWelcomePage(onTap: () {
+                currentPageIndex = pageController.page!.round();
+                movingNextPage(pageController, currentPageIndex);
+              }, back: () {
+                currentPageIndex = pageController.page!.round();
+                movingPreviousPage(pageController, currentPageIndex);
+              })),
+          KeepAlivePage(
+              child: SixWelcomePage(onTap: () {
+                currentPageIndex = pageController.page!.round();
+                movingNextPage(pageController, currentPageIndex);
+              }, back: () {
+                currentPageIndex = pageController.page!.round();
+                movingPreviousPage(pageController, currentPageIndex);
+              })),
           KeepAlivePage(
               child: FinalPage(onTap: () {
             controller.toPageApplication();

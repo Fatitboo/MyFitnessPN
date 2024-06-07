@@ -12,6 +12,9 @@ class SignUpPage extends GetView<SignUpController> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Container(
@@ -20,13 +23,12 @@ class SignUpPage extends GetView<SignUpController> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 20),
 
                     // logo
                     Padding(
                       padding: const EdgeInsets.only(
-                        left: 70.0,
-                        right: 70.0,
+                        left: 120.0,
+                        right: 120.0,
                         top: 00,
                         bottom: 0,
                       ),
@@ -70,15 +72,14 @@ class SignUpPage extends GetView<SignUpController> {
 
                               // password textfield
                               MyTextField(
-                                controller: controller.passwordController,
-                                hintText: 'Password',
-                                isPass: true,
+                                controller: controller.fullNameController,
+                                hintText: 'Full name',
                               ),
 
                               const SizedBox(height: 10),
                               MyTextField(
-                                controller: controller.repassController,
-                                hintText: 'Enter Password again',
+                                controller: controller.passwordController,
+                                hintText: 'Password',
                                 isPass: true,
                               ),
                             ],

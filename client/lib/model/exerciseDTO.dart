@@ -58,7 +58,7 @@ class ExerciseDTO {
   }
 
   String getStringStrengthValues(){
-    return "${sets?[0].count} sets, ${sets?[0].rep} reps, ${sets?[0].weight} kg";
+    return "${sets?[0].count} sets, ${sets?[0].rep} reps, ${sets?[0]?.weight} kg";
   }
 
   String getStringCardioValues(){

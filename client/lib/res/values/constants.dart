@@ -1,9 +1,18 @@
 import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 
 class Constant {
-  static const GOAL_gainWeight = "gainweight";
-  static const GOAL_loseWeight = "loseweight";
+  static const GOAL_gainWeight = "bulking_slow";
+  static const GOAL_loseWeight = "fatloss_moderate";
   static const GOAL_maintenance = "maintenance";
+
+  static const male = "male";
+  static const female = "female";
+
+  static const EXC_ACTIVE_little = "little";
+  static const EXC_ACTIVE_light = "light";
+  static const EXC_ACTIVE_moderate = "moderate";
+  static const EXC_ACTIVE_heavy = "heavy";
+
 
   // exercise type
   static const EXERCISE_strength = "Strength";

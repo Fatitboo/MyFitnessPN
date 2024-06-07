@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:do_an_2/model/login_response.dart';
+import 'package:do_an_2/res/routes/names.dart';
 import 'package:do_an_2/res/store/storage.dart';
 import 'package:get/get.dart';
 
@@ -61,6 +62,7 @@ class UserStore extends GetxController {
     await StorageService.to.remove(STORAGE_USER_PROFILE_KEY);
     _isLogin.value = false;
     token = '';
+    Get.offAndToNamed(AppRoutes.SIGN_IN_USER);
   }
   Future<bool> saveAlreadyOpen() {
     return StorageService.to.setBool(STORAGE_DEVICE_FIRST_OPEN_KEY, true);

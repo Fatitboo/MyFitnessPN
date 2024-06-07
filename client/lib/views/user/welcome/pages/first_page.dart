@@ -9,7 +9,7 @@ import '../welcome_controller.dart';
 
 class FirstPage extends GetView<WelcomeController> {
   final VoidCallback onTap;
-  var selectedIndex = 3.obs;
+  var selectedIndex = 0.obs;
   
   FirstPage({
     Key? key,

@@ -20,7 +20,7 @@ class MealPage extends GetView<MealController> {
           backgroundColor: AppColor.white,
           title: controller.type.value == "createMeal"
               ? const Text("Create a meal")
-              : controller.type.value == "logMeal"
+              : controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
               || controller.type.value == "logMealFromDiscoverPage"
                   ? const Text("Log meal")
                   : const Text("Update meal"),
@@ -35,7 +35,7 @@ class MealPage extends GetView<MealController> {
               if(controller.type.value == "updateMeal"){
                 controller.handleUpdateMeal();
               }
-              if(controller.type.value =="logMeal"
+              if(controller.type.value == "logMeal" || controller.type.value =="updateLogMeal"
               || controller.type.value=="logMealFromDiscoverPage"){
                 controller.logFood();
               }
@@ -61,7 +61,7 @@ class MealPage extends GetView<MealController> {
                         height: MediaQuery.of(context).size.width / 2,
                         width: double.maxFinite,
                         color: Colors.transparent,
-                        child:  (controller.type.value == "logMeal"
+                        child:  (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                         || controller.type.value == "logMealFromDiscoverPage")
                             ? const SizedBox(height: 0,)
                             : InkWell(
@@ -87,7 +87,7 @@ class MealPage extends GetView<MealController> {
                                SizedBox(
                                  width: MediaQuery.of(context).size.width-40,
                                  child: Text(
-                                   (controller.type.value == "logMeal"
+                                   (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                                        || controller.type.value == "logMealFromDiscoverPage")
                                        ? controller.formController["description"]!.text
                                    : "Meal name",
@@ -95,13 +95,13 @@ class MealPage extends GetView<MealController> {
                                       fontSize: 18, fontWeight: FontWeight.w600),
                                    overflow: TextOverflow.ellipsis),
                                ),
-                              (controller.type.value == "logMeal"
+                              (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                               || controller.type.value == "logMealFromDiscoverPage")
                               ? const SizedBox(height: 0)
                               : const Text("Required", style: TextStyle(fontSize: 14),),
                             ],
                           ),
-                          (controller.type.value == "logMeal"
+                          (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                           || controller.type.value == "logMealFromDiscoverPage")
                           ? const SizedBox(height: 0)
                           : Container(
@@ -114,7 +114,7 @@ class MealPage extends GetView<MealController> {
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 style: TextStyle(color: AppColor.black, ),
-                                enabled: (controller.type.value == "logMeal") ? false : true,
+                                enabled: (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal") ? false : true,
                                 decoration: const InputDecoration(
                                     enabledBorder: InputBorder.none,
                                     focusedBorder: InputBorder.none,
@@ -125,7 +125,7 @@ class MealPage extends GetView<MealController> {
                         ],
                       ),
                       const SizedBox(height: 10,),
-                      (controller.type.value == "logMeal"
+                      (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                           || controller.type.value == "logMealFromDiscoverPage")
                           ? const SizedBox(height: 0,)
                           :Container(height: 0.5, width: MediaQuery.of(context).size.width, color: Colors.grey.shade300,),
@@ -133,7 +133,7 @@ class MealPage extends GetView<MealController> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          (controller.type.value == "logMeal" || controller.type.value == "logMealFromDiscoverPage")
+                          (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal" || controller.type.value == "logMealFromDiscoverPage")
                           ?Text("${controller.formController["numberOfServing"]!.text} serving", style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),)
                           : const SizedBox(height: 10,),
                           const SizedBox(height: 10,),
@@ -529,7 +529,7 @@ class MealPage extends GetView<MealController> {
                               ],
                             ),
                            controller.type.value == "createMeal"
-                               ||(controller.type.value == "logMeal")
+                               ||(controller.type.value == "logMeal"||controller.type.value == "updateLogMeal")
                           ? const SizedBox(height: 0)
                                 :Row(
                               mainAxisSize: MainAxisSize.max,
@@ -609,7 +609,7 @@ class MealPage extends GetView<MealController> {
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 15),
                         ),
-                        (controller.type.value == "logMeal"
+                        (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                             || controller.type.value == "logMealFromDiscoverPage")
                             ? const SizedBox(height: 0)
                             : InkWell(
@@ -647,12 +647,12 @@ class MealPage extends GetView<MealController> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                              width: MediaQuery.of(context).size.width*60/100,
+                                              width: MediaQuery.of(context).size.width*70/100,
                                               child: Text("${h.numberOfServing!*h.servingSize!} g ${h.foodName} "?? "", style: const TextStyle(fontSize: 16), overflow: TextOverflow.ellipsis,)),
                                           Text(h.getCalDes() , style: const TextStyle(color: Colors.black54),)
                                         ],
                                       ),
-                                      (controller.type.value == "logMeal"
+                                      (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                                           || controller.type.value == "logMealFromDiscoverPage")
                                           ? const SizedBox(height: 0)
                                           : InkWell(
@@ -703,14 +703,14 @@ class MealPage extends GetView<MealController> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                            width:MediaQuery.of(context).size.width-50,
+                                            width:MediaQuery.of(context).size.width*70/100,
                                             child: Text(
                                               "${h.numberOfServing} p ${h.title}" ?? "", style: const TextStyle(fontSize: 16,), overflow: TextOverflow.ellipsis,),
                                           ),
                                           Text(h.getCaloriesDesStr() , style: const TextStyle(color: Colors.black54),)
                                         ],
                                       ),
-                                      (controller.type.value == "logMeal"
+                                      (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                                           || controller.type.value == "logMealFromDiscoverPage")
                                           ? const SizedBox(height: 0)
                                           :InkWell(
@@ -747,7 +747,7 @@ class MealPage extends GetView<MealController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Direction", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),),
-                        (controller.type.value == "logMeal"
+                        (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                             || controller.type.value == "logMealFromDiscoverPage")
                             ? const SizedBox(height: 0)
                             : InkWell(

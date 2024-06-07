@@ -45,11 +45,14 @@ class LogFoodController extends GetxController {
 
   FoodDTO fdto = FoodDTO('foodId', 'foodName', 'description', 1, 1, null);
   RecipeDTO rdto = RecipeDTO('recipeId', 'title', 2, null);
+  LogDiaryDTO logDiaryDTO = LogDiaryDTO('logDiaryItemId', 'logDiaryType', 0, null, null);
 
+  var diaryLogType = "".obs;
   var indexV = "".obs;
   var fid = "".obs;
   var fname = "".obs;
   var fdes = "".obs;
+  late DateTime sltDate = DateTime.now();
   @override
   void onInit() {
     super.onInit();
@@ -137,6 +140,93 @@ class LogFoodController extends GetxController {
       formController["numberOfServing"]!.text = "1";
       formController["servingSize"]!.text = "100.0";
       setData(1);
+    } else if (Get.parameters["type"] == "updateLogRecipe"){
+      indexV.value = Get.parameters['index']!;
+      DiaryController f = Get.find<DiaryController>();
+      diaryLogType.value = Get.parameters["diaryType"]!;
+      if(diaryLogType == "breakfast"){
+        LogDiaryDTO l = f.breakfast.elementAt(int.parse(indexV.value));
+        logDiaryDTO = l;
+        rdto = l.foodLogItem!.recipe!;
+        formController["numberOfServing"]!.text = "${l.foodLogItem!.numberOfServing!}";
+        selectedMeal.value = "Breakfast";
+
+      }
+      if(diaryLogType =="lunch"){
+        LogDiaryDTO l = f.lunch.elementAt(int.parse(indexV.value));
+        logDiaryDTO = l;
+        rdto = l.foodLogItem!.recipe!;
+        formController["numberOfServing"]!.text = "${l.foodLogItem!.numberOfServing!}";
+        selectedMeal.value = "Lunch";
+
+      }
+      if(diaryLogType =="dinner"){
+        LogDiaryDTO l = f.dinner.elementAt(int.parse(indexV.value));
+        logDiaryDTO = l;
+        rdto = l.foodLogItem!.recipe!;
+        formController["numberOfServing"]!.text = "${l.foodLogItem!.numberOfServing!}";
+        selectedMeal.value = "Dinner";
+
+      }
+      if(diaryLogType =="snack"){
+        LogDiaryDTO l = f.snack.elementAt(int.parse(indexV.value));
+        logDiaryDTO = l;
+        rdto = l.foodLogItem!.recipe!;
+        formController["numberOfServing"]!.text = "${l.foodLogItem!.numberOfServing!}";
+        selectedMeal.value = "Snack";
+
+      }
+      fname.value = rdto.title!;
+      fid.value = rdto.recipeId!;
+      sltDate = f.sltDate;
+      fdes.value = rdto.getStringDescription();
+      formController["servingSize"]!.text = "100";
+      setData(double.tryParse(formController["numberOfServing"]?.text.toString().trim()??"0.0")??1);
+    }
+    else if (Get.parameters["type"] == "updateLogFood"){
+      indexV.value = Get.parameters['index']!;
+      DiaryController f = Get.find<DiaryController>();
+      diaryLogType.value = Get.parameters["diaryType"]!;
+      if(diaryLogType == "breakfast"){
+        LogDiaryDTO l = f.breakfast.elementAt(int.parse(indexV.value));
+        logDiaryDTO = l;
+        fdto = l.foodLogItem!.food!;
+        formController["numberOfServing"]!.text = "${l.foodLogItem!.numberOfServing!}";
+        selectedMeal.value = "Breakfast";
+
+      }
+      if(diaryLogType =="lunch"){
+        LogDiaryDTO l = f.lunch.elementAt(int.parse(indexV.value));
+        logDiaryDTO = l;
+        fdto = l.foodLogItem!.food!;
+        formController["numberOfServing"]!.text = "${l.foodLogItem!.numberOfServing!}";
+        selectedMeal.value = "Lunch";
+
+      }
+      if(diaryLogType =="dinner"){
+        LogDiaryDTO l = f.dinner.elementAt(int.parse(indexV.value));
+        logDiaryDTO = l;
+        fdto = l.foodLogItem!.food!;
+        formController["numberOfServing"]!.text = "${l.foodLogItem!.numberOfServing!}";
+        selectedMeal.value = "Dinner";
+
+      }
+      if(diaryLogType =="snack"){
+        LogDiaryDTO l = f.snack.elementAt(int.parse(indexV.value));
+        logDiaryDTO = l;
+        fdto = l.foodLogItem!.food!;
+        formController["numberOfServing"]!.text = "${l.foodLogItem!.numberOfServing!}";
+        selectedMeal.value = "Snack";
+
+      }
+      fname.value = fdto.foodName!;
+      fid.value = fdto.foodId!;
+      fdes.value = fdto.getStringDescription();
+      sltDate = f.sltDate;
+      formController["servingSize"]!.text = "${fdto.servingSize}";
+
+      setData(double.tryParse(formController["numberOfServing"]?.text.toString().trim()??"0.0")??1);
+
     }
     else {
       showData();
@@ -189,7 +279,7 @@ class LogFoodController extends GetxController {
     print (i);
     if (Get.parameters["type"] == "fromMyRecipePage"
     ||Get.parameters["type"] == "fromAddMealItemRecipePage"
-
+        ||Get.parameters["type"] == "updateLogRecipe"
     ){
       var item = {
         "calories": double.parse(rdto.getCaloriesStr()),
@@ -406,13 +496,24 @@ class LogFoodController extends GetxController {
   }
 
   Future<void> logFood( ) async {
-    DateTime now = DateTime.now();
-    print("cc");
-    String formattedDateTime = DateFormat('yyyy-MM-ddTHH:mm:ss').format(now);
+    String formattedDateTime = DateFormat('yyyy-MM-ddTHH:mm:ss').format(sltDate);
     var item;
     if (Get.parameters["type"] == "fromMyFoodPage" ) {
        item = {
         "logDiaryId": "",
+        "dateLog": formattedDateTime,
+        "foodLogItem": {
+          "food": fdto.toJson(),
+          "numberOfServing": double.tryParse(
+              formController["numberOfServing"]?.text.toString().trim() ?? "0.0"),
+          "foodLogType": "food"
+        },
+        "logDiaryType": selectedMeal.value
+      };
+    }
+    if (Get.parameters["type"] == "updateLogFood" ) {
+      item = {
+        "logDiaryId": logDiaryDTO.logDiaryItemId,
         "dateLog": formattedDateTime,
         "foodLogItem": {
           "food": fdto.toJson(),
@@ -436,26 +537,66 @@ class LogFoodController extends GetxController {
         "logDiaryType": selectedMeal.value
       };
     }
-
-    Object obj = jsonEncode(item);
-    NetworkApiService networkApiService = NetworkApiService();
-    FoodOverviewController clr = Get.find<FoodOverviewController>();
-    http.Response res = await networkApiService.postApi("/log-diary/add-log/${clr.loginResponse.userId}", obj);
-
-    if(res.statusCode == 200){
-      LogDiaryDTO logDiaryDTO = LogDiaryDTO.fromJson(json.decode(utf8.decode(res.bodyBytes)));
-      DiaryController diaryController = Get.find<DiaryController>();
-      if(selectedMeal.value == "Breakfast"){
-        diaryController.breakfast.add(logDiaryDTO);
-      }else if(selectedMeal.value == "Lunch"){
-        diaryController.lunch.add(logDiaryDTO);
-      }else if(selectedMeal.value == "Dinner"){
-        diaryController.dinner.add(logDiaryDTO);
-      }else if(selectedMeal.value == "Snack"){
-        diaryController.snack.add(logDiaryDTO);
-      }
+    if (Get.parameters["type"] == "updateLogRecipe" ) {
+      item = {
+        "logDiaryId": logDiaryDTO.logDiaryItemId,
+        "dateLog": formattedDateTime,
+        "foodLogItem": {
+          "recipe": rdto.toJson(),
+          "numberOfServing": double.tryParse(
+              formController["numberOfServing"]?.text.toString().trim() ?? "0.0"),
+          "foodLogType": "recipe"
+        },
+        "logDiaryType": selectedMeal.value
+      };
     }
-    Get.close(2);
+    Object obj = jsonEncode(item);
+
+    if(Get.parameters["type"] == "updateLogRecipe"||Get.parameters["type"] == "updateLogFood"){
+      NetworkApiService networkApiService = NetworkApiService();
+      DiaryController clr = Get.find<DiaryController>();
+
+      http.Response res = await networkApiService.postApi("/log-diary/update-diary/${clr.loginResponse.userId}", obj);
+      logDiaryDTO.foodLogItem?.numberOfServing = double.tryParse(formController["numberOfServing"]?.text.toString().trim() ?? "0.0");
+
+      if(res.statusCode == 200){
+        DiaryController diaryController = Get.find<DiaryController>();
+        if(diaryLogType.value == "breakfast"){
+          diaryController.breakfast.removeAt(int.parse(indexV.value) );
+          diaryController.breakfast.insert(int.parse(indexV.value), logDiaryDTO);
+        }else if(diaryLogType.value == "lunch"){
+          diaryController.lunch.removeAt(int.parse(indexV.value));
+          diaryController.lunch.insert(int.parse(indexV.value), logDiaryDTO);
+        }else if(diaryLogType.value == "dinner"){
+          diaryController.dinner.removeAt(int.parse(indexV.value));
+          diaryController.dinner.insert(int.parse(indexV.value), logDiaryDTO);
+        }else if(diaryLogType.value == "snack"){
+          diaryController.snack.removeAt(int.parse(indexV.value));
+          diaryController.snack.insert(int.parse(indexV.value), logDiaryDTO);
+        }
+      }
+      Get.close(1);
+    }else{
+      NetworkApiService networkApiService = NetworkApiService();
+      FoodOverviewController clr = Get.find<FoodOverviewController>();
+      http.Response res = await networkApiService.postApi("/log-diary/add-log/${clr.loginResponse.userId}", obj);
+
+      if(res.statusCode == 200){
+        LogDiaryDTO logDiaryDTO = LogDiaryDTO.fromJson(json.decode(utf8.decode(res.bodyBytes)));
+        DiaryController diaryController = Get.find<DiaryController>();
+        if(selectedMeal.value == "Breakfast"){
+          diaryController.breakfast.add(logDiaryDTO);
+        }else if(selectedMeal.value == "Lunch"){
+          diaryController.lunch.add(logDiaryDTO);
+        }else if(selectedMeal.value == "Dinner"){
+          diaryController.dinner.add(logDiaryDTO);
+        }else if(selectedMeal.value == "Snack"){
+          diaryController.snack.add(logDiaryDTO);
+        }
+      }
+      Get.close(2);
+    }
+
   }
 }
 
