@@ -5,6 +5,7 @@ import 'dart:developer';
 
 import 'package:do_an_2/model/components/Description.dart';
 import 'package:do_an_2/model/planDTO.dart';
+import 'package:do_an_2/model/planTypeDTO.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
@@ -100,6 +101,26 @@ class PlanAdminController extends GetxController{
 
   Rx<String> typeForm = "".obs;
 
+
+  @override
+  void onInit() {
+    getAllPlanTypes();
+    getAllPlans();
+  }
+  void getAllPlanTypes() async{
+    loading.value = true;
+    http.Response res = await networkApiService.getApi("/admin/plan-types");
+    loading.value = false;
+    if(res.statusCode == HttpStatus.ok){
+      Iterable i = json.decode(utf8.decode(res.bodyBytes));
+      List<PlanTypeDTO> planTypes = List<PlanTypeDTO>.from(i.map((model)=> PlanTypeDTO.fromJson(model))).toList();
+      planTypeList.value = planTypes;
+    }
+    else{
+      Map<String, dynamic> resMessage = json.decode(utf8.decode(res.bodyBytes));
+      print(resMessage["message"]);
+    }
+  }
   void filterPlanType(String selectedPlanType){
     myPlanList.value = allPlanList.where((element) => element.planType == selectedPlanType).toList();
   }

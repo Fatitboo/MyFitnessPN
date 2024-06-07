@@ -14,7 +14,8 @@ class OverviewPage extends GetView<PlanAdminController>{
             QuillEditor.basic(
               configurations: QuillEditorConfigurations(
                 controller: controller.overviewController,
-                readOnly: true,
+                // readOnly: true,
+                checkBoxReadOnly: true,
                 sharedConfigurations: const QuillSharedConfigurations(
                   locale: Locale('de'),
                 ),
@@ -64,7 +65,7 @@ class OverviewPage extends GetView<PlanAdminController>{
                     QuillEditor.basic(
                       configurations: QuillEditorConfigurations(
                         controller: quillController.values.elementAt(0),
-                        readOnly: true,
+                        // readOnly: true,
                         sharedConfigurations: const QuillSharedConfigurations(
                           locale: Locale('de'),
                         ),

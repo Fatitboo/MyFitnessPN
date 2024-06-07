@@ -93,6 +93,12 @@ class RoutineController extends GetxController{
 
   Rx<String> typeForm = "".obs;
 
+
+  @override
+  void onInit() {
+    getAllRoutine();
+  }
+
   void addExercise(String value, String type){
     TextEditingController name = TextEditingController();
     name.text = value;
@@ -157,7 +163,6 @@ class RoutineController extends GetxController{
       );
     }
   }
-
   void getAllRoutineCategory() async{
     loading.value = true;
     http.Response res = await networkApiService.getApi("/admin/routine-categories");

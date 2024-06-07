@@ -34,6 +34,7 @@ class AppRoutes {
   static const BLOG_MANAGEMENT = '/blog_management';
   static const PROFILE_ADMIN = '/profile_admin';
   static const INGREDIENTS_ADMIN = '/ingredients_admin';
+  static const ADMIN_ROUTINE_PAGE = '/admin_routine_page';
 
   static const DISCOVER_RECIPES_MANAGEMENT = '/discover_recipes_management';
   static const DISCOVER_RECIPES_MANAGEMENT_ADD = '/discover_recipes_management_add';
@@ -42,6 +43,4 @@ class AppRoutes {
   static const ROUTINE_MANAGEMENT_ADD = '/routine_management/add';
   static const PLAN_MANAGEMENT_ADD = '/plan_management/add';
   static const PLAN_TASK_MANAGEMENT = '/plan_management/task_management';
-
-
 }

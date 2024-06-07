@@ -1,6 +1,4 @@
-import 'package:do_an_2/model/exerciseDTO.dart';
 import 'package:do_an_2/views/admin/workout_management/routine/routine_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 

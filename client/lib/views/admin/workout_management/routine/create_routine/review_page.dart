@@ -64,7 +64,7 @@ class ReviewPage extends GetView<RoutineController>{
                   QuillEditor.basic(
                     configurations: QuillEditorConfigurations(
                       controller: controller.descriptionController,
-                      readOnly: true,
+                      // readOnly: true,
                       sharedConfigurations: const QuillSharedConfigurations(
                         locale: Locale('de'),
                       ),
@@ -75,7 +75,8 @@ class ReviewPage extends GetView<RoutineController>{
                   QuillEditor.basic(
                     configurations: QuillEditorConfigurations(
                       controller: controller.workoutOverviewController,
-                      readOnly: true,
+                      // readOnly: true,
+                      checkBoxReadOnly: true,
                       sharedConfigurations: const QuillSharedConfigurations(
                         locale: Locale('de'),
                       ),

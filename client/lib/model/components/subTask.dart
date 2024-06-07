@@ -5,7 +5,7 @@ class SubTask {
   String? subTaskType;  // learn/ workout/ config / article
 
   //workout
-  RoutineDTO? routine;
+  String? routine;
 
   // learn/ config / article
 
@@ -37,14 +37,14 @@ class SubTask {
       subTaskType: json["subTaskType"] ?? "",  // learn/ workout/ config / article
 
       //workout
-      routine: RoutineDTO.fromJson(json["routine"]),
+      routine: json["routine"] ?? "",
 
       // learn/ config / article
       subTaskDescription: json["subTaskDescription"] ?? "",
       subTaskLink: json["subTaskLink"] ?? "", // link to page or link to article or link to video4
 
       //use for user
-      isFinish: json["isFinish"] ?? "",
+      isFinish: json["isFinish"] ?? false,
     );
   }
   Map<String, dynamic> toJson() => {
@@ -52,7 +52,7 @@ class SubTask {
     "subTaskType": subTaskType,  // learn/ workout/ config / article
 
     //workout
-    "routine": routine?.toJson(routine!),
+    "routine": routine,
 
     // learn/ config / article
     "subTaskDescription": subTaskDescription,

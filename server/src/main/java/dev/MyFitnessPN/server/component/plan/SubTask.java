@@ -14,7 +14,7 @@ public class SubTask {
     private String subTaskType;  // learn/ workout/ config / article
 
     //workout
-    private RoutineDTO routine;
+    private String routine;
 
     // learn/ config / article
 

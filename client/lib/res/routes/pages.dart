@@ -25,6 +25,7 @@ import 'package:do_an_2/views/admin/workout_management/exercise/exercise_binding
 import 'package:do_an_2/views/admin/workout_management/exercise/exercise_form.dart';
 import 'package:do_an_2/views/admin/workout_management/routine/add_routine_page.dart';
 import 'package:do_an_2/views/admin/workout_management/routine/routine_binding.dart';
+import 'package:do_an_2/views/admin/workout_management/routine/routine_page.dart';
 import 'package:do_an_2/views/admin/workout_management/workout_management_binding.dart';
 import 'package:do_an_2/views/admin/workout_management/workout_management_page.dart';
 import 'package:do_an_2/views/intro/intro_binding.dart';
@@ -289,6 +290,20 @@ class AppPages {
       name: AppRoutes.PLAN_TASK_MANAGEMENT,
       page: () => ManageTaskPage(),
       binding: ManageTaskBinding(),
+      transition: Transition.native,
+    ),
+
+    GetPage(
+      name: AppRoutes.ADMIN_ROUTINE_PAGE,
+      page: () => MyRoutinePage(),
+      binding: RoutineAdminBinding(),
+      transition: Transition.native,
+    ),
+
+    GetPage(
+      name: AppRoutes.ADMIN_ROUTINE_PAGE,
+      page: () => MyRoutinePage(),
+      binding: RoutineAdminBinding(),
       transition: Transition.native,
     ),
   ];

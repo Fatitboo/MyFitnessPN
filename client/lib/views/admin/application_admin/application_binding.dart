@@ -23,7 +23,6 @@ class ApplicationAdminBinding extends Bindings {
       Get.lazyPut<ExerciseController>(() => ExerciseController());
       Get.lazyPut<RoutineController>(() => RoutineController());
       Get.lazyPut<DiscoverRecipesController>(() => DiscoverRecipesController());
-
       Get.lazyPut<PlanAdminController>(() => PlanAdminController());
   }
   

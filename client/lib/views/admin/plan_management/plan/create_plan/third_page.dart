@@ -135,7 +135,7 @@ class ThirdPage extends GetView<PlanAdminController> {
                             child: QuillEditor.basic(
                               configurations: QuillEditorConfigurations(
                                 controller: quillController.values.elementAt(0),
-                                readOnly: false,
+                                // readOnly: false,
                                 sharedConfigurations: const QuillSharedConfigurations(
                                   locale: Locale('de'),
                                 ),

@@ -18,9 +18,10 @@ class RoutineExploreItemWidget extends StatelessWidget{
   final String type;
   final String category;
   final QuillController workoutOverview;
+  final bool isShowOptions;
   final Function callBack;
 
-  const RoutineExploreItemWidget({super.key, required this.routId, required this.routineName, required this.duration, required this.callBack, required this.thumbNail, required this.type, required this.category, required this.workoutOverview});
+  const RoutineExploreItemWidget({super.key, required this.routId, required this.routineName, required this.duration, required this.callBack, required this.thumbNail, required this.type, required this.category, required this.workoutOverview, required this.isShowOptions});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,8 @@ class RoutineExploreItemWidget extends StatelessWidget{
                             SizedBox(width: MediaQuery.of(context).size.width - 190, child: Text(routineName, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800),)),
                           ],
                         ),
-                        PopupMenuButton<SampleItem>(
+                        if(!isShowOptions)
+                          PopupMenuButton<SampleItem>(
                           color: Colors.white,
                           padding: EdgeInsets.only(right: 0),
                           onSelected: (SampleItem item) {
@@ -110,15 +112,15 @@ class RoutineExploreItemWidget extends StatelessWidget{
                             ),
                           ],
                         ),
-
                       ],
                     ),
                     const SizedBox(height: 3,),
                     SizedBox(
                       child: QuillEditor.basic(
                         configurations: QuillEditorConfigurations(
+                          checkBoxReadOnly: true,
                           controller: workoutOverview,
-                          readOnly: true,
+                          // readOnly: true,
                           sharedConfigurations: const QuillSharedConfigurations(
                             locale: Locale('de'),
                           ),

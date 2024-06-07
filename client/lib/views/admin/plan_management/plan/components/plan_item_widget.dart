@@ -15,9 +15,10 @@ class PlanItemAdminWidget extends StatelessWidget{
   final int timePerWeek;
   final QuillController overview;
   final String difficulty;
+  final bool isFuncs;
   final Function callBack;
 
-  const PlanItemAdminWidget({super.key, required this.planType, required this.thumbnail, required this.title, required this.duration, required this.timePerWeek, required this.overview, required this.difficulty, required this.callBack});
+  const PlanItemAdminWidget({super.key, required this.planType, required this.thumbnail, required this.title, required this.duration, required this.timePerWeek, required this.overview, required this.difficulty, required this.isFuncs, required this.callBack});
 
   @override
   Widget build(BuildContext context) {
@@ -50,48 +51,45 @@ class PlanItemAdminWidget extends StatelessWidget{
                     children: [
                       Row(
                         children: [
-                          SizedBox(width: MediaQuery.of(context).size.width - 90, child: Text(title, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),)),
-                          PopupMenuButton<SampleItem>(
-                            color: Colors.white,
-                            padding: const EdgeInsets.only(right: 0),
-                            onSelected: (SampleItem item) {
-
-                            },
-                            itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
-                              PopupMenuItem<SampleItem>(
-                                padding: const EdgeInsets.only(left: 20, right: 50),
-                                value: SampleItem.Delete,
-                                child: Text('Activate'),
-                                onTap: (){
-                                  callBack("activate");
-                                },
-                              ),
-                              PopupMenuItem<SampleItem>(
-                                padding: EdgeInsets.only(left: 20, right: 50),
-                                value: SampleItem.Edit,
-                                child: Text('Manage Tasks'),
-                                onTap: () {
-                                  callBack("manage-task");
-                                },
-                              ),
-                              PopupMenuItem<SampleItem>(
-                                padding: EdgeInsets.only(left: 20, right: 50),
-                                value: SampleItem.Edit,
-                                child: Text('Edit'),
-                                onTap: () {
-                                  callBack("edit");
-                                },
-                              ),
-                              PopupMenuItem<SampleItem>(
-                                padding: const EdgeInsets.only(left: 20, right: 50),
-                                value: SampleItem.Delete,
-                                child: Text('Delete'),
-                                onTap: (){
-                                  callBack("delete");
-                                },
-                              ),
-                            ],
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            width: MediaQuery.of(context).size.width - 90,
+                            child: Text(title, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),)
                           ),
+                          if(isFuncs)
+                            PopupMenuButton<SampleItem>(
+                              color: Colors.white,
+                              padding: const EdgeInsets.only(right: 0),
+                              onSelected: (SampleItem item) {
+
+                              },
+                              itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
+                                PopupMenuItem<SampleItem>(
+                                  padding: const EdgeInsets.only(left: 20, right: 50),
+                                  value: SampleItem.Edit,
+                                  child: const Text('Manage Tasks'),
+                                  onTap: () {
+                                    callBack("manage-task");
+                                  },
+                                ),
+                                PopupMenuItem<SampleItem>(
+                                  padding: const EdgeInsets.only(left: 20, right: 50),
+                                  value: SampleItem.Edit,
+                                  child: const Text('Edit'),
+                                  onTap: () {
+                                    callBack("edit");
+                                  },
+                                ),
+                                PopupMenuItem<SampleItem>(
+                                  padding: const EdgeInsets.only(left: 20, right: 50),
+                                  value: SampleItem.Delete,
+                                  child: const Text('Delete'),
+                                  onTap: (){
+                                    callBack("delete");
+                                  },
+                                ),
+                              ],
+                            ),
                         ],
                       ),
                       Row(

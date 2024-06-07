@@ -1,11 +1,15 @@
+import 'package:do_an_2/model/planDTO.dart';
 import 'package:do_an_2/res/values/color_extension.dart';
 import 'package:do_an_2/res/widgets/tab_button.dart';
+import 'package:do_an_2/views/admin/plan_management/plan/plan_page.dart';
 import 'package:do_an_2/views/user/application_user/application_controller.dart';
 import 'package:do_an_2/views/user/diary/diary_page.dart';
 import 'package:do_an_2/views/user/home/home_page.dart';
+import 'package:do_an_2/views/user/plan/plan_page.dart';
 import 'package:do_an_2/views/user/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 import '../../../res/routes/names.dart';
 
@@ -66,7 +70,7 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
   }
 
   Widget _buildPageView() {
-    return PageView(
+    return Obx(() => PageView(
       reverse: false,
       controller: controller.pageController,
       onPageChanged: (index) => {controller.handleChangePage(index)},
@@ -74,10 +78,10 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
       children: [
         HomePage(),
         DiaryPage(),
-        ProfilePage(),
+        controller.isStartPlan.value ? PlanObserveUserPage(controller.planDTO) : PlanPage("user"),
         ProfilePage(),
       ],
-    );
+    ));
   }
 
   @override

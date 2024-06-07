@@ -89,12 +89,12 @@ class SignInAdminPage extends GetView<SignInAdminController> {
                       RoundButton(
                           title: "Sign In",
                           onPressed: () {
-                            controller.signAdminIn();
+                            // controller.signAdminIn();
                             // if(controller.formField.currentState!
                             //     .validate()){
                             //
                             // }
-                            // Get.offAndToNamed(AppRoutes.APPLICATION_ADMIN);
+                            Get.offAndToNamed(AppRoutes.APPLICATION_ADMIN);
                           }),
 
                       const SizedBox(height: 50),
