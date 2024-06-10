@@ -50,13 +50,13 @@ class ManageTaskController extends GetxController{
           subTaskName.text = subTask.subTaskName!;
           subTaskDescription.text = subTask.subTaskDescription!;
           subTaskLink.text = subTask.subTaskLink!;
-
+          print(subTask.routine );
           subTaskList.add({
             "subTaskName": subTaskName,
             "subTaskType": subTask.subTaskType,  // learn/ workout/ config / article
             "subTaskDescription": subTaskDescription,
             "subTaskLink": subTaskLink,
-            "routine": null,
+            "routine": subTask.routine?.isEmpty ?? true ? null : RoutineDTO.basic(subTask.routine!),
           });
         }
         tasks.add(
@@ -140,13 +140,13 @@ class ManageTaskController extends GetxController{
       if(currentDaysOfWeek.value[i]){
         if(tasks.value[i]["taskDescription"].text.isEmpty){
           showDialog(context: context, builder: (BuildContext context) {
-            return customDialog("Warning", "Missing task overview in ${getWeekDay((i % 7))}day week ${((i + 1) / 7).floor()}", context);
+            return customDialog("Warning", "Missing task overview in ${getWeekDay((i % 7))}day week ${((i / 7).floor() + 1).floor()}", context);
           });
           return false;
         }
         if(tasks.value[i]["subTaskList"].isEmpty){
           showDialog(context: context, builder: (BuildContext context) {
-            return customDialog("Warning","You need to add sub tasks in ${getWeekDay((i % 7).floor())}day week ${i + 1}", context);
+            return customDialog("Warning","You need to add sub tasks in ${getWeekDay((i % 7).floor())}day week ${(i / 7).floor() + 1}", context);
           });
           return false;
         }
@@ -154,7 +154,7 @@ class ManageTaskController extends GetxController{
           var subTask = tasks.value[i]["subTaskList"][j];
           if(subTask["subTaskName"].text.isEmpty){
             showDialog(context: context, builder: (BuildContext context) {
-              return customDialog("Warning","Missing sub task name in ${getWeekDay((i % 7).floor())}day week ${i + 1}", context);
+              return customDialog("Warning","Missing sub task name in ${getWeekDay((i % 7).floor())}day week ${(i / 7).floor() + 1}", context);
             });
             return false;
           }
@@ -163,7 +163,7 @@ class ManageTaskController extends GetxController{
               )
            && subTask["subTaskDescription"].text.isEmpty){
             showDialog(context: context, builder: (BuildContext context) {
-              return customDialog("Warning","Missing sub task description in ${getWeekDay((i % 7).floor())}day of Week ${i + 1}", context);
+              return customDialog("Warning","Missing sub task description in ${getWeekDay((i % 7).floor())}day of Week ${(i / 7).floor() + 1}", context);
             });
             return false;
           }
@@ -171,7 +171,7 @@ class ManageTaskController extends GetxController{
           if(subTask["subTaskType"] == Constant.SUBTASK_link
             && subTask["subTaskLink"].text.isEmpty){
             showDialog(context: context, builder: (BuildContext context) {
-              return customDialog("Warning","Missing sub task link in ${getWeekDay((i % 7).floor())}day week ${i + 1}", context);
+              return customDialog("Warning","Missing sub task link in ${getWeekDay((i % 7).floor())}day week ${(i / 7).floor() + 1}", context);
             });
             return false;
           }
@@ -179,7 +179,8 @@ class ManageTaskController extends GetxController{
           if(subTask["subTaskType"] == Constant.SUBTASK_workout
               && subTask["routine"] == null){
             showDialog(context: context, builder: (BuildContext context) {
-              return customDialog("Warning","Missing sub task routine in ${getWeekDay((i % 7).floor())}day week ${i + 1}", context);
+              print(subTask["subTaskName"].text);
+              return customDialog("Warning","Missing sub task routine in ${getWeekDay((i % 7).floor())}day week ${(i / 7).floor() + 1}", context);
             });
             return false;
           }
@@ -193,7 +194,7 @@ class ManageTaskController extends GetxController{
       );
       if(sum != planDTO.timePerWeek){
         showDialog(context: context, builder: (BuildContext context) {
-          return customDialog("Warning", "Missing task in Week ${i + 1}", context);
+          return customDialog("Warning", "Missing task in Week ${(i / 7).floor() + 1}", context);
         });
         return false;
       }

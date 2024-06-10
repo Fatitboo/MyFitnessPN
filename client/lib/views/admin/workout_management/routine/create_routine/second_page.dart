@@ -289,6 +289,8 @@ class SecondPage extends GetView<RoutineController>{
                             children: [
                               MyButton(
                                 onTap: () {
+                                  onTap();
+                                  return;
                                   if(controller.thumbnail != null){
                                     if(controller.video != null){
                                       onTap();

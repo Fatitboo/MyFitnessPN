@@ -85,7 +85,10 @@ class ThirdPage extends GetView<RoutineController> {
                         showJustifyAlignment: false,
                         showSmallButton: false,
                         showDirection: false,
-                        showClearFormat: false
+                        showClearFormat: false,
+                        showClipboardPaste: false,
+                        showClipboardCut: false,
+                        showClipboardCopy: false
                       ),
                     ),
                   ),
@@ -148,7 +151,7 @@ class ThirdPage extends GetView<RoutineController> {
                                           content: Text("Description is requires!"),
                                           actions: [
                                             TextButton(
-                                              child: Text("OK"),
+                                              child: Text("OK "),
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },

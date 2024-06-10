@@ -1,5 +1,4 @@
 import 'package:do_an_2/model/exerciseDTO.dart';
-import 'package:do_an_2/res/routes/names.dart';
 import 'package:do_an_2/views/admin/workout_management/exercise/exercise_controller.dart';
 import 'package:do_an_2/views/admin/workout_management/exercise/exercise_page.dart';
 import 'package:do_an_2/views/admin/workout_management/routine/add_exercise_item.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../../../../res/values/color_extension.dart';
-import '../../../../../res/values/constants.dart';
 import '../../../../../res/widgets/my_button.dart';
 import '../../../../../validate/Validator.dart';
 

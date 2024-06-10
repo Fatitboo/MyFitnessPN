@@ -95,7 +95,6 @@ public class RoutineController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
         }
     }
-////
     @DeleteMapping("{userId}/delete-routine/{routineId}")
     public ResponseEntity<?> deleteExercise(@PathVariable String userId, @PathVariable String routineId){
         HashMap<String, Object> Response = new HashMap<>();

@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../../../../res/widgets/my_button.dart';
-
 enum SampleItem { Delete, Duplicate, Edit, Log, Share}
 
 class ManageTaskPage extends GetView<ManageTaskController>{
@@ -145,9 +143,8 @@ class ManageTaskPage extends GetView<ManageTaskController>{
                                   SizedBox(width: MediaQuery.of(context).size.width,child: const Text("Overview", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),)),
                                   const SizedBox(height: 5,),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
                                     width: MediaQuery.of(context).size.width - 10,
-                                    height: 50,
                                     child: TextField(
                                       controller: controller.tasks.value[index * 7 + indexPage]['taskDescription'],
                                       decoration: const InputDecoration(

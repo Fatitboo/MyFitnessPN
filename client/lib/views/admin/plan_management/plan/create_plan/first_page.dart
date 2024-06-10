@@ -319,7 +319,10 @@ class FirstPage extends GetView<PlanAdminController> {
                                       showJustifyAlignment: false,
                                       showSmallButton: false,
                                       showDirection: false,
-                                      showClearFormat: false
+                                      showClearFormat: false,
+                                      showClipboardPaste: false,
+                                      showClipboardCopy: false,
+                                      showClipboardCut: false
                                   ),
                                 ),
                               ),

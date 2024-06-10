@@ -34,6 +34,8 @@ class RoutineDTO {
     this.category
   );
 
+  RoutineDTO.basic(String this.routId);
+
   factory RoutineDTO.fromJson(Map<String, dynamic> json) {
     RoutineDTO item = RoutineDTO(
       json["routId"] ?? "",

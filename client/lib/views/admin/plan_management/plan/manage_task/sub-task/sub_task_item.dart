@@ -47,7 +47,6 @@ class SubTaskItem extends GetView<ManageTaskController> {
           const SizedBox(height: 10,),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 5),
-            height: 50,
             child: TextField(
               controller: subTask['subTaskName'],
               decoration: const InputDecoration(
@@ -82,7 +81,6 @@ class SubTaskItem extends GetView<ManageTaskController> {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  height: 50,
                   child: TextField(
                     controller: subTask['subTaskLink'],
                     decoration: const InputDecoration(
@@ -125,7 +123,6 @@ class SubTaskItem extends GetView<ManageTaskController> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 margin: const EdgeInsets.symmetric(horizontal: 5),
-                height: 50,
                 decoration: BoxDecoration(
                   color: AppColor.OutlineButtonColor.withOpacity(0.8),
                   borderRadius: const BorderRadius.all(Radius.circular(5))
@@ -144,7 +141,7 @@ class SubTaskItem extends GetView<ManageTaskController> {
                   duration: subTask['routine'].duration.toString(),
                   type: subTask['routine'].type.toString(),
                   category: subTask['routine'].category.toString(),
-                  workoutOverview: subTask['routine'].workoutOverview,
+                  workoutOverview: subTask['routine'].workoutOverview ?? "",
                   callBack: () {},
                 ),
                 Align(

@@ -24,6 +24,7 @@ class PlanAdminController extends GetxController{
   RxList listCategory = [].obs;
   var progressValue = 0.0.obs;
   var index = 0.obs;
+  RxString thumnailLink = "".obs;
 
   RxList myPlanList = [].obs;
 
@@ -193,7 +194,49 @@ class PlanAdminController extends GetxController{
       thumbnail.value = File(_image.path);
     }
   }
+  void setValueAdd(PlanDTO planDTO) {
+    textEditController.value["title"]?.text = planDTO.title!;
+    textEditController.value["duration"]?.text = planDTO.duration!.toString();
+    selectedTimePerWeek.value = planDTO.timePerWeek!.toString();
+    selectedDifficulty.value = planDTO.difficulty!;
 
+    selectedType = (planDTO.planType.toString()).obs;
+    overviewController = QuillController.basic();
+    overviewController.document = Document.fromJson(jsonDecode(planDTO.overview.toString()));
+
+    descriptionControllers = [].obs;
+    for(int i = 0; i < planDTO.descriptions!.length; i++){
+      Map<String, QuillController> quillController = {};
+      QuillController quill = QuillController.basic();
+      quill.document = Document.fromJson(jsonDecode(planDTO.descriptions![i].content.toString()));
+      quillController[planDTO.descriptions![i].title!] = quill;
+      descriptionControllers.add(quillController);
+    }
+
+    weekDescriptions = [].obs;
+
+    for(int i = 0; i < planDTO.weekDescription!.length; i++){
+      TextEditingController tctrler = TextEditingController();
+      tctrler.text = planDTO.weekDescription![i];
+      weekDescriptions.add(tctrler);
+    }
+
+    List<String> Wdes = planDTO.descriptions!.map((e) => e.title!).toList();
+
+    thumbnail = File('').obs;
+    thumnailLink.value = planDTO.thumbnail!;
+    progressValue = 0.0.obs;
+    index = 0.obs;
+    Set set1 = {
+      "What You'll Need On This Plan",
+      "Choose This Plan If",
+      "What you will do",
+      "Sample List of Exercises",
+      "Guidelines"
+    };
+    Set set2 = Set.from(Wdes);
+    descriptionTypes = (List<String>.from(set1.difference(set2))).obs;
+  }
   void resetValue() {
     textEditController = {
       "title": TextEditingController(),
@@ -215,5 +258,6 @@ class PlanAdminController extends GetxController{
       "Sample List of Exercises",
       "Guidelines"
     ].obs;
+    thumnailLink = "".obs;
   }
 }
