@@ -15,9 +15,11 @@ class PredictApiService extends BaseApiService {
   @override
   Future<http.StreamedResponse> postApi(String path, String filename) async {
     try {
+      print("Dô");
       var request = http.MultipartRequest('POST', Uri.parse(baseUrl + path));
       request.files.add(await http.MultipartFile.fromPath('image', filename));
       var res = await request.send();
+      print(res);
       return res;
     } on SocketException {
       throw InternetException();

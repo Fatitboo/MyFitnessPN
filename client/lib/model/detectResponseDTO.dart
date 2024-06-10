@@ -4,6 +4,7 @@ class DetectResponseDTO {
   List<String> masks;
   String msg;
   List<Roi> rois;
+  List<double> scores;
 
   DetectResponseDTO({
     required this.classIds,
@@ -11,6 +12,7 @@ class DetectResponseDTO {
     required this.masks,
     required this.msg,
     required this.rois,
+    required this.scores,
   });
 
   factory DetectResponseDTO.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class DetectResponseDTO {
       masks: List<String>.from(json['masks']),
       msg: json['msg'],
       rois: roisList,
+      scores: List<double>.from(json['scores']),
     );
   }
 }

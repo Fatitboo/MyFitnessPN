@@ -50,42 +50,47 @@ print("Load weight done!")
 
 @app.route("/predict/", methods=['POST'])
 def predict():
-    file = request.files['image']
-    # Read the image via file.stream
-    print(file)
-    original_image = Image.open(file.stream)
-    original_image = np.array(original_image)
-    
-    img = cv2.resize(original_image, (IMAGE_SIZE, IMAGE_SIZE), interpolation=cv2.INTER_AREA)                         
-    r = model.detect([img])
-    r = r[0]
-    
-    if r['masks'].size > 0:
-        masks = np.zeros((original_image.shape[0], original_image.shape[1], r['masks'].shape[-1]), dtype=np.uint8)
-        for m in range(r['masks'].shape[-1]):
-            masks[:, :, m] = cv2.resize(r['masks'][:, :, m].astype('uint8'), 
-                                        (original_image.shape[1], original_image.shape[0]), interpolation=cv2.INTER_NEAREST)
+    try:
+        file = request.files['image']
+        # Read the image via file.stream
+        print(file)
+        original_image = Image.open(file.stream)
+        original_image = np.array(original_image)
         
-        y_scale = original_image.shape[0]/IMAGE_SIZE
-        x_scale = original_image.shape[1]/IMAGE_SIZE
-        rois = (r['rois'] * [y_scale, x_scale, y_scale, x_scale]).astype(int)
+        img = cv2.resize(original_image, (IMAGE_SIZE, IMAGE_SIZE), interpolation=cv2.INTER_AREA)                         
+        r = model.detect([img])
+        r = r[0]
         
-        masks, rois = Utilities.refine_masks(masks, rois)
-    else:
-        masks, rois = r['masks'], r['rois']
-        
-    mask_list = []
-    for m in range(masks.shape[-1]):
-        mask_item = masks[:, :, m]
-        
-        encode_params = [int(cv2.IMWRITE_PNG_COMPRESSION), 9]
-        _, buffer = cv2.imencode('.png', mask_item, encode_params)
-        b64_bytearr = base64.b64encode(buffer).decode("utf-8")
-        #b64 = str(b64_bytearr, 'utf-8')
-        mask_list.append(b64_bytearr)
+        if r['masks'].size > 0:
+            masks = np.zeros((original_image.shape[0], original_image.shape[1], r['masks'].shape[-1]), dtype=np.uint8)
+            for m in range(r['masks'].shape[-1]):
+                masks[:, :, m] = cv2.resize(r['masks'][:, :, m].astype('uint8'), 
+                                            (original_image.shape[1], original_image.shape[0]), interpolation=cv2.INTER_NEAREST)
+            
+            y_scale = original_image.shape[0]/IMAGE_SIZE
+            x_scale = original_image.shape[1]/IMAGE_SIZE
+            rois = (r['rois'] * [y_scale, x_scale, y_scale, x_scale]).astype(int)
+            
+            masks, rois = Utilities.refine_masks(masks, rois)
+        else:
+            masks, rois = r['masks'], r['rois']
+            
+        mask_list = []
+        for m in range(masks.shape[-1]):
+            mask_item = masks[:, :, m]
+            
+            encode_params = [int(cv2.IMWRITE_PNG_COMPRESSION), 9]
+            _, buffer = cv2.imencode('.png', mask_item, encode_params)
+            b64_bytearr = base64.b64encode(buffer).decode("utf-8")
+            #b64 = str(b64_bytearr, 'utf-8')
+            mask_list.append(b64_bytearr)
+            print(r['scores'])
 
-    
-    return jsonify({'msg': 'success', 'masks': mask_list, 'rois': rois.tolist(), 'class_ids': r['class_ids'].tolist(), 'image_size': [original_image.shape[0], original_image.shape[1]]})
+        
+        return jsonify({'msg': 'success', 'masks': mask_list, 'rois': rois.tolist(), 'scores': r['scores'].tolist() ,'class_ids': r['class_ids'].tolist(), 'image_size': [original_image.shape[0], original_image.shape[1]]})
+    except:
+        return jsonify({"msg": "System Failed"})
+        
 
 
 if __name__ == '__main__':

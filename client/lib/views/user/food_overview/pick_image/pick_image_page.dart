@@ -13,6 +13,7 @@ import '../../../../res/routes/names.dart';
 import '../../../../res/values/color_extension.dart';
 import '../../../../res/widgets/loading_widget.dart';
 import '../../../../res/widgets/round_button.dart';
+import 'package:image/image.dart' as imglib;
 
 class PickImagePage extends GetView<PickImageController> {
   const PickImagePage({super.key});
@@ -214,10 +215,10 @@ class PickImagePage extends GetView<PickImageController> {
                                             children: [
                                               Container(
                                                 height: 100,
-                                                width: 120,
+                                                width: 100,
                                                 color: Colors.transparent,
                                                 child: CustomPaint(
-                                                  size: const Size(120, 100), // Kích thước của phần hình ảnh hiển thị
+                                                  size: const Size(100, 100), // Kích thước của phần hình ảnh hiển thị
                                                   painter: ImageCropPainter(
                                                       context: context,
                                                       image: controller.loadedImage,
@@ -230,7 +231,7 @@ class PickImagePage extends GetView<PickImageController> {
                                                   SizedBox(
                                                       width: MediaQuery.of(context).size.width * 35 / 100,
                                                       child: Text(
-                                                        "${h.foodName} ",
+                                                        "${h.foodName}",
                                                         style: const TextStyle(fontSize: 16),
                                                         overflow: TextOverflow.ellipsis,
                                                       )),
@@ -912,27 +913,16 @@ class ImageCropPainter extends CustomPainter {
   final BuildContext context;
   @override
   void paint(Canvas canvas, Size size) {
-    // Tọa độ x, y và kích thước của phần cần cắt 97,
-    //             283,
-    //             339,
-    //             503
-    //             0,
-    //             35,
-    //             125,
-    //             352
     double x = (roi.x).toDouble();
     double y = (roi.y).toDouble();
-    double width = (roi.width).toDouble();
-    double height = (roi.height).toDouble();
-    print("width = ${size.width}");
-    print("heigh = ${size.height}");
-
-    // Vẽ phần hình ảnh được cắt từ tọa độ (x, y) với kích thước (width, height)
+    double height = (roi.height).toDouble() - x;
+    double width = (roi.width).toDouble() - y;
     if (image != null) {
       canvas.drawImageRect(
         image!,
-        Rect.fromLTWH(x, y, width, height),
-        Rect.fromLTWH(0, 0, size.width, size.height),
+        Rect.fromLTWH(y, x, width, height),
+        width <= height ? Rect.fromLTWH(0, 0, width * size.height / height, size.height) :
+        Rect.fromLTWH(0, 0, size.width, height * size.width / width),
         Paint(),
       );
     }

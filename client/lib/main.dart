@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           fontFamily: "PublicSans"
         ),
         title: 'MyFitnessPN',
-        initialRoute: AppPages.INITIAL,
+        initialRoute: AppRoutes.PICK_IMAGE_FOOD,
         getPages: AppPages.routes,
       )),
     );
