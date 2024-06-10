@@ -18,9 +18,10 @@ class PlanPage extends GetView<PlanAdminController>{
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      appBar: AppBar(
-        title: Text("PLANS", style: TextStyle(fontWeight: FontWeight.w600),),
+      appBar: type == "user" ? AppBar(
+        title: const Text("PLANS", style: TextStyle(fontWeight: FontWeight.w600),),
         centerTitle: true,
+
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
           child: Container(
@@ -28,7 +29,7 @@ class PlanPage extends GetView<PlanAdminController>{
             height: 1.0,
           ),
         )
-      ),
+      ) : null,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -79,7 +80,9 @@ class PlanPage extends GetView<PlanAdminController>{
                       onTapDown: (position){
                         final RenderBox renderBox = context.findRenderObject() as RenderBox;
                         controller.tapPosition.value = renderBox.globalToLocal(position.globalPosition);
-                        Get.to(PlanReviewPage(planDTO: planDTO, type: type, planController: PlanController(),));
+                        if(type == "user"){
+                          Get.to(PlanReviewPage(planDTO: planDTO, type: type, planController: PlanController(),));
+                        }
                       },
 
                       child: PlanItemAdminWidget(
@@ -97,11 +100,12 @@ class PlanPage extends GetView<PlanAdminController>{
                               Get.toNamed(AppRoutes.PLAN_TASK_MANAGEMENT, arguments: {"item": planDTO});
                               break;
                             case "edit":
-                              // Get.toNamed(AppRoutes.PLAN_MANAGEMENT_ADD, arguments: {"type": "edit"})?.then(
-                              //         (value) => {
-                              //       // controller.resetValue()
-                              //     }
-                              // );
+                              controller.setValueAdd(planDTO);
+                              Get.toNamed(AppRoutes.PLAN_MANAGEMENT_ADD, arguments: {"type": "edit"})?.then(
+                                      (value) => {
+                                    controller.resetValue()
+                                  }
+                              );
                               break;
                             case "duplicate":
                               // controller.createRoutine(jsonEncode( routineDTO.toJson(routineDTO)));

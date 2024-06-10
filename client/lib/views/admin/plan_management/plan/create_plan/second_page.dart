@@ -1,14 +1,10 @@
 import 'package:do_an_2/views/admin/plan_management/plan/plan_controller.dart';
-import 'package:do_an_2/views/admin/workout_management/routine/routine_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:video_player/video_player.dart';
 
 import '../../../../../res/values/color_extension.dart';
 import '../../../../../res/widgets/my_button.dart';
@@ -106,10 +102,14 @@ class SecondPage extends GetView<PlanAdminController>{
                         Expanded(child:
                           controller.thumbnail.value.path != '' ?
                             Image.file(controller.thumbnail.value, height: 200, fit: BoxFit.cover,)
-                          : Container(height: 200, decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black54, width: 1)
-                            )
-                          )
+                          :
+                            controller.thumnailLink.value != "" ?
+                              Image.network(controller.thumnailLink.value, height: 200, fit: BoxFit.cover,)
+                            :
+                              Container(height: 200, decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black54, width: 1)
+                                )
+                              )
                         ),
                       ],
                     ),

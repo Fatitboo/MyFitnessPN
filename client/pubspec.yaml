@@ -36,6 +36,8 @@ dependencies:
   cloudinary_sdk: ^5.0.0+1
   date_picker_timeline: ^1.2.5
   scrollable_positioned_list: ^0.3.8
+  webview_flutter: ^4.8.0
+
   flutter_ruler_picker: ^1.0.6
   bottom_picker: ^2.7.0
   image: ^4.2.0

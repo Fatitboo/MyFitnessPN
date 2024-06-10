@@ -17,7 +17,9 @@ class RoutineExploreItemTaskWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     QuillController quill = QuillController.basic();
-    quill.document = Document.fromJson(jsonDecode(workoutOverview));
+    if(workoutOverview != ""){
+      quill.document = Document.fromJson(jsonDecode(workoutOverview));
+    }
 
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
