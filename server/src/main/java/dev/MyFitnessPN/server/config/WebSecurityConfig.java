@@ -41,6 +41,7 @@ public class WebSecurityConfig {
                             .requestMatchers(
                                     "api/v1/users/register",
                                     "api/v1/users/login"
+
                             ).permitAll()
                             .requestMatchers("api/v1/skills**").permitAll()
                             .requestMatchers("api/v1/occupations**").permitAll()

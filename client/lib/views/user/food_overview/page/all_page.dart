@@ -26,6 +26,9 @@ class AllPage extends GetView<FoodOverviewController> {
               children: [
                 Expanded(
                   child: InkWell(
+                    onTap: (){
+                      controller.openBottomPicker(context);
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                           color: AppColor.white,

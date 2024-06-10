@@ -1,9 +1,10 @@
 import 'dart:convert';
-
 import 'package:do_an_2/model/foodDTO.dart';
 import 'package:do_an_2/model/historyDTO.dart';
 import 'package:do_an_2/model/recipeDTO.dart';
+import 'package:do_an_2/res/routes/names.dart';
 import 'package:do_an_2/res/service/remote_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -127,5 +128,10 @@ class FoodOverviewController extends GetxController {
     myHistory.refresh();
     myHistory = his;
     update();
+  }
+  openBottomPicker(BuildContext context) {
+    Get.toNamed(AppRoutes.PICK_IMAGE_FOOD);
+
+
   }
 }

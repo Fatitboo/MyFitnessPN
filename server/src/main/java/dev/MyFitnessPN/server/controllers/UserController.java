@@ -44,6 +44,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
         }
     }
+    @PostMapping("/update")
+    public ResponseEntity<?> updaetUser( @RequestBody UserDTO userDTO) {
+
+        HashMap<String, Object> Response = new HashMap<>();
+        try {
+            boolean u = userServices.updateUser(userDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(u);
+        } catch (Exception e) {
+            Response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Response);
+        }
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(
@@ -74,6 +86,51 @@ public class UserController {
         }
     }
 
+    @GetMapping("/check-username")
+    public ResponseEntity<?> checkEmail(
+            @RequestParam("username") String username
+    ) {
+        HashMap<String, Object> loginResponse = new HashMap<>();
+        try {
+            boolean ok = userServices.sendEmailReset(username);
+            loginResponse.put("message", ok);
+            return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
+        } catch (Exception e) {
+            loginResponse.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse);
+        }
+    }
+
+    @GetMapping("{username}/check-otp")
+    public ResponseEntity<?> checkOtp(
+            @RequestParam("otp") String otp, @PathVariable String username
+    ) {
+        HashMap<String, Object> loginResponse = new HashMap<>();
+        try {
+            boolean ok = userServices.checkOtp(username, otp);
+            loginResponse.put("message", "ok");
+            return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
+        } catch (Exception e) {
+            loginResponse.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse);
+        }
+    }
+
+    @PostMapping("reset-password")
+    public ResponseEntity<?> checkOtp(
+            @RequestBody UserLoginDTO userLoginDTO
+    ) {
+        HashMap<String, Object> loginResponse = new HashMap<>();
+        try {
+            boolean ok = userServices.resetPassword(userLoginDTO.getUsername(), userLoginDTO.getPassword());
+            loginResponse.put("message", "ok");
+            return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
+        } catch (Exception e) {
+            loginResponse.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse);
+        }
+    }
+
     @GetMapping("/get_user_health/{id}")
     public ResponseEntity<?> getUserHealth(@PathVariable String id) {
         HashMap<String, Object> response = new HashMap<>();
@@ -90,7 +147,7 @@ public class UserController {
     }
 
     @PutMapping("{userId}/set-up-plan/{planId}")
-    public ResponseEntity<?> setupPlan(@PathVariable String userId, @PathVariable String planId){
+    public ResponseEntity<?> setupPlan(@PathVariable String userId, @PathVariable String planId) {
         HashMap<String, Object> response = new HashMap<>();
 
         try {
@@ -102,8 +159,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
     @PutMapping("/{userId}/mask-done-task/{planId}")
-    public ResponseEntity<?> maskDoneSubTask(@PathVariable String userId, @PathVariable String planId,@RequestParam(value="index", required = true) int index){
+    public ResponseEntity<?> maskDoneSubTask(@PathVariable String userId, @PathVariable String planId, @RequestParam(value = "index", required = true) int index) {
         HashMap<String, Object> response = new HashMap<>();
 
         try {
@@ -115,4 +173,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
+
 }

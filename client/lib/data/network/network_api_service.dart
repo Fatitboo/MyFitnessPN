@@ -10,17 +10,15 @@ import '../../res/store/user.dart';
 
 class NetworkApiService extends BaseApiService {
   // String token = StorageService.to.getString(STORAGE_USER_TOKEN_KEY)??"";
-  String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE4NTU2MjI1fQ.naqa0933qLuBDryxCZyLd-bBgd8ocDoZ9ukoE7SPe7U";
-  final String baseUrl = "http://192.168.56.2:8088/api/v1";
+  String token =
+      "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE4NTU2MjI1fQ.naqa0933qLuBDryxCZyLd-bBgd8ocDoZ9ukoE7SPe7U";
+  final String baseUrl = "http://10.0.2.2:8088/api/v1";
 
   @override
   Future<http.Response> getApi(String path) async {
     dynamic responseJson;
     try {
-      final response = await http.get(Uri.parse(baseUrl + path), headers: {
-        'content-type': 'application/json',
-        'Authorization': 'Bearer $token'
-      });
+      final response = await http.get(Uri.parse(baseUrl + path), headers: {'content-type': 'application/json', 'Authorization': 'Bearer $token'});
       print(response.body);
       return response;
     } on SocketException {
@@ -31,15 +29,12 @@ class NetworkApiService extends BaseApiService {
   @override
   Future<http.Response> postApi(String path, Object body) async {
     dynamic responseJson;
-    token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE4NTU2MjI1fQ.naqa0933qLuBDryxCZyLd-bBgd8ocDoZ9ukoE7SPe7U";
+    token =
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE4NTU2MjI1fQ.naqa0933qLuBDryxCZyLd-bBgd8ocDoZ9ukoE7SPe7U";
     try {
       print(token);
-      final response = await http.post(Uri.parse(baseUrl + path),
-          headers: {
-            'content-type': 'application/json',
-            'Authorization': 'Bearer $token'
-          },
-          body: body);
+      final response =
+          await http.post(Uri.parse(baseUrl + path), headers: {'content-type': 'application/json', 'Authorization': 'Bearer $token'}, body: body);
       print(response.body);
       return response;
     } on SocketException {
@@ -50,14 +45,11 @@ class NetworkApiService extends BaseApiService {
   @override
   Future<http.Response> putApi(String path, Object body) async {
     dynamic responseJson;
-    token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE4NTU2MjI1fQ.naqa0933qLuBDryxCZyLd-bBgd8ocDoZ9ukoE7SPe7U";
+    token =
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE4NTU2MjI1fQ.naqa0933qLuBDryxCZyLd-bBgd8ocDoZ9ukoE7SPe7U";
     try {
-      final response = await http.put(Uri.parse(baseUrl + path),
-          headers: {
-            'content-type': 'application/json',
-            'Authorization': 'Bearer $token'
-          },
-          body: body);
+      final response =
+          await http.put(Uri.parse(baseUrl + path), headers: {'content-type': 'application/json', 'Authorization': 'Bearer $token'}, body: body);
       print(response.body);
       return response;
     } on SocketException {
@@ -68,13 +60,10 @@ class NetworkApiService extends BaseApiService {
   @override
   Future<http.Response> deleteApi(String path) async {
     dynamic responseJson;
-    token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE4NTU2MjI1fQ.naqa0933qLuBDryxCZyLd-bBgd8ocDoZ9ukoE7SPe7U";
+    token =
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOnsidGltZXN0YW1wIjoxNzExNzY1OTU5LCJkYXRlIjoxNzExNzY1OTU5MDAwfSwidXNlcm5hbWUiOiJ1c2VyMSIsInN1YiI6InVzZXIxIiwiZXhwIjoxNzE4NTU2MjI1fQ.naqa0933qLuBDryxCZyLd-bBgd8ocDoZ9ukoE7SPe7U";
     try {
-      final response = await http.delete(Uri.parse(baseUrl + path),
-          headers: {
-            'content-type': 'application/json',
-            'Authorization': 'Bearer $token'
-          });
+      final response = await http.delete(Uri.parse(baseUrl + path), headers: {'content-type': 'application/json', 'Authorization': 'Bearer $token'});
       print(response.body);
       return response;
     } on SocketException {

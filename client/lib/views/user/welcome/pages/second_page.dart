@@ -29,11 +29,7 @@ class SecondPage extends GetView<WelcomeController> {
         children: [
           const Text(
             "What is your gender?",
-            style: TextStyle(
-                color: AppColor.blackText,
-                fontSize: 24,
-                fontFamily: 'Gothic',
-                fontWeight: FontWeight.w900),
+            style: TextStyle(color: AppColor.blackText, fontSize: 24, fontFamily: 'Gothic', fontWeight: FontWeight.w900),
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 20),
@@ -43,15 +39,12 @@ class SecondPage extends GetView<WelcomeController> {
               children: [
                 SimpleButtonCard(
                   buttonText: "Male",
-                  backgroundColor: selectedIndex.value == 0
-                      ? AppColor.primaryColor1
-                      : Colors.white,
-                  textColor:
-                      selectedIndex.value == 0 ? Colors.white : Colors.black,
+                  backgroundColor: controller.gender.value == Constant.male ? AppColor.primaryColor1 : Colors.white,
+                  textColor: controller.gender.value == Constant.male ? Colors.white : Colors.black,
                   iconAssets: 'assets/images/male.jpg',
                   onTap: () {
                     changeStatus(0);
-                    controller.goal.value = Constant.male;
+                    controller.gender.value = Constant.male;
                   },
                 ),
                 const SizedBox(
@@ -59,15 +52,12 @@ class SecondPage extends GetView<WelcomeController> {
                 ),
                 SimpleButtonCard(
                   buttonText: "Female",
-                  backgroundColor: selectedIndex.value == 1
-                      ? AppColor.primaryColor1
-                      : Colors.white,
-                  textColor:
-                      selectedIndex.value == 1 ? Colors.white : Colors.black,
+                  backgroundColor: controller.gender.value == Constant.female ? AppColor.primaryColor1 : Colors.white,
+                  textColor: controller.gender.value == Constant.female ? Colors.white : Colors.black,
                   iconAssets: 'assets/images/female.jpg',
                   onTap: () {
                     changeStatus(1);
-                    controller.goal.value = Constant.female;
+                    controller.gender.value = Constant.female;
                   },
                 ),
               ],

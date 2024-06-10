@@ -21,16 +21,12 @@ public class UserDTO {
     @NotNull(message = "Username is required")
     private String username;
 
-    @NotNull(message = "Password cannot null")
     private String password;
 
-    @NotNull(message = "Confirm Password cannot null")
     private String cPassword;
 
-    @NotNull(message = "Full name cannot null")
     private String fullName;
 
-    @NotNull(message = "Email cannot null")
     private String email;
 
     @NotNull(message = "Gender cannot null")
@@ -48,13 +44,10 @@ public class UserDTO {
     @NotNull(message = "Weight goal cannot null")
     private double goalWeight;
 
-    @NotNull(message = "Day of birth cannot null")
     private LocalDate dayOfBirth;
 
     @NotNull(message = "Exercise level cannot null")
     private String exercise;
-
-
 
     private int googleAccountId;
 }

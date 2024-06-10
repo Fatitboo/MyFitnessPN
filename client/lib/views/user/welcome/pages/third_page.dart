@@ -55,7 +55,7 @@ class ThirdPage extends GetView<WelcomeController> {
                   "${controller.selectedDate.value.toLocal()}".split(' ')[0],
                   style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 ElevatedButton(

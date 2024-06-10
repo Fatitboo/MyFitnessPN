@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class LogDiaryService {
     private final UserRepository userRepository;
     private final LogDiaryItemRepository logDiaryItemRepository;
+    private final FoodServices foodServices;
 
     public List<LogDiaryItem> getAllLogDiaryInDate(String date, String userId) throws Exception {
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
@@ -60,6 +61,19 @@ public class LogDiaryService {
     }
 
     public LogDiaryDTO addLogDiary(LogDiaryDTO logDiaryDTO, String userId) throws Exception {
+
+        if(!logDiaryDTO.getLogDiaryType().equals("Exercise")&&!logDiaryDTO.getLogDiaryType().equals("Water")){
+            if(logDiaryDTO.getFoodLogItem().getFoodLogType().equals("recipe")){
+                if(logDiaryDTO.getFoodLogItem().getRecipe().getRecipeId().startsWith("fromAPI")){
+                    foodServices.createRecipe(logDiaryDTO.getFoodLogItem().getRecipe(), userId);
+                }
+            }
+            if(logDiaryDTO.getFoodLogItem().getFoodLogType().equals("meal")){
+                if(logDiaryDTO.getFoodLogItem().getMeal().getMealId().startsWith("fromSeftAdd")){
+                    foodServices.createMeal(logDiaryDTO.getFoodLogItem().getMeal(), userId);
+                }
+            }
+        }
         Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
         if (optionalUser.isEmpty()) {
             throw new DataIntegrityViolationException("User is not exist!");

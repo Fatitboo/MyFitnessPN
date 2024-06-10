@@ -41,8 +41,8 @@ class FirstPage extends GetView<WelcomeController> {
                   children: [
                     SimpleButtonCard(
                       buttonText: "Stay Healthy",
-                      backgroundColor: selectedIndex.value == 0 ? AppColor.primaryColor1 : Colors.white,
-                      textColor: selectedIndex.value == 0 ? Colors.white : Colors.black,
+                      backgroundColor: controller.goal.value == Constant.GOAL_maintenance ? AppColor.primaryColor1 : Colors.white,
+                      textColor: controller.goal.value == Constant.GOAL_maintenance ? Colors.white : Colors.black,
                       iconAssets: 'assets/icons/stayhealthy.png',
                       onTap: () {
                         changeStatus(0);
@@ -54,8 +54,8 @@ class FirstPage extends GetView<WelcomeController> {
                     ),
                     SimpleButtonCard(
                       buttonText: "Loss weight",
-                      backgroundColor: selectedIndex.value == 1 ? AppColor.primaryColor1 : Colors.white,
-                      textColor: selectedIndex.value == 1 ? Colors.white : Colors.black,
+                      backgroundColor: controller.goal.value == Constant.GOAL_loseWeight ? AppColor.primaryColor1 : Colors.white,
+                      textColor: controller.goal.value == Constant.GOAL_loseWeight ? Colors.white : Colors.black,
                       iconAssets: 'assets/icons/loseweight.png',
                       onTap: () {
                         changeStatus(1);
@@ -67,8 +67,8 @@ class FirstPage extends GetView<WelcomeController> {
                     ),
                     SimpleButtonCard(
                       buttonText: 'Gain weight',
-                      backgroundColor: selectedIndex.value == 2 ? AppColor.primaryColor1 : Colors.white,
-                      textColor: selectedIndex.value == 2 ? Colors.white : Colors.black,
+                      backgroundColor:controller.goal.value == Constant.GOAL_gainWeight ? AppColor.primaryColor1 : Colors.white,
+                      textColor:controller.goal.value == Constant.GOAL_gainWeight ? Colors.white : Colors.black,
                       iconAssets: 'assets/icons/gainweight.png',
                       onTap: () {
                         changeStatus(2);

@@ -85,7 +85,7 @@ class MealPage extends GetView<MealController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                                SizedBox(
-                                 width: MediaQuery.of(context).size.width-40,
+                                 width: MediaQuery.of(context).size.width*70/100-40,
                                  child: Text(
                                    (controller.type.value == "logMeal"||controller.type.value == "updateLogMeal"
                                        || controller.type.value == "logMealFromDiscoverPage")

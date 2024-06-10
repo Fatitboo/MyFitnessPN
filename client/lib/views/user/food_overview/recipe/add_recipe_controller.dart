@@ -50,20 +50,24 @@ class AddRecipeController extends GetxController {
   void onInit() {
     super.onInit();
     formController["numberOfServing"]!.text = "${1.0}";
-    type.value = Get.parameters["type"]??"";
-    validate = {"title": {ERROR_TYPE.require: "Food Name is required"}, "numberOfServing": {ERROR_TYPE.require: "Number Of Serving is required", ERROR_TYPE.number: "Number Of Serving must be a number",}};
-    if (type.value == "edit"){
+    type.value = Get.parameters["type"] ?? "";
+    validate = {
+      "title": {ERROR_TYPE.require: "Food Name is required"},
+      "numberOfServing": {
+        ERROR_TYPE.require: "Number Of Serving is required",
+        ERROR_TYPE.number: "Number Of Serving must be a number",
+      }
+    };
+    if (type.value == "edit") {
       FoodOverviewController f = Get.find<FoodOverviewController>();
       indexV.value = Get.parameters["index"]!;
-      RecipeDTO r =  f.myRecipe.elementAt(int.parse(indexV.value));
+      RecipeDTO r = f.myRecipe.elementAt(int.parse(indexV.value));
       List<FoodDTO> fl = r.foods!;
       myIngredients.assignAll(fl);
       recipeId.value = r.recipeId!;
       formController["title"]!.text = "${r.title}";
       formController["numberOfServing"]!.text = "${r.numberOfServing}";
-
-
-    }
+    } else if (type.value == "fromPickImg") {}
 
     updateData();
   }
@@ -82,34 +86,36 @@ class AddRecipeController extends GetxController {
       "sugar_g": 0.0
     };
     for (FoodDTO f in myIngredients) {
-      double cv = (f.numberOfServing??1)*(f.servingSize??100)/100;
+      double cv = (f.numberOfServing ?? 1) * (f.servingSize ?? 100) / 100;
       print(cv);
-      item["calories"] = item["calories"]! + f.nutrition!.elementAt(0).amount*cv?? 0.0 ;
-      item["fat_total_g"] = item["fat_total_g"]! + f.nutrition!.elementAt(2).amount*cv ?? 0.0;
-      item["fat_saturated_g"] = item["fat_saturated_g"]! + f.nutrition!.elementAt(3).amount*cv ?? 0.0;
-      item["protein_g"] = item["protein_g"]! + f.nutrition!.elementAt(4).amount*cv ?? 0.0;
-      item["sodium_mg"] = item["sodium_mg"]! + f.nutrition!.elementAt(5).amount*cv ?? 0.0;
-      item["potassium_mg"] = item["potassium_mg"]! + f.nutrition!.elementAt(6).amount*cv ?? 0.0;
-      item["cholesterol_mg"] = item["cholesterol_mg"]! + f.nutrition!.elementAt(7).amount*cv ?? 0.0;
-      item["carbohydrates_total_g"] = item["carbohydrates_total_g"]! + f.nutrition!.elementAt(8).amount*cv ?? 0.0;
-      item["fiber_g"] = item["fiber_g"]! + f.nutrition!.elementAt(9).amount*cv ?? 0.0;
-      item["sugar_g"] = item["sugar_g"]! + f.nutrition!.elementAt(10).amount*cv ?? 0.0;
+      item["calories"] = item["calories"]! + f.nutrition!.elementAt(0).amount * cv ?? 0.0;
+      item["fat_total_g"] = item["fat_total_g"]! + f.nutrition!.elementAt(2).amount * cv ?? 0.0;
+      item["fat_saturated_g"] = item["fat_saturated_g"]! + f.nutrition!.elementAt(3).amount * cv ?? 0.0;
+      item["protein_g"] = item["protein_g"]! + f.nutrition!.elementAt(4).amount * cv ?? 0.0;
+      item["sodium_mg"] = item["sodium_mg"]! + f.nutrition!.elementAt(5).amount * cv ?? 0.0;
+      item["potassium_mg"] = item["potassium_mg"]! + f.nutrition!.elementAt(6).amount * cv ?? 0.0;
+      item["cholesterol_mg"] = item["cholesterol_mg"]! + f.nutrition!.elementAt(7).amount * cv ?? 0.0;
+      item["carbohydrates_total_g"] = item["carbohydrates_total_g"]! + f.nutrition!.elementAt(8).amount * cv ?? 0.0;
+      item["fiber_g"] = item["fiber_g"]! + f.nutrition!.elementAt(9).amount * cv ?? 0.0;
+      item["sugar_g"] = item["sugar_g"]! + f.nutrition!.elementAt(10).amount * cv ?? 0.0;
     }
-    double i = double.parse(formController["numberOfServing"]!.text );
-    formController["calories"]!.text = "${item["calories"]!/i}";
-    formController["fat_total_g"]!.text = "${item["fat_total_g"]!/i}";
-    formController["fat_saturated_g"]!.text = "${item["fat_saturated_g"]!/i}";
-    formController["protein_g"]!.text = "${item["protein_g"]!/i}";
-    formController["sodium_mg"]!.text = "${item["sodium_mg"]!/i}";
-    formController["potassium_mg"]!.text = "${item["potassium_mg"]!/i}";
-    formController["cholesterol_mg"]!.text = "${item["cholesterol_mg"]!/i}";
-    formController["carbohydrates_total_g"]!.text = "${item["carbohydrates_total_g"]!/i}";
-    formController["fiber_g"]!.text = "${item["fiber_g"]!/i}";
-    formController["sugar_g"]!.text = "${item["sugar_g"]!/i}";
+    double i = double.parse(formController["numberOfServing"]!.text);
+    formController["calories"]!.text = (item["calories"]! / i).toStringAsFixed(2);
+    formController["fat_total_g"]!.text = (item["fat_total_g"]! / i).toStringAsFixed(2);
+    formController["fat_saturated_g"]!.text = (item["fat_saturated_g"]! / i).toStringAsFixed(2);
+    formController["protein_g"]!.text = (item["protein_g"]! / i).toStringAsFixed(2);
+    formController["sodium_mg"]!.text = (item["sodium_mg"]! / i).toStringAsFixed(2);
+    formController["potassium_mg"]!.text = (item["potassium_mg"]! / i).toStringAsFixed(2);
+    formController["cholesterol_mg"]!.text = (item["cholesterol_mg"]! / i).toStringAsFixed(2);
+    formController["carbohydrates_total_g"]!.text = (item["carbohydrates_total_g"]! / i).toStringAsFixed(2);
+    formController["fiber_g"]!.text = (item["fiber_g"]! / i).toStringAsFixed(2);
+    formController["sugar_g"]!.text = (item["sugar_g"]! / i).toStringAsFixed(2);
   }
-  void onChangeSize(String item){
+
+  void onChangeSize(String item) {
     updateData();
   }
+
   void getFoodsFromApi(String queryString) async {
     if (queryString.length <= 2) {
       Get.defaultDialog(
@@ -117,8 +123,9 @@ class AddRecipeController extends GetxController {
           title: "Search term too short",
           middleText: "Please enter a search term that is at least 2 characters long.",
           textConfirm: "Dismiss",
-          onConfirm: () {Get.close(1);}
-      );
+          onConfirm: () {
+            Get.close(1);
+          });
     } else {
       foods.clear();
       foods = await RemoteService().getFoodsFromApi(queryString);
@@ -134,13 +141,10 @@ class AddRecipeController extends GetxController {
 
   Future<void> handleAddRecipe() async {
     errors.value = Validator.ValidateForm(validate, formController);
-    var result = errors.values
-        .toList()
-        .firstWhere((e) => e.isError, orElse: () => Val(false, ""));
+    var result = errors.values.toList().firstWhere((e) => e.isError, orElse: () => Val(false, ""));
     Object obj;
     Map<String, dynamic> item;
     if (!result.isError) {
-
       item = {
         "recipeId": "",
         "title": formController["title"]?.text.toString().trim(),
@@ -163,23 +167,21 @@ class AddRecipeController extends GetxController {
 
         if (res.statusCode == 200) {
           Map<String, dynamic> i = json.decode(utf8.decode(res.bodyBytes));
-         
+
           List<RecipeDTO> rec = List<RecipeDTO>.from(i["recipes"].map((model) => RecipeDTO.fromJson(model))).toList();
           clr.myRecipe.refresh();
           clr.myRecipe = rec.obs;
 
           clr.update();
-
         }
         Get.back();
       }
     }
   }
+
   Future<void> handleUpdateRecipe() async {
     errors.value = Validator.ValidateForm(validate, formController);
-    var result = errors.values
-        .toList()
-        .firstWhere((e) => e.isError, orElse: () => Val(false, ""));
+    var result = errors.values.toList().firstWhere((e) => e.isError, orElse: () => Val(false, ""));
     Object obj;
     Map<String, dynamic> item;
     if (!result.isError) {
@@ -213,16 +215,13 @@ class AddRecipeController extends GetxController {
           clr.myRecipe.value = rec.obs;
 
           clr.update();
-
         }
 
         Get.back();
-      }  else {
-      Map<String, dynamic> resMessage = json.decode(utf8.decode(res.bodyBytes));
-      print(resMessage["message"]);
-    }
-
+      } else {
+        Map<String, dynamic> resMessage = json.decode(utf8.decode(res.bodyBytes));
+        print(resMessage["message"]);
+      }
     }
   }
-
 }

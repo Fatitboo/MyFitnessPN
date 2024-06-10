@@ -39,10 +39,7 @@ class SignInPage extends GetView<SignInController> {
                       // welcome back, you've been missed!
                       Text(
                         'Welcome back you\'ve been missed!',
-                        style: TextStyle(
-                            color: Colors.grey[700],
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.grey[700], fontSize: 18, fontWeight: FontWeight.bold),
                       ),
 
                       SizedBox(
@@ -55,18 +52,17 @@ class SignInPage extends GetView<SignInController> {
                               MyTextField(
                                 controller: controller.usernameController,
                                 hintText: 'Username',
-
                               ),
-                          
+
                               const SizedBox(height: 20),
-                          
+
                               // password textfield
                               MyTextField(
                                 controller: controller.passwordController,
                                 hintText: 'Password',
                                 isPass: true,
                               ),
-                          
+
                               const SizedBox(height: 10),
                               // forgot password?
                               Padding(
@@ -75,7 +71,9 @@ class SignInPage extends GetView<SignInController> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes.FORGOT_PASSWORD);
+                                      },
                                       child: Text(
                                         'Forgot Password?',
                                         style: TextStyle(color: Colors.grey[600]),
@@ -91,18 +89,14 @@ class SignInPage extends GetView<SignInController> {
                               RoundButton(
                                   title: "Sign In",
                                   onPressed: () {
-                                    Get.offAndToNamed(AppRoutes.APPLICATION_USER);
-
-                                    if (controller.formField.currentState!.validate()) {
-
-                                    }
+                                    // Get.offAndToNamed(AppRoutes.APPLICATION_USER);
+                                    controller.signUserIn();
+                                    if (controller.formField.currentState!.validate()) {}
                                   }),
-
                             ],
                           ),
                         ),
                       ),
-
 
                       const SizedBox(height: 40),
 
@@ -118,8 +112,7 @@ class SignInPage extends GetView<SignInController> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Text(
                                 'Or continue with',
                                 style: TextStyle(color: Colors.grey[700]),
@@ -151,9 +144,7 @@ class SignInPage extends GetView<SignInController> {
                                 style: TextStyle(color: Color(0xff2186ab)),
                               ),
                               style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                                 side: const BorderSide(color: Colors.purple),
                                 borderRadius: BorderRadius.circular(10.0),
                               )))),

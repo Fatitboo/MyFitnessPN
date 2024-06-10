@@ -37,12 +37,9 @@ class AddMealItemPage extends GetView<AddMealItemController> {
             icon: const Icon(Icons.arrow_back),
           ),
           centerTitle: true,
-          title:const Text("Add meal item"),
+          title: const Text("Add meal item"),
           bottom: TabBar(
-            labelStyle: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: AppColor.black,
-                fontSize: 16),
+            labelStyle: TextStyle(fontWeight: FontWeight.w500, color: AppColor.black, fontSize: 16),
             tabAlignment: TabAlignment.center,
             isScrollable: true,
             tabs: const [

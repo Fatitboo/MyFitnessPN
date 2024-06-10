@@ -11,6 +11,8 @@ spring:
     mongodb:
       database: ${MONGO_DATABSE}
       uri: mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_CLUSTER}
+  sendgrid:
+    api-key: ${API_KEY_SEND_GRID}
 
 jwt:
   expiration: 2592000 #30 days = 30 * 24 * 60 * 60

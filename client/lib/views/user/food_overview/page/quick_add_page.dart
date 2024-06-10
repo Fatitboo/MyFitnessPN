@@ -17,12 +17,7 @@ class QuickAddPage extends GetView<AddFoodController> {
           centerTitle: true,
           shadowColor: Colors.black,
           elevation: 1,
-          actions: [
-            IconButton(
-                onPressed: () {
-                },
-                icon: const Icon(Icons.check))
-          ],
+          actions: [IconButton(onPressed: () { controller.quickLog();}, icon: const Icon(Icons.check))],
         ),
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -39,7 +34,10 @@ class QuickAddPage extends GetView<AddFoodController> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text("Meal", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                          const Text(
+                            "Meal",
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
                           Container(
                             constraints: BoxConstraints(minWidth: 100, maxHeight: 40, maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
@@ -51,27 +49,23 @@ class QuickAddPage extends GetView<AddFoodController> {
                                     focusedBorder: OutlineInputBorder()),
                                 hint: Text(
                                   controller.selectedMeal.value,
-                                  style:
-                                  const TextStyle(fontSize: 14),
+                                  style: const TextStyle(fontSize: 14),
                                 ),
                                 items: controller.itemsMeal
-                                    .map((item) =>
-                                    DropdownMenuItem<String>(
-                                      value: item,
-                                      child: Text(
-                                        item,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ))
+                                    .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ))
                                     .toList(),
                                 onChanged: (value) {
-                                  controller.selectedMeal.value =
-                                      value.toString();
+                                  controller.selectedMeal.value = value.toString();
                                 },
-                                buttonStyleData:
-                                const ButtonStyleData(
+                                buttonStyleData: const ButtonStyleData(
                                   padding: EdgeInsets.only(right: 8),
                                 ),
                                 iconStyleData: const IconStyleData(
@@ -83,21 +77,17 @@ class QuickAddPage extends GetView<AddFoodController> {
                                 ),
                                 dropdownStyleData: DropdownStyleData(
                                   decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(15),
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
                                 ),
-                                menuItemStyleData:
-                                const MenuItemStyleData(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 16),
+                                menuItemStyleData: const MenuItemStyleData(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
                                 ),
                               ),
                             ),
                           ),
                         ],
                       ),
-
                     ],
                   ),
                 ),
@@ -113,16 +103,14 @@ class QuickAddPage extends GetView<AddFoodController> {
                       children: [
                         Text(
                           "Nutrition Facts per serving",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         )
                       ],
                     ),
                   ),
                 ),
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -132,30 +120,22 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Calories (Cal)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller:
-                                controller.formController["calories"],
+                                controller: controller.formController["calories"],
                                 onChanged: (item) {
-                                  controller.errors.value["calories"]?.isError =
-                                  false;
+                                  controller.errors.value["calories"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller
-                                        .errors.value["calories"]!.isError
-                                        ? controller
-                                        .errors.value["calories"]!.message
-                                        : null,
+                                    errorText: controller.errors.value["calories"]!.isError ? controller.errors.value["calories"]!.message : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Required"),
                               ),
@@ -174,30 +154,23 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Fat total (g)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller:
-                                controller.formController["fat_total_g"],
+                                controller: controller.formController["fat_total_g"],
                                 onChanged: (item) {
-                                  controller.errors.value["fat_total_g"]
-                                      ?.isError = false;
+                                  controller.errors.value["fat_total_g"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller.errors
-                                        .value["fat_total_g"]!.isError
-                                        ? controller.errors
-                                        .value["fat_total_g"]!.message
-                                        : null,
+                                    errorText:
+                                        controller.errors.value["fat_total_g"]!.isError ? controller.errors.value["fat_total_g"]!.message : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Optional"),
                               ),
@@ -216,29 +189,23 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Fat saturated (g)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller: controller
-                                    .formController["fat_saturated_g"],
+                                controller: controller.formController["fat_saturated_g"],
                                 onChanged: (item) {
-                                  controller.errors.value["fat_saturated_g"]
-                                      ?.isError = false;
+                                  controller.errors.value["fat_saturated_g"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller.errors
-                                        .value["fat_saturated_g"]!.isError
-                                        ? controller.errors
-                                        .value["fat_saturated_g"]!.message
+                                    errorText: controller.errors.value["fat_saturated_g"]!.isError
+                                        ? controller.errors.value["fat_saturated_g"]!.message
                                         : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Optional"),
@@ -258,29 +225,23 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Cholesterol (mg)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller:
-                                controller.formController["cholesterol_mg"],
+                                controller: controller.formController["cholesterol_mg"],
                                 onChanged: (item) {
-                                  controller.errors.value["cholesterol_mg"]
-                                      ?.isError = false;
+                                  controller.errors.value["cholesterol_mg"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller.errors
-                                        .value["cholesterol_mg"]!.isError
-                                        ? controller.errors
-                                        .value["cholesterol_mg"]!.message
+                                    errorText: controller.errors.value["cholesterol_mg"]!.isError
+                                        ? controller.errors.value["cholesterol_mg"]!.message
                                         : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Optional"),
@@ -300,30 +261,22 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Protein (g)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller:
-                                controller.formController["protein_g"],
+                                controller: controller.formController["protein_g"],
                                 onChanged: (item) {
-                                  controller.errors.value["protein_g"]
-                                      ?.isError = false;
+                                  controller.errors.value["protein_g"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller
-                                        .errors.value["protein_g"]!.isError
-                                        ? controller
-                                        .errors.value["protein_g"]!.message
-                                        : null,
+                                    errorText: controller.errors.value["protein_g"]!.isError ? controller.errors.value["protein_g"]!.message : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Optional"),
                               ),
@@ -342,30 +295,22 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Sodium (mg)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller:
-                                controller.formController["sodium_mg"],
+                                controller: controller.formController["sodium_mg"],
                                 onChanged: (item) {
-                                  controller.errors.value["sodium_mg"]
-                                      ?.isError = false;
+                                  controller.errors.value["sodium_mg"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller
-                                        .errors.value["sodium_mg"]!.isError
-                                        ? controller
-                                        .errors.value["sodium_mg"]!.message
-                                        : null,
+                                    errorText: controller.errors.value["sodium_mg"]!.isError ? controller.errors.value["sodium_mg"]!.message : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Optional"),
                               ),
@@ -384,30 +329,23 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Potassium (mg)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller:
-                                controller.formController["potassium_mg"],
+                                controller: controller.formController["potassium_mg"],
                                 onChanged: (item) {
-                                  controller.errors.value["potassium_mg"]
-                                      ?.isError = false;
+                                  controller.errors.value["potassium_mg"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller.errors
-                                        .value["potassium_mg"]!.isError
-                                        ? controller.errors
-                                        .value["potassium_mg"]!.message
-                                        : null,
+                                    errorText:
+                                        controller.errors.value["potassium_mg"]!.isError ? controller.errors.value["potassium_mg"]!.message : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Optional"),
                               ),
@@ -426,35 +364,23 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Carbohydrates total (g)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller: controller
-                                    .formController["carbohydrates_total_g"],
+                                controller: controller.formController["carbohydrates_total_g"],
                                 onChanged: (item) {
-                                  controller
-                                      .errors
-                                      .value["carbohydrates_total_g"]
-                                      ?.isError = false;
+                                  controller.errors.value["carbohydrates_total_g"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller
-                                        .errors
-                                        .value["carbohydrates_total_g"]!
-                                        .isError
-                                        ? controller
-                                        .errors
-                                        .value["carbohydrates_total_g"]!
-                                        .message
+                                    errorText: controller.errors.value["carbohydrates_total_g"]!.isError
+                                        ? controller.errors.value["carbohydrates_total_g"]!.message
                                         : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Optional"),
@@ -474,30 +400,22 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Fiber (g)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller:
-                                controller.formController["fiber_g"],
+                                controller: controller.formController["fiber_g"],
                                 onChanged: (item) {
-                                  controller.errors.value["fiber_g"]?.isError =
-                                  false;
+                                  controller.errors.value["fiber_g"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller
-                                        .errors.value["fiber_g"]!.isError
-                                        ? controller
-                                        .errors.value["fiber_g"]!.message
-                                        : null,
+                                    errorText: controller.errors.value["fiber_g"]!.isError ? controller.errors.value["fiber_g"]!.message : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Optional"),
                               ),
@@ -516,30 +434,22 @@ class QuickAddPage extends GetView<AddFoodController> {
                         children: [
                           const Text(
                             "Sugar (g)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Container(
-                            constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width),
+                            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                             child: IntrinsicWidth(
                               child: TextField(
-                                controller:
-                                controller.formController["sugar_g"],
+                                controller: controller.formController["sugar_g"],
                                 onChanged: (item) {
-                                  controller.errors.value["sugar_g"]?.isError =
-                                  false;
+                                  controller.errors.value["sugar_g"]?.isError = false;
                                 },
                                 textAlign: TextAlign.right,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
                                     enabledBorder: InputBorder.none,
-                                    errorText: controller
-                                        .errors.value["sugar_g"]!.isError
-                                        ? controller
-                                        .errors.value["sugar_g"]!.message
-                                        : null,
+                                    errorText: controller.errors.value["sugar_g"]!.isError ? controller.errors.value["sugar_g"]!.message : null,
                                     focusedBorder: InputBorder.none,
                                     hintText: "Optional"),
                               ),

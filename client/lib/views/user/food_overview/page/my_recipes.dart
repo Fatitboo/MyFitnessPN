@@ -25,11 +25,8 @@ class MyRecipesPage extends GetView<FoodOverviewController> {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: (){
-                      Get.toNamed(
-                          AppRoutes.ADD_RECIPE,
-                          parameters: {"type": "add"},
-                          arguments: Get.arguments);
+                    onTap: () {
+                      Get.toNamed(AppRoutes.ADD_RECIPE, parameters: {"type": "add"}, arguments: Get.arguments);
                     },
                     child: Container(
                       decoration: BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.circular(10)),
@@ -37,30 +34,43 @@ class MyRecipesPage extends GetView<FoodOverviewController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.add_business_outlined, size: media.width / 10, color: Colors.purple),
-                          SizedBox(height: media.width / 40,),
-                          const Text('Create a Recipe', style: TextStyle(fontWeight: FontWeight.w600,color: Colors.purple),
+                          SizedBox(
+                            height: media.width / 40,
+                          ),
+                          const Text(
+                            'Create a Recipe',
+                            style: TextStyle(fontWeight: FontWeight.w600, color: Colors.purple),
                           )
                         ],
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Expanded(
                   child: InkWell(
-                    onTap: (){
-                      Get.toNamed(
-                          AppRoutes.DISCOVER_RECIPES_MANAGEMENT,
-                          parameters: {"type": "fromUserDiscoverRecipe"});
+                    onTap: () {
+                      Get.toNamed(AppRoutes.DISCOVER_RECIPES_MANAGEMENT, parameters: {"type": "fromUserDiscoverRecipe"});
                     },
                     child: Container(
-                      decoration: BoxDecoration(color: AppColor.white,borderRadius: BorderRadius.circular(10)),
+                      decoration: BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.circular(10)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.account_tree_outlined, size: media.width / 10, color: Colors.purple,),
-                          SizedBox(height: media.width / 40,),
-                          const Text('Discover the Recipe', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.purple),)
+                          Icon(
+                            Icons.account_tree_outlined,
+                            size: media.width / 10,
+                            color: Colors.purple,
+                          ),
+                          SizedBox(
+                            height: media.width / 40,
+                          ),
+                          const Text(
+                            'Discover the Recipe',
+                            style: TextStyle(fontWeight: FontWeight.w600, color: Colors.purple),
+                          )
                         ],
                       ),
                     ),
@@ -73,7 +83,12 @@ class MyRecipesPage extends GetView<FoodOverviewController> {
             height: 40,
             child: Padding(
               padding: EdgeInsets.only(left: 15, top: 10),
-              child: Text("My Recipes", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black,),
+              child: Text(
+                "My Recipes",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
@@ -89,42 +104,40 @@ class MyRecipesPage extends GetView<FoodOverviewController> {
                         RecipeDTO r = controller.myRecipe.elementAt(index);
                         return GestureDetector(
                           onTap: () {
-                            Get.toNamed(AppRoutes.LOG_FOOD,
-                                parameters: {
-                                  "type": "fromMyRecipePage",
-                                  "index": "$index"
-                                },
-                                arguments: controller);
+                            Get.toNamed(AppRoutes.LOG_FOOD, parameters: {"type": "fromMyRecipePage", "index": "$index"}, arguments: controller);
                           },
-                          onLongPress: (){
-                            Get.toNamed(AppRoutes.ADD_RECIPE,
-                                parameters: {"type": "edit", "index": "$index"},
-                                arguments: Get.arguments);
+                          onLongPress: () {
+                            Get.toNamed(AppRoutes.ADD_RECIPE, parameters: {"type": "edit", "index": "$index"}, arguments: Get.arguments);
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade100,),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade100,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(r.title ?? "", style: const TextStyle(fontSize: 16),),
-                                    Text(r.getStringDescription(), style: const TextStyle(color: Colors.black54),)
+                                    Text(
+                                      r.title ?? "",
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                    Text(
+                                      r.getStringDescription(),
+                                      style: const TextStyle(color: Colors.black54),
+                                    )
                                   ],
                                 ),
                                 InkWell(
-                                  onTap: () {
-
-                                  },
+                                  onTap: () {},
                                   child: Container(
                                     padding: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(100),
-                                        color: AppColor.primaryColor1.withOpacity(0.1)
-                                    ),
+                                    decoration:
+                                        BoxDecoration(borderRadius: BorderRadius.circular(100), color: AppColor.primaryColor1.withOpacity(0.1)),
                                     child: const Icon(Icons.add),
                                   ),
                                 )

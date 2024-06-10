@@ -23,7 +23,10 @@ class AppRoutes {
   static const ADD_MEAL_ITEM = '/add_meal_item';
   static const QUICK_ADD = '/quick_add';
   static const ADD_WATER = '/add_water';
-
+  static const PICK_IMAGE_FOOD = '/pick_image_food';
+  static const FORGOT_PASSWORD = '/forgot_password';
+  static const ENTER_OTP = '/enter_otp';
+  static const RESET_PASS = '/reset_pass';
   
   // admin routes
   static const SIGN_IN_ADMIN = '/sign_in_admin';

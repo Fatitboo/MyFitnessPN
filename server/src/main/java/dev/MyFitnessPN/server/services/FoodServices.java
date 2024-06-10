@@ -142,8 +142,9 @@ public class FoodServices {
         List<Recipe> recipes = user.getRecipes();
         recipeDto.setRecipeId(UUID.randomUUID().toString());
         if (recipes == null) recipes = new ArrayList<>();
-        recipes.add(recipeDto);
-
+        if(recipes.stream().noneMatch(recipe -> recipe.getTitle().equals(recipeDto.getTitle()))){
+            recipes.add(recipeDto);
+        }
         user.setRecipes(recipes);
 
         userRepository.save(user);
@@ -208,7 +209,9 @@ public class FoodServices {
         List<Meal> meals = user.getMeals();
         MealDto.setMealId(UUID.randomUUID().toString());
         if (meals == null) meals = new ArrayList<>();
-        meals.add(MealDto);
+        if(meals.stream().noneMatch(meal -> meal.getDescription().equals(MealDto.getDescription()))){
+            meals.add(MealDto);
+        }
 
         user.setMeals(meals);
 

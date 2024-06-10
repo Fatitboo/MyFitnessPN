@@ -46,6 +46,8 @@ import 'package:do_an_2/views/user/food_overview/meal/meal_binding.dart';
 import 'package:do_an_2/views/user/food_overview/meal/meal_page.dart';
 import 'package:do_an_2/views/user/food_overview/page/add_water.dart';
 import 'package:do_an_2/views/user/food_overview/page/quick_add_page.dart';
+import 'package:do_an_2/views/user/food_overview/pick_image/pick_image_binding.dart';
+import 'package:do_an_2/views/user/food_overview/pick_image/pick_image_page.dart';
 import 'package:do_an_2/views/user/food_overview/recipe/add_recipe_binding.dart';
 import 'package:do_an_2/views/user/food_overview/recipe/add_recipe_page.dart';
 import 'package:do_an_2/views/user/food_overview/recipe/ingredients/search_ingredient_page.dart';
@@ -63,6 +65,10 @@ import 'package:do_an_2/views/user/workout/exercise/exercise_binding.dart';
 import 'package:get/get.dart';
 
 import '../../views/user/food_overview/meal/add_meal_item/add_meal_item_page.dart';
+import '../../views/user/forgot_password/enter_otp.dart';
+import '../../views/user/forgot_password/forgot_password_binding.dart';
+import '../../views/user/forgot_password/forgot_password_page.dart';
+import '../../views/user/forgot_password/reset_password.dart';
 import '../../views/user/workout/exercise/exercise_page.dart';
 import '../../views/user/workout/routine/add_routine_page.dart';
 import '../../views/user/workout/routine/routine_binding.dart';
@@ -91,6 +97,25 @@ class AppPages {
       fullscreenDialog: true,
       popGesture: false,
       transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.FORGOT_PASSWORD,
+      page: () => ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
+      transition: Transition.native,
+      fullscreenDialog: true,
+      popGesture: false,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.ENTER_OTP,
+      page: () => EnterOtpPage(),
+      binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.RESET_PASS,
+      page: () => ResetPasswordPage(),
+      binding: ForgotPasswordBinding(),
     ),
     GetPage(
       name: AppRoutes.SIGN_IN_USER,
@@ -164,6 +189,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.INGREDIENTS,
       page: () => SearchIngredientPage(),
+      binding: AddRecipeBinding(),
       transition: Transition.native,
     ),
     GetPage(
@@ -248,6 +274,12 @@ class AppPages {
       name: AppRoutes.DISCOVER_RECIPES_MANAGEMENT,
       page: () => DiscoverRecipesPage(),
       binding: DiscoverRecipesBinding(),
+      transition: Transition.native,
+    ),
+    GetPage(
+      name: AppRoutes.PICK_IMAGE_FOOD,
+      page: () => PickImagePage(),
+      binding: PickImageBinding(),
       transition: Transition.native,
     ),
     GetPage(

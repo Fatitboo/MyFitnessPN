@@ -1,4 +1,5 @@
 import 'package:do_an_2/res/routes/names.dart';
+import 'package:do_an_2/views/user/food_overview/pick_image/pick_image_controller.dart';
 import 'package:do_an_2/views/user/food_overview/recipe/add_recipe_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,12 +38,7 @@ class SearchIngredientPage extends GetView<AddRecipeController> {
                       decoration: BoxDecoration(
                           color: Colors.grey.shade100,
                           borderRadius: BorderRadius.circular(0),
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 2,
-                                offset: Offset(0, 1))
-                          ]),
+                          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 2, offset: Offset(0, 1))]),
                       child: Row(
                         children: [
                           Expanded(
@@ -84,59 +80,61 @@ class SearchIngredientPage extends GetView<AddRecipeController> {
                                 return GestureDetector(
                                   onTap: () {},
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 20),
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 15),
+                                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                    margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.grey.shade100,
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               h.title ?? "",
-                                              style:
-                                                  const TextStyle(fontSize: 16),
+                                              style: const TextStyle(fontSize: 16),
                                             ),
                                             Text(
                                               h.description ?? "",
-                                              style: const TextStyle(
-                                                  color: Colors.black54),
+                                              style: const TextStyle(color: Colors.black54),
                                             )
                                           ],
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            if (!controller.myIngredients.any((element) => element.foodName == h.title)) {
-                                              Get.toNamed(AppRoutes.LOG_FOOD,
-                                                  parameters: {
-                                                    "type": "fromIngredientPage",
-                                                    "index": "$index"
-                                                  },
-                                                  arguments: controller);
+                                            if (controller.type.value == "fromPickImg") {
+                                              PickImageController pic = Get.find<PickImageController>();
+                                              if (!pic.myFood.any((element) => element.foodName == h.title)) {
+                                                Get.toNamed(AppRoutes.LOG_FOOD,
+                                                    parameters: {"type": "fromIngredientPickImgPage", "index": "$index"}, arguments: controller);
+                                              } else {
+                                                Get.defaultDialog(
+                                                  radius: 8,
+                                                  title: "Existed food?",
+                                                  middleText: "This food is existed in list ingredient.",
+                                                  textCancel: "Dismiss",
+                                                );
+                                              }
                                             } else {
-                                              Get.defaultDialog(
-                                                radius: 8,
-                                                title: "Existed food?",
-                                                middleText: "This food is existed in list ingredient.",
-                                                textCancel: "Dismiss",
-                                              );
+                                              if (!controller.myIngredients.any((element) => element.foodName == h.title)) {
+                                                Get.toNamed(AppRoutes.LOG_FOOD,
+                                                    parameters: {"type": "fromIngredientPage", "index": "$index"}, arguments: controller);
+                                              } else {
+                                                Get.defaultDialog(
+                                                  radius: 8,
+                                                  title: "Existed food?",
+                                                  middleText: "This food is existed in list ingredient.",
+                                                  textCancel: "Dismiss",
+                                                );
+                                              }
                                             }
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.all(5),
                                             decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(100),
-                                                color: AppColor.primaryColor1
-                                                    .withOpacity(0.1)),
+                                                borderRadius: BorderRadius.circular(100), color: AppColor.primaryColor1.withOpacity(0.1)),
                                             child: const Icon(Icons.add),
                                           ),
                                         )

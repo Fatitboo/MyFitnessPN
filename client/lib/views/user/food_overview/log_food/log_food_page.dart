@@ -30,13 +30,19 @@ class LogFoodPage extends GetView<LogFoodController> {
                   if(Get.parameters["type"] == "fromMyFoodPage"
                   || Get.parameters["type"] == "fromMyRecipePage"
                       || Get.parameters["type"] == "updateLogFood"
-                      || Get.parameters["type"] == "updateLogRecipe"){
+                      || Get.parameters["type"] == "updateLogRecipe"
+                      ){
+                    controller.logFood();
+                  }
+                  if (Get.parameters["type"] == "fromPickImgRecipePage"){
                     controller.logFood();
                   }
                   if(Get.parameters["type"] == "fromIngredientPage"
                       || Get.parameters["type"] == "fromAddRecipePage"
                       || Get.parameters["type"] == "fromIngredientAdminPage"
-                      || Get.parameters["type"] == "fromUpdateDisRecipePage"){
+                      || Get.parameters["type"] == "fromUpdateDisRecipePage"
+                      || Get.parameters["type"] == "fromIngredientPickImgPage"
+                      || Get.parameters["type"] == "fromPickImgIngredientPage"){
                     controller.logIngredientToRecipe();
                   }
                   if((controller.type.value == "fromAddMealItemRecipePage")
@@ -147,7 +153,9 @@ class LogFoodPage extends GetView<LogFoodController> {
                           ||(controller.type.value == "fromAddRecipePage")
                           ||(controller.type.value == "fromAddMealItemRecipePage")
                           ||(controller.type.value == "fromIngredientAdminPage")
-                          ||(controller.type.value == "fromUpdateDisRecipePage")
+                          ||(controller.type.value == "fromUpdateDisRecipePage"
+                          || Get.parameters["type"] == "fromIngredientPickImgPage"
+                          || Get.parameters["type"] == "fromPickImgIngredientPage")
                           ? const SizedBox(height: 0,)
                           : Column(
                               children: [

@@ -318,7 +318,7 @@ class DiaryPage extends GetView<DiaryController> {
                                               SizedBox(
                                                 width: MediaQuery.of(context).size.width*60/100,
                                                 child: Text("${ld.foodLogItem?.food?.foodName??ld.foodLogItem?.recipe?.title??ld.foodLogItem?.meal?.description }",
-                                                style: const TextStyle(fontSize: 16, color: Colors.black),)),
+                                                style: const TextStyle(fontSize: 16, color: Colors.black,  overflow: TextOverflow.ellipsis,),)),
                                               Text("${ld.foodLogItem?.food?.getStringDescription()??ld.foodLogItem?.recipe?.getStringDescription()??ld.foodLogItem?.meal?.getStringDescription() }",
                                                 style: const TextStyle(
                                                     color: Colors.black54),)
@@ -508,7 +508,7 @@ class DiaryPage extends GetView<DiaryController> {
                                                 width: MediaQuery.of(context).size.width*60/100,
                                                 child: Text(
                                                 "${ld.foodLogItem?.food?.foodName??ld.foodLogItem?.recipe?.title??ld.foodLogItem?.meal?.description }",
-                                                style: const TextStyle(fontSize: 16, color: Colors.black),)),
+                                                style: const TextStyle(fontSize: 16, color: Colors.black, overflow: TextOverflow.ellipsis, ),)),
                                               Text(
                                                 "${ld.foodLogItem?.food?.getStringDescription()??ld.foodLogItem?.recipe?.getStringDescription()??ld.foodLogItem?.meal?.getStringDescription() }",
                                                 style: const TextStyle(color: Colors.black54),)
@@ -691,7 +691,7 @@ class DiaryPage extends GetView<DiaryController> {
                                                 width: MediaQuery.of(context).size.width*60/100,
                                                 child: Text(
                                                 "${ld.foodLogItem?.food?.foodName??ld.foodLogItem?.recipe?.title??ld.foodLogItem?.meal?.description }",
-                                                style: const TextStyle(fontSize: 16, color: Colors.black),)),
+                                                style: const TextStyle(fontSize: 16, color: Colors.black,  overflow: TextOverflow.ellipsis,),)),
                                               Text(
                                                 "${ld.foodLogItem?.food?.getStringDescription()??ld.foodLogItem?.recipe?.getStringDescription()??ld.foodLogItem?.meal?.getStringDescription() }",
                                                 style: const TextStyle(color: Colors.black54),)
@@ -881,7 +881,7 @@ class DiaryPage extends GetView<DiaryController> {
                                                 width: MediaQuery.of(context).size.width*60/100,
                                                 child:  Text(
                                                 "${ld.foodLogItem?.food?.foodName??ld.foodLogItem?.recipe?.title??ld.foodLogItem?.meal?.description }",
-                                                style: const TextStyle(fontSize: 16, color: Colors.black),)),
+                                                style: const TextStyle(fontSize: 16, color: Colors.black,  overflow: TextOverflow.ellipsis,),)),
                                               Text(
                                                 "${ld.foodLogItem?.food?.getStringDescription()??ld.foodLogItem?.recipe?.getStringDescription()??ld.foodLogItem?.meal?.getStringDescription() }",
                                                 style: const TextStyle(color: Colors.black54),)

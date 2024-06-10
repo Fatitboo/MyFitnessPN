@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:do_an_2/model/mealDTO.dart';
+import 'package:do_an_2/model/recipeDTO.dart';
 
 import '../../model/foodDTO.dart';
 import 'package:http/http.dart' as http;
@@ -11,8 +12,8 @@ class RemoteService{
     var url = Uri.parse(
         "https://nutrition-by-api-ninjas.p.rapidapi.com/v1/nutrition?query=$searchingQuery");
     var response = await client.get(url, headers: {
-      // 'X-RapidAPI-Key': "3fb34c9a9emshdf9e39788ac293dp19ac8ejsna599162717bf",
-      'X-RapidAPI-Key': "6f0370dce0msh71dc0a50b4101f6p1aa036jsnc2ac05370b28",
+      'X-RapidAPI-Key': "3fb34c9a9emshdf9e39788ac293dp19ac8ejsna599162717bf",
+      // 'X-RapidAPI-Key': "6f0370dce0msh71dc0a50b4101f6p1aa036jsnc2ac05370b28",
       'X-RapidAPI-Host': "nutrition-by-api-ninjas.p.rapidapi.com"
     });
     List<FoodDTO> foods = [];
@@ -23,6 +24,24 @@ class RemoteService{
 
     }
     return foods;
+  }
+  Future<List<RecipeDTO>> getRecipesPredictFromApiMyFitness(String searchingQuery) async {
+    var client = http.Client();
+    var url = Uri.parse(
+        "https://myfitnesspal2.p.rapidapi.com/searchByKeyword?keyword=$searchingQuery");
+    var response = await client.get(url, headers: {
+      // 'X-RapidAPI-Key': "3fb34c9a9emshdf9e39788ac293dp19ac8ejsna599162717bf",
+      'X-RapidAPI-Key': "3fb34c9a9emshdf9e39788ac293dp19ac8ejsna599162717bf",
+      'X-RapidAPI-Host': "myfitnesspal2.p.rapidapi.com"
+    });
+    List<RecipeDTO> recipes = [];
+    if (response.statusCode == 200) {
+      dynamic i = json.decode(utf8.decode(response.bodyBytes));
+      recipes = List<RecipeDTO>.from(i.map((model) => RecipeDTO.fromApiJson(model)))
+          .toList();
+
+    }
+    return recipes;
   }
   Future<List<MealDTO>> getDiscoverRecipeFromApi(String searchingQuery) async {
     var client = http.Client();
