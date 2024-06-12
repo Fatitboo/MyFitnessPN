@@ -53,5 +53,5 @@ class ProfileController extends GetxController{
     } catch (err) {
       print(err);
     }
-  }
+  } 
 }
