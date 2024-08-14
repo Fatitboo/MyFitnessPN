@@ -2,19 +2,6 @@
 
 MyFitnessPN is a comprehensive fitness tracking and management application built using Flutter for the frontend and Spring Boot for the backend. This app helps users to set fitness goals, track their workouts, monitor their progress, and access personalized nutrition plans. It also features an AI-powered food recognition system to help users log their meals accurately.
 
-## Table of Contents
-
-1. [Features](#features)
-2. [Technologies Used](#technologies-used)
-3. [Getting Started](#getting-started)
-   - [Prerequisites](#prerequisites)
-   - [Installation](#installation)
-4. [Project Structure](#project-structure)
-5. [API Documentation](#api-documentation)
-6. [AI Food Recognition](#ai-food-recognition)
-7. [Contributing](#contributing)
-8. [License](#license)
-
 ## Features
 
 - User authentication (sign-up, login, and profile management)
