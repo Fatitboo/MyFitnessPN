@@ -1,11 +1,17 @@
+import 'package:do_an_2/model/planDTO.dart';
 import 'package:do_an_2/res/values/color_extension.dart';
 import 'package:do_an_2/res/widgets/tab_button.dart';
+import 'package:do_an_2/views/admin/plan_management/plan/plan_page.dart';
 import 'package:do_an_2/views/user/application_user/application_controller.dart';
 import 'package:do_an_2/views/user/diary/diary_page.dart';
 import 'package:do_an_2/views/user/home/home_page.dart';
+import 'package:do_an_2/views/user/plan/plan_page.dart';
 import 'package:do_an_2/views/user/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
+
+import '../../../res/routes/names.dart';
 
 class ApplicationUserPage extends GetView<ApplicationUserController> {
   ApplicationUserPage({super.key});
@@ -64,7 +70,7 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
   }
 
   Widget _buildPageView() {
-    return PageView(
+    return Obx(() => PageView(
       reverse: false,
       controller: controller.pageController,
       onPageChanged: (index) => {controller.handleChangePage(index)},
@@ -72,10 +78,10 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
       children: [
         HomePage(),
         DiaryPage(),
-        ProfilePage(),
+        controller.isStartPlan.value ? PlanObserveUserPage(controller.planDTO) : PlanPage("user"),
         ProfilePage(),
       ],
-    );
+    ));
   }
 
   @override
@@ -84,10 +90,15 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
       bottomNavigationBar: _buildBottomNavigation(context),
       body: _buildPageView(),
       floatingActionButton: SizedBox(
-        width: 70,
-        height: 70,
+        width: 65,
+        height: 65,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+              Get.toNamed(
+                  AppRoutes.FOOD_OVERVIEW,
+                  arguments: {"mealType":"Breakfast"}
+              );
+          },
           child: Container(
             width: 65,
             height: 65,
@@ -103,15 +114,14 @@ class ApplicationUserPage extends GetView<ApplicationUserController> {
                   )
                 ]),
             child: Icon(
-              Icons.search,
+              Icons.add,
               color: AppColor.white,
-              size: 35,
+              size: 48,
             ),
           ),
         ),
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

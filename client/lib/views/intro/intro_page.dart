@@ -17,16 +17,16 @@ class IntroPage extends GetView<IntroController> {
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           child: Column(
             children: [
-              // big logo
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 70.0,
-                  right: 70.0,
-                  top: 40,
-                  bottom: 20,
-                ),
-                child: Image.asset('assets/images/avocado.png'),
-              ),
+              // big logdo
+              // Padding(
+              //   padding: const EdgeInsets.only(
+              //     left: 70.0,
+              //     right: 70.0,
+              //     top: 40,
+              //     bottom: 20,
+              //   ),
+              //   child: Image.asset('assets/images/avocado.png'),
+              // ),
 
               // MyfitnessPN the new way of healthy
               Padding(
